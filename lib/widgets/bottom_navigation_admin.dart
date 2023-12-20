@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/admin/category_page.dart';
 import 'package:new_travel_app/others/contants.dart';
 
 final List<Widget> _pages = [
-  // const Categories(),
-  // const DetailsAddPage(),
+  const CategoriesPage(),
+  const CategoriesPage(),
 ];
 
 class BottomNavigationAdmin extends StatefulWidget {

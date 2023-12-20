@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
+import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/others/admin_credentials.dart';
 import 'package:new_travel_app/screen/authentication_page.dart';
 import 'package:new_travel_app/screen/sign_up_page.dart';
@@ -293,8 +295,8 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       if (formKey.currentState?.validate() ?? false) {
                         // Access the users list from the userNotifier value
-                        // List<AuthenticationModels> users =
-                        //     AuthenticationDb.singleton.userNotifier.value;
+                        List<AuthenticationModels> users =
+                            AuthenticationDb.singleton.userNotifier.value;
 
                         // Replace 'enteredUsername' and 'enteredPassword' with the actual values entered by the user
 
@@ -302,41 +304,41 @@ class _LoginPageState extends State<LoginPage> {
                         String enteredPassword = _passwordController.text;
 
                         // Check if entered username and password match any user details
-                        // bool isUserAuthenticated = users.any((user) =>
-                        //     user.username == enteredUsername &&
-                        //     user.password == enteredPassword);
+                        bool isUserAuthenticated = users.any((user) =>
+                            user.username == enteredUsername &&
+                            user.password == enteredPassword);
 
                         // Clear the text fields
                         _usernameController.text = '';
                         _passwordController.text = '';
                         // Unfocus the text fields to hide the keyboard
                         FocusScope.of(context).unfocus();
-                        // if (isUserAuthenticated) {
-                        //   final sharedpref =
-                        //       await SharedPreferences.getInstance();
-                        //   sharedpref.setBool(saveKey, true);
-                        //   // ignore: use_build_context_synchronously
-                        //   Navigator.pushReplacement(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => const BottomNavigation(),
-                        //       settings:
-                        //           RouteSettings(arguments: enteredUsername),
-                        //     ),
-                        //   );
-                        // } else {
-                        //   if (_usernameController.text ==
-                        //           AdminCredentials.username &&
-                        //       _passwordController.text ==
-                        //           AdminCredentials.password) {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       const SnackBar(
-                        //         content: Text('Invalid username or password'),
-                        //         duration: Duration(seconds: 3),
-                        //       ),
-                        //     );
-                        //   }
-                        // }
+                        if (isUserAuthenticated) {
+                          final sharedpref =
+                              await SharedPreferences.getInstance();
+                          sharedpref.setBool(saveKey, true);
+                          // ignore: use_build_context_synchronously
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const BottomNavigation(),
+                              settings:
+                                  RouteSettings(arguments: enteredUsername),
+                            ),
+                          );
+                        } else {
+                          if (_usernameController.text ==
+                                  AdminCredentials.username &&
+                              _passwordController.text ==
+                                  AdminCredentials.password) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Invalid username or password'),
+                                duration: Duration(seconds: 3),
+                              ),
+                            );
+                          }
+                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(
