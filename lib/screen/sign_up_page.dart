@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/authentication_db.dart';
+import 'package:new_travel_app/main.dart';
+import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/screen/authentication_page.dart';
 import 'package:new_travel_app/screen/login_screen.dart';
-
+import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 TextEditingController _firstnameController = TextEditingController();
 TextEditingController _lastnameController = TextEditingController();
@@ -78,149 +82,20 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             Positioned(
-              left: screenWidth * .07,
-              top: 200,
-              child: SizedBox(
-                width: screenWidth * 0.85,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white70, // Set the background color
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // Shadow color
-                        spreadRadius: 2, // Spread radius
-                        blurRadius: 5, // Blur radius
-                        offset: const Offset(0, 2), // Offset in x and y axes
-                      ),
-                    ], // Set border radius if needed
-                  ),
-                  child: TextFormField(
-                      controller: _firstnameController,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        label: const Text(
-                          'First Name',
-                          style: TextStyle(color: Colors.black45),
-                        ),
-
-                        hintStyle: TextStyle(
-                          color: Colors.black
-                              .withOpacity(0.3), // Set hint text color
-                          // fontWeight: FontWeight.w700,
-                        ),
-                        border: InputBorder.none, // Remove the default border
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please fill this field';
-                        } else {
-                          return null;
-                        }
-                      }),
-                ),
-              ),
-            ),
+                left: screenWidth * .07,
+                top: 200,
+                child: textfield(screenWidth, _firstnameController,
+                    'First Name', 'Please enter the first name')),
             Positioned(
-              left: screenWidth * .07,
-              top: 280,
-              child: SizedBox(
-                width: screenWidth * 0.85,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white70, // Set the background color
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // Shadow color
-                        spreadRadius: 2, // Spread radius
-                        blurRadius: 5, // Blur radius
-                        offset: const Offset(0, 2), // Offset in x and y axes
-                      ),
-                    ], // Set border radius if needed
-                  ),
-                  child: TextFormField(
-                      controller: _lastnameController,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        label: const Text(
-                          'Last Name',
-                          style: TextStyle(color: Colors.black45),
-                        ),
-
-                        hintStyle: TextStyle(
-                          color: Colors.black
-                              .withOpacity(0.3), // Set hint text color
-                          // fontWeight: FontWeight.w700,
-                        ),
-                        border: InputBorder.none, // Remove the default border
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please fill this field';
-                        } else {
-                          return null;
-                        }
-                      }),
-                ),
-              ),
-            ),
+                left: screenWidth * .07,
+                top: 280,
+                child: textfield(screenWidth, _lastnameController, 'Last Name',
+                    'Please enter the last name')),
             Positioned(
-              left: screenWidth * .07,
-              top: 360,
-              child: SizedBox(
-                width: screenWidth * 0.85,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white70, // Set the background color
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2), // Shadow color
-                        spreadRadius: 2, // Spread radius
-                        blurRadius: 5, // Blur radius
-                        offset: const Offset(0, 2), // Offset in x and y axes
-                      ),
-                    ], // Set border radius if needed
-                  ),
-                  child: TextFormField(
-                      controller: _usernameController,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        label: const Text(
-                          'Username',
-                          style: TextStyle(color: Colors.black45),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                        border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please fill this field';
-                        } else {
-                          return null;
-                        }
-                      }),
-                ),
-              ),
-            ),
+                left: screenWidth * .07,
+                top: 360,
+                child: textfield(screenWidth, _usernameController, 'Username',
+                    'Please enter the username')),
             Positioned(
               left: screenWidth * .07,
               top: 440,
@@ -273,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: !_isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please fill this field';
+                          return 'Please enter the password';
                         }
 
                         // Check if password is at least 8 characters long
@@ -313,61 +188,64 @@ class _SignUpPageState extends State<SignUpPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
-                      // if (formKey.currentState?.validate() ?? false) {
-                      //   // Check if the username already exists
-                      //   bool usernameExists = await AuthenticationDb.singleton
-                      //       .usernameExists(_usernameController.text);
+                      if (formKey.currentState?.validate() ?? false) {
+                        // Check if the username already exists
+                        bool usernameExists = await AuthenticationDb.singleton
+                            .usernameExists(_usernameController.text);
 
-                      //   if (usernameExists) {
-                      //     // Username already exists, show an error SnackBar
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       const SnackBar(
-                      //         content: Text(
-                      //             'Username already exists. Please choose another username.'),
-                      //         duration: Duration(seconds: 3),
-                      //       ),
-                      //     );
-                      //   } else {
-                      //     // Username doesn't exist, proceed with sign-up
-                      //     final users = AuthenticationModels(
-                      //       id: DateTime.now()
-                      //           .millisecondsSinceEpoch
-                      //           .toString(),
-                      //       name: _firstnameController.text +
-                      //           _lastnameController.text,
-                      //       password: _passwordController.text,
-                      //       username: _usernameController.text,
-                      //     );
+                        if (usernameExists) {
+                          // Username already exists, show an error SnackBar
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  'Username already exists. Please choose another username.'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                        } else {
+                          // Username doesn't exist, proceed with sign-up
+                          final users = AuthenticationModels(
+                            id: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            name: _firstnameController.text +
+                                _lastnameController.text,
+                            password: _passwordController.text,
+                            username: _usernameController.text,
+                          );
 
-                      //     AuthenticationDb.singleton.insertUsers(users);
+                          AuthenticationDb.singleton.insertUsers(users);
+                          // Clear the text fields
+                          _firstnameController.text = '';
+                          _lastnameController.text = '';
+                          _usernameController.text = '';
+                          _passwordController.text = '';
 
-                      //     // Clear the text fields
-                      //     _firstnameController.text = '';
-                      //     _lastnameController.text = '';
-                      //     _usernameController.text = '';
-                      //     _passwordController.text = '';
+                          // Unfocus the text fields to hide the keyboard
+                          // ignore: use_build_context_synchronously
+                          FocusScope.of(context).unfocus();
 
-                      //     // Unfocus the text fields to hide the keyboard
-                      //     FocusScope.of(context).unfocus();
-
-                      //     ScaffoldMessenger.of(context).showSnackBar(
-                      //       const SnackBar(
-                      //         content: Text('Account created successfully!'),
-                      //         duration: Duration(seconds: 3),
-                      //       ),
-                      //     );
-                      //      final sharedpref =
-                      //         await SharedPreferences.getInstance();
-                      //     sharedpref.setBool(saveKey, true);
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) => const BottomNavigation(),
-                      //         settings: RouteSettings(arguments: users.name),
-                      //       ),
-                      //     );
-                      //   }
-                      // }
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Account created successfully!'),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
+                          final sharedpref =
+                              await SharedPreferences.getInstance();
+                          sharedpref.setBool(saveKey, true);
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const BottomNavigation(),
+                              settings: RouteSettings(arguments: users.name),
+                            ),
+                          );
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 8,
@@ -407,6 +285,53 @@ class _SignUpPageState extends State<SignUpPage> {
                 ))
           ],
         ),
+      ),
+    );
+  }
+
+  Widget textfield(double screenWidth, TextEditingController controller,
+      String label, String message) {
+    return SizedBox(
+      width: screenWidth * 0.85,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white70, // Set the background color
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2), // Shadow color
+              spreadRadius: 2, // Spread radius
+              blurRadius: 5, // Blur radius
+              offset: const Offset(0, 2), // Offset in x and y axes
+            ),
+          ],
+        ),
+        child: TextFormField(
+            controller: controller,
+            style: const TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w400,
+            ),
+            decoration: InputDecoration(
+              label: Text(
+                label,
+                style: const TextStyle(color: Colors.black45),
+              ),
+
+              hintStyle: TextStyle(
+                color: Colors.black.withOpacity(0.3), // Set hint text color
+                // fontWeight: FontWeight.w700,
+              ),
+              border: InputBorder.none, // Remove the default border
+              contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return message;
+              } else {
+                return null;
+              }
+            }),
       ),
     );
   }

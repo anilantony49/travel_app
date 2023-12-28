@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/admin/add_details_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/authentication_page.dart';
@@ -45,13 +46,14 @@ class _AsiaPageState extends State<AsiaPage> {
 
   @override
   Widget build(BuildContext context) {
+        final String title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       drawer: SideMenuBar(),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Constants.greenColor,
           onPressed: () {
-            // Navigator.push(context,
-            //     MaterialPageRoute(builder: (context) => const AddCategory()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const DetailsAddPage()));
           },
           child: const Icon(Icons.add)),
       backgroundColor: const Color.fromARGB(255, 234, 227, 227),
@@ -69,8 +71,8 @@ class _AsiaPageState extends State<AsiaPage> {
         //     )),
         backgroundColor: Constants.greenColor,
         centerTitle: true,
-        title: const Text(
-          'Admin panal',
+        title:  Text(
+          title,
           style: TextStyle(
               color: Constants.blackColor, fontWeight: FontWeight.bold),
         ),

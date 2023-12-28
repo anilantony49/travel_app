@@ -31,7 +31,10 @@ class SideMenuBar extends StatelessWidget {
             title: const Text('Popular Destinations'),
             onTap: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const PopularDstination()));
+                  context, MaterialPageRoute(builder: (context) => const PopularDstination(),
+                    settings: const RouteSettings(arguments: 'Popular Destinations')));
+                   
+                 
             },
           ),
           const Divider(),
@@ -40,7 +43,8 @@ class SideMenuBar extends StatelessWidget {
             title: const Text('Europe'),
             onTap: () {
                 Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const EuropePage()));
+                  MaterialPageRoute(builder: (context) => const EuropePage(),
+                   settings: const RouteSettings(arguments: 'Europe')));
             },
           ),
           const Divider(),
@@ -48,21 +52,24 @@ class SideMenuBar extends StatelessWidget {
             leading: const Icon(Mdi.earth),
             title: const Text('Africa'),
             onTap: () =>  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AfricaPage())),
+                  MaterialPageRoute(builder: (context) => const AfricaPage(),
+                   settings: const RouteSettings(arguments: 'Africa'))),
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.place),
             title: const Text('North America'),
             onTap: () =>  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const NorthAmericaPage())),
+                  MaterialPageRoute(builder: (context) => const NorthAmericaPage(),
+                   settings: const RouteSettings(arguments: 'North America'))),
           ),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.south_america),
             title: const Text('South America'),
             onTap: () =>  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const SouthAmericaPage())),
+                  MaterialPageRoute(builder: (context) => const SouthAmericaPage(),
+                   settings: const RouteSettings(arguments: 'South America'))),
           ),
           const Divider(),
           ListTile(
@@ -73,7 +80,8 @@ class SideMenuBar extends StatelessWidget {
             ),
             title: const Text('Asia'),
             onTap: () =>Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const AsiaPage())),
+                  MaterialPageRoute(builder: (context) => const AsiaPage(),
+                   settings: const RouteSettings(arguments: 'Asia'))),
           )
         ],
       ),

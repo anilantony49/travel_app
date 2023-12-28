@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/admin/popular_destinations.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
@@ -20,14 +21,14 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
+  // bool _isPasswordVisible = false;
 
   final formKey = GlobalKey<FormState>();
-  void _passwordVisibility() {
-    setState(() {
-      _isPasswordVisible = !_isPasswordVisible;
-    });
-  }
+  // void _passwordVisibility() {
+  //   setState(() {
+  //     _isPasswordVisible = !_isPasswordVisible;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                   togglePasswordVisibility: null,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please fill this field';
+                      return 'Please enter the username';
                     } else {
                       return null;
                     }
@@ -101,12 +102,13 @@ class _LoginPageState extends State<LoginPage> {
               left: screenWidth * .07,
               top: 330,
               child: CustomInputField(
+                isPassword: true,
                 controller: _passwordController,
                 label: 'Password',
-                togglePasswordVisibility: _passwordVisibility,
+                togglePasswordVisibility: null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please fill this field';
+                    return 'Please enter the password';
                   }
               
                   // Check if password is at least 8 characters long
@@ -282,7 +284,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const BottomNavigationAdmin(),
+                            builder: (context) => const PopularDstination(),
                           ), // Replace YourNextScreen with the actual screen widget you want to navigate to
                           (route) => false,
                         );

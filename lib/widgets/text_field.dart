@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/others/contants.dart';
 
-class CustomInputField extends StatelessWidget {
+class CustomInputField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final bool isPassword;
@@ -20,6 +20,12 @@ class CustomInputField extends StatelessWidget {
     required this.validator,
   }) : super(key: key);
 
+  @override
+  State<CustomInputField> createState() => _CustomInputFieldState();
+}
+
+class _CustomInputFieldState extends State<CustomInputField> {
+  bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -40,16 +46,20 @@ class CustomInputField extends StatelessWidget {
           ],
         ),
         child: TextFormField(
-          controller: controller,
+          controller: widget.controller,
           style: const TextStyle(
             color: Constants.blackColor,
             fontWeight: FontWeight.w400,
           ),
           decoration: InputDecoration(
-            suffixIcon: isPassword
+            suffixIcon: widget.isPassword
                 ? IconButton(
-                    onPressed: togglePasswordVisibility,
-                    icon: isPasswordVisible
+                    onPressed:(){
+                      setState(() {
+                           _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: _isPasswordVisible 
                         ? const Icon(Icons.visibility,
                             color: Constants.blackColor)
                         : const Icon(Icons.visibility_off,
@@ -57,7 +67,7 @@ class CustomInputField extends StatelessWidget {
                   )
                 : null,
             label: Text(
-              label,
+              widget.label,
               style: const TextStyle(color: Constants.blackColor),
             ),
             hintStyle: TextStyle(
@@ -66,8 +76,8 @@ class CustomInputField extends StatelessWidget {
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           ),
-          obscureText: isPassword && !isPasswordVisible,
-          validator: validator,
+         obscureText: widget.isPassword && !_isPasswordVisible,
+          validator: widget.validator,
         ),
       ),
     );
