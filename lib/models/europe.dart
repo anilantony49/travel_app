@@ -1,8 +1,8 @@
 import 'package:hive_flutter/adapters.dart';
-part 'popular_destination.g.dart';
+part 'europe.g.dart';
 
-@HiveType(typeId: 2)
-class PopularDestinationModels {
+@HiveType(typeId: 3)
+class EuropeDestinationModels {
   @HiveField(0)
   final String id;
   @HiveField(1)
@@ -42,7 +42,7 @@ class PopularDestinationModels {
   @HiveField(17)
   final int fire;
 
-  PopularDestinationModels(
+  EuropeDestinationModels(
       {required this.id,
       required this.countryName,
       required this.countryImage,

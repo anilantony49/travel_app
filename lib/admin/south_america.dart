@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/add_details_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
@@ -53,16 +51,19 @@ class _SouthAmericaPageState extends State<SouthAmericaPage> {
       floatingActionButton: FloatingActionButton(
           backgroundColor: Constants.greenColor,
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DetailsAddPage()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const DetailsAddPage(
+                          category: '',
+                        )));
           },
           child: const Icon(Icons.add)),
       backgroundColor: const Color.fromARGB(255, 234, 227, 227),
       appBar: AppBar(
-       
         backgroundColor: Constants.greenColor,
         centerTitle: true,
-        title:  Text(
+        title: Text(
           title,
           style: TextStyle(
               color: Constants.blackColor, fontWeight: FontWeight.bold),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mdi_icons/flutter_mdi_icons.dart';
+import 'package:new_travel_app/models/europe.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
 import 'package:new_travel_app/others/contants.dart';
 // ignore: depend_on_referenced_packages
@@ -9,11 +10,15 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ShowDetailsPage extends StatefulWidget {
-  const ShowDetailsPage({
+  const ShowDetailsPage(
+    this.selectedItem,
+    this.selectedEuropeItem, {
     super.key,
-    required this.selectedItem,
+    required this.category,
   });
-  final PopularDestinationModels selectedItem;
+  final PopularDestinationModels? selectedItem;
+  final EuropeDestinationModels? selectedEuropeItem;
+  final String category;
 
   @override
   State<ShowDetailsPage> createState() => _ShowDetailsPageState();
@@ -48,12 +53,20 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
               backgroundColor: Colors.grey,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(widget.selectedItem.countryName,style: const TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
+                title: Text(
+                  widget.category == 'Popular Destination'
+                      ? widget.selectedItem!.countryName
+                      : widget.selectedEuropeItem!.countryName,
+                  style: const TextStyle(
+                      fontSize: 35, fontWeight: FontWeight.bold),
+                ),
                 background: Stack(
                   fit: StackFit.expand,
                   children: [
                     Image.file(
-                      File(widget.selectedItem.countryImage),
+                      File(widget.category == 'Popular Destination'
+                          ? widget.selectedItem!.countryImage
+                          : widget.selectedEuropeItem!.countryImage),
                       width: double.maxFinite,
                       fit: BoxFit.cover,
                     ),
@@ -167,7 +180,10 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      widget.selectedItem.description,
+                                      widget.category == 'Popular Destination'
+                                          ? widget.selectedItem!.description
+                                          : widget
+                                              .selectedEuropeItem!.description,
                                       style: const TextStyle(
                                           color: Constants.blackColor,
                                           fontSize: 15,
@@ -189,10 +205,12 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                     borderRadius: BorderRadius.circular(8),
                                     color: const Color.fromARGB(
                                         255, 231, 228, 228)),
-                                child: const Center(
+                                child: Center(
                                     child: Text(
-                                  'capital',
-                                  style: TextStyle(
+                                  widget.category == 'Popular Destination'
+                                      ? widget.selectedItem!.capital
+                                      : widget.selectedEuropeItem!.capital,
+                                  style: const TextStyle(
                                       color: Colors.purple,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -278,7 +296,10 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             Container(
                               height: 200,
                               child: ListView.builder(
-                                itemCount: widget.selectedItem.images.length,
+                                itemCount: widget.category ==
+                                        'Popular Destination'
+                                    ? widget.selectedItem!.images.length
+                                    : widget.selectedEuropeItem!.images.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Padding(
@@ -289,8 +310,11 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 FullScreenImagePageView(
-                                              images:
-                                                  widget.selectedItem.images,
+                                              images: widget.category ==
+                                                      'Popular Destination'
+                                                  ? widget.selectedItem!.images
+                                                  : widget.selectedEuropeItem!
+                                                      .images,
                                               initialIndex: index,
                                             ),
                                           ),
@@ -310,8 +334,12 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                             borderRadius:
                                                 BorderRadius.circular(10),
                                             child: Image.file(
-                                              File(widget
-                                                  .selectedItem.images[index]),
+                                              File(widget.category ==
+                                                      'Popular Destination'
+                                                  ? widget.selectedItem!
+                                                      .images[index]
+                                                  : widget.selectedEuropeItem!
+                                                      .images[index]),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -324,19 +352,25 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             ),
                             headingText('Official Language'),
                             section(
-                              widget.selectedItem.language,
+                              widget.category == 'Popular Destination'
+                                  ? widget.selectedItem!.language
+                                  : widget.selectedEuropeItem!.language,
                             ),
                             headingText('Currency'),
                             section(
-                              widget.selectedItem.currency,
+                              widget.category == 'Popular Destination'
+                                  ? widget.selectedItem!.currency
+                                  : widget.selectedEuropeItem!.currency,
                             ),
-                            headingText('Major Religions'),
-                            section('Christianity'),
-                            headingText('National Day'),
-                            section('Bastile Day Jul- 14'),
+                            // headingText('Major Religions'),
+                            // section('Christianity'),
+                            // headingText('National Day'),
+                            // section('Bastile Day Jul- 14'),
                             headingText('Dial Code'),
                             section(
-                              widget.selectedItem.digitialCode,
+                              widget.category == 'Popular Destination'
+                                  ? widget.selectedItem!.digitialCode
+                                  : widget.selectedEuropeItem!.digitialCode,
                             ),
                             headingText('Mobile Phone Operators'),
                             section('French')
@@ -359,7 +393,11 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                   fontSize: 15),
                             ),
                           ),
-                          section("${widget.selectedItem.currency}(\u20AC)"),
+                          section(
+                            widget.category == 'Popular Destination'
+                                ? widget.selectedItem!.currency
+                                : widget.selectedEuropeItem!.currency,
+                          ),
                           headingText('Convert'),
                           Padding(
                             padding: const EdgeInsets.all(12.0),
@@ -467,7 +505,10 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                   decoration: const BoxDecoration(
                                     color: Color.fromARGB(255, 231, 228, 228),
                                   ),
-                                  child: Text(widget.selectedItem.weather)),
+                                  child: Text(widget.category ==
+                                          'Popular Destination'
+                                      ? widget.selectedItem!.weather
+                                      : widget.selectedEuropeItem!.weather)),
                             ),
                             // const Text('When to visit'),
                             // Container(
@@ -523,15 +564,25 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                   fontSize: 15),
                             ),
                             emergencyServices(
-                                'Police', widget.selectedItem.police, Icons.local_police),
+                                'Police',
+                                widget.category == 'Popular Destination'
+                                    ? widget.selectedItem!.police.toString()
+                                    : widget.selectedEuropeItem!.police
+                                        .toString(),
+                                Icons.local_police),
                             emergencyServices(
                               'Ambulance',
-                              widget.selectedItem.ambulance,
+                              widget.category == 'Popular Destination'
+                                  ? widget.selectedItem!.ambulance.toString()
+                                  : widget.selectedEuropeItem!.ambulance
+                                      .toString(),
                               Mdi.ambulance,
                             ),
                             emergencyServices(
                               'Fire',
-                              widget.selectedItem.fire,
+                              widget.category == 'Popular Destination'
+                                  ? widget.selectedItem!.fire.toString()
+                                  : widget.selectedEuropeItem!.fire.toString(),
                               Mdi.fire,
                             ),
                           ],

@@ -12,13 +12,31 @@ class DetailsEditPage extends StatefulWidget {
   final String initialCountryName;
   final String initialDescription;
   final String initialImagePath;
+  final String initialImages;
+  final String initialCountryCapital;
+  final String initialLanguage;
+  final String initialcurrency;
+  final String initialDialCode;
+  final String initialWeather;
+  final String initialPoliceNumber;
+  final String initialAmbulanceNumber;
+  final String initialFireNumber;
 
   const DetailsEditPage(
       {super.key,
       required this.initialitemId,
       required this.initialCountryName,
       required this.initialDescription,
-      required this.initialImagePath});
+      required this.initialImagePath,
+      required this.initialCountryCapital,
+      required this.initialLanguage,
+      required this.initialcurrency,
+      required this.initialDialCode,
+      required this.initialWeather,
+      required this.initialPoliceNumber,
+      required this.initialAmbulanceNumber,
+      required this.initialFireNumber,
+      required this.initialImages});
 
   @override
   State<DetailsEditPage> createState() => _DetailsEditPageState();
@@ -34,7 +52,6 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
   final TextEditingController _wheatherController = TextEditingController();
   final TextEditingController _countryCapitalController =
       TextEditingController();
-  final TextEditingController _nationalDayController = TextEditingController();
   final TextEditingController _policeEmergencyController =
       TextEditingController();
 
@@ -53,15 +70,14 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
     'South America',
     'Asia'
   ];
-  // List<AddCategoryModels> categoryList = [];
-  // List<String> categoryNames = [];
-  // String? _selectedValue;
+
   String images = '';
-  // String _selectedCategoryModel = '';
   void selectImages() async {
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
     if (selectedImages.isNotEmpty) {
-      imageFileList.addAll(selectedImages);
+      setState(() {
+        imageFileList.addAll(selectedImages);
+      });
     }
     images = selectedImages.map((image) => image.path).join(', ');
     setState(() {
@@ -70,9 +86,6 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
   }
 
   bool isExpanded = false;
-  // String? _selectedValue;
-  // List<AddCategoryModels> categoryList = []; // Add this line
-  // AddCategoryModels? _selectedCategoryModel;
   String selectedImagePath = '';
   Future pickImage(BuildContext context, ImageSource source) async {
     final image = await ImagePicker().pickImage(source: source);
@@ -82,30 +95,26 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
     });
   }
 
-  // void fetchCategory() async {
-  //   // List<AddCategoryModels> fetchedCategories =
-  //   //     await AddCategoryDb.singleton.getCategory();
-  //   // setState(() {
-  //   //   categoryList = fetchedCategories;
-  //   // });
-  // }
-
   @override
   void initState() {
     super.initState();
     _countryNameController.text = widget.initialCountryName;
     selectedImagePath = widget.initialImagePath;
     _descriptionEditingController.text = widget.initialDescription;
-
-    // fetchCategory();
-    // _selectedValue = (categoryItems.isNotEmpty ? categoryItems[0] : null); // Set initial value
+    _countryCapitalController.text = widget.initialCountryCapital;
+    _languageController.text = widget.initialLanguage;
+    _currencyController.text = widget.initialcurrency;
+    _digitalCodeController.text = widget.initialDialCode;
+    _wheatherController.text = widget.initialWeather;
+    _policeEmergencyController.text = widget.initialPoliceNumber;
+    _ambulanceEmergencyController.text = widget.initialAmbulanceNumber;
+    _fireEmergencyController.text = widget.initialFireNumber;
   }
 
   @override
   Widget build(BuildContext context) {
     final countryName = ModalRoute.of(context)?.settings.arguments as String? ??
         'Default Category';
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -187,24 +196,29 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
                 width: 350,
                 height: 300,
                 decoration: const BoxDecoration(color: Colors.grey),
-                child: GridView.builder(
-                    itemCount: imageFileList.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Image.file(
-                        File(imageFileList[index].path),
-                        fit: BoxFit.cover,
-                      );
-                    }),
+                child: images.isEmpty
+                    ? Image.asset(
+                        'assets/image/image.jpg',
+                        fit: BoxFit.fill,
+                      )
+                    : GridView.builder(
+                        itemCount: imageFileList.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Image.file(
+                            File(imageFileList[index].path),
+                            fit: BoxFit.cover,
+                          );
+                        }),
               ),
             ),
             textfields(_countryCapitalController, 'Capital', null),
             textfields(_languageController, 'Language', null),
             textfields(_currencyController, 'Currency', null),
             textfields(_digitalCodeController, 'Digital Code', null),
-            textfields(_nationalDayController, 'National Day', null),
+            // textfields(_nationalDayController, 'National Day', null),
             textfields(_wheatherController, 'weather', null),
             textfields(
                 _policeEmergencyController, 'Police emergency number', null),
@@ -223,9 +237,10 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
                     digitialCode: _digitalCodeController.text,
                     weather: _wheatherController.text,
                     images: imageFileList.map((image) => image.path).toList(),
-                    police: _policeEmergencyController.text,
-                    ambulance: _ambulanceEmergencyController.text,
-                    fire: _ambulanceEmergencyController.text,
+                    police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
+                    ambulance:int.tryParse(_ambulanceEmergencyController.text)??0 ,
+                    fire: int.tryParse(_fireEmergencyController.text)??0 ,
+                    capital: _countryCapitalController.text,
                     // knownFor: [],
                   );
                   // ignore: use_build_context_synchronously
@@ -241,6 +256,7 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
                   _descriptionEditingController.text = '';
                   _countryNameController.text = '';
                   _languageController.text = '';
+                  _countryCapitalController.text = '';
                   _digitalCodeController.text = '';
                   _currencyController.text = '';
                   _wheatherController.text = '';

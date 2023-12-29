@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'popular_destination.dart';
+part of 'europe.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PopularDestinationModelsAdapter
-    extends TypeAdapter<PopularDestinationModels> {
+class EuropeDestinationModelsAdapter
+    extends TypeAdapter<EuropeDestinationModels> {
   @override
-  final int typeId = 2;
+  final int typeId = 3;
 
   @override
-  PopularDestinationModels read(BinaryReader reader) {
+  EuropeDestinationModels read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return PopularDestinationModels(
+    return EuropeDestinationModels(
       id: fields[0] as String,
       countryName: fields[1] as String,
       countryImage: fields[2] as String,
@@ -35,7 +35,7 @@ class PopularDestinationModelsAdapter
   }
 
   @override
-  void write(BinaryWriter writer, PopularDestinationModels obj) {
+  void write(BinaryWriter writer, EuropeDestinationModels obj) {
     writer
       ..writeByte(13)
       ..writeByte(0)
@@ -72,7 +72,7 @@ class PopularDestinationModelsAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PopularDestinationModelsAdapter &&
+      other is EuropeDestinationModelsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

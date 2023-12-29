@@ -48,7 +48,7 @@ class _PopularDstinationState extends State<PopularDstination> {
 
   PopularDestinationModels? popularDestination;
 
-    void deleteCountryAndShowSnackbar(String itemId) {
+  void deleteCountryAndShowSnackbar(String itemId) {
     PopularDestinationDb.singleton.deleteCountry(itemId);
 
     // Show a Snackbar indicating that the user has been deleted
@@ -61,6 +61,7 @@ class _PopularDstinationState extends State<PopularDstination> {
 
     fetchCategory();
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -74,7 +75,7 @@ class _PopularDstinationState extends State<PopularDstination> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DetailsAddPage()));
+                      builder: (context) => const DetailsAddPage(category: 'Popular Destination',)));
             },
             child: const Icon(Icons.add)),
         backgroundColor: const Color.fromARGB(255, 234, 227, 227),
@@ -163,6 +164,25 @@ class _PopularDstinationState extends State<PopularDstination> {
                                                     items[index].description,
                                                 initialImagePath:
                                                     items[index].countryImage,
+                                                initialCountryCapital:
+                                                    items[index].capital,
+                                                initialFireNumber:
+                                                    items[index].fire.toString(),
+                                                initialAmbulanceNumber:
+                                                    items[index].ambulance.toString(),
+                                                initialLanguage:
+                                                    items[index].language,
+                                                initialcurrency:
+                                                    items[index].currency,
+                                                initialDialCode:
+                                                    items[index].digitialCode,
+                                                initialWeather:
+                                                    items[index].weather,
+                                                initialPoliceNumber:
+                                                    items[index].police.toString(),
+                                                initialImages: items[index]
+                                                    .images
+                                                    .toString(),
                                               )));
                                   // Navigator.pop(context);
                                 },
@@ -174,7 +194,8 @@ class _PopularDstinationState extends State<PopularDstination> {
                               ),
                               ListTile(
                                 onTap: () {
-                               deleteCategoryAndShowSnackbar(items[index].id);
+                                  deleteCategoryAndShowSnackbar(
+                                      items[index].id);
                                   Navigator.pop(context);
                                 },
                                 leading: const Icon(Icons.delete,
@@ -196,6 +217,16 @@ class _PopularDstinationState extends State<PopularDstination> {
                                   initialCountryName: items[index].countryName,
                                   initialDescription: items[index].description,
                                   initialImagePath: items[index].countryImage,
+                                  initialCountryCapital: items[index].capital,
+                                  initialLanguage: items[index].language,
+                                  initialcurrency: items[index].currency,
+                                  initialDialCode: items[index].digitialCode,
+                                  initialWeather: items[index].weather,
+                                  initialPoliceNumber: items[index].police.toString(),
+                                  initialAmbulanceNumber:
+                                      items[index].ambulance.toString(),
+                                  initialFireNumber: items[index].fire.toString(),
+                                  initialImages: items[index].images.toString(),
                                 )));
                   },
                   child: Stack(children: [

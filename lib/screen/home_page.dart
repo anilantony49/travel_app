@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/europe_db.dart';
 import 'package:new_travel_app/db/popular_destination_db.dart';
+import 'package:new_travel_app/models/europe.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/show_detail_description.dart';
@@ -16,6 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<PopularDestinationModels> items = [];
+  List<EuropeDestinationModels> europeItems = [];
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
@@ -24,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     fetchCategory();
+    fetchEurope();
     startHintTextTimer();
     // Auto slide every 3 seconds
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
@@ -45,6 +49,13 @@ class _HomePageState extends State<HomePage> {
         await PopularDestinationDb.singleton.getCountries();
     setState(() {
       items = fetchedCategories;
+    });
+  }
+    void fetchEurope() async {
+    List<EuropeDestinationModels> fetchedEuropeItems =
+        await EuropeDb.singleton.getCountries();
+    setState(() {
+      europeItems = fetchedEuropeItems;
     });
   }
 
@@ -214,8 +225,9 @@ class _HomePageState extends State<HomePage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ShowDetailsPage(
-                                        selectedItem: items[index]),
+                                    builder: (context) =>
+                                        ShowDetailsPage( items[index], null, category: 'Popular Destination',
+                                     ),
                                   ),
                                 );
                               },
@@ -292,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                         height: 150.0,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: items.length,
+                          itemCount: europeItems.length,
                           itemBuilder: (BuildContext context, int index) {
                             return GestureDetector(
                               onTap: () {
@@ -300,7 +312,9 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ShowDetailsPage(
-                                        selectedItem: items[index]),
+                                      null,
+                                      europeItems[index], category: 'Europe',
+                                    ),
                                   ),
                                 );
                               },
@@ -338,7 +352,8 @@ class _HomePageState extends State<HomePage> {
                                               topRight: Radius.circular(10),
                                             ),
                                             child: Image.file(
-                                              File(items[index].countryImage),
+                                              File(europeItems[index]
+                                                  .countryImage),
                                               fit: BoxFit.fill,
                                             ),
                                           ),
@@ -346,7 +361,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       Container(
                                         child: Text(
-                                          items[index].countryName,
+                                          europeItems[index].countryName,
                                           style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold,
@@ -385,7 +400,9 @@ class _HomePageState extends State<HomePage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ShowDetailsPage(
-                                        selectedItem: items[index]),
+                                       items[index],
+                                      null, category: '',
+                                    ),
                                   ),
                                 );
                               },
@@ -537,7 +554,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget imageContainer( PopularDestinationModels selectedItem, ) {
+  Widget imageContainer(
+    PopularDestinationModels selectedItem,
+  ) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
@@ -554,8 +573,10 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              ShowDetailsPage(selectedItem: items[index]),
+                          builder: (context) => ShowDetailsPage(
+                            items[index],
+                          null, category: '',
+                          ),
                         ),
                       );
                     },
@@ -598,7 +619,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Container(
                               child: Text(
-                               items[index].countryName,
+                                items[index].countryName,
                                 style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,

@@ -53,7 +53,7 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
           backgroundColor: Constants.greenColor,
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DetailsAddPage()));
+                MaterialPageRoute(builder: (context) => const DetailsAddPage(category: '',)));
           },
           child: const Icon(Icons.add)),
       backgroundColor: const Color.fromARGB(255, 234, 227, 227),
