@@ -75,7 +75,9 @@ class _PopularDstinationState extends State<PopularDstination> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DetailsAddPage(category: 'Popular Destination',)));
+                      builder: (context) => const DetailsAddPage(
+                            category: 'Popular Destination',
+                          )));
             },
             child: const Icon(Icons.add)),
         backgroundColor: const Color.fromARGB(255, 234, 227, 227),
@@ -166,10 +168,13 @@ class _PopularDstinationState extends State<PopularDstination> {
                                                     items[index].countryImage,
                                                 initialCountryCapital:
                                                     items[index].capital,
-                                                initialFireNumber:
-                                                    items[index].fire.toString(),
+                                                initialFireNumber: items[index]
+                                                    .fire
+                                                    .toString(),
                                                 initialAmbulanceNumber:
-                                                    items[index].ambulance.toString(),
+                                                    items[index]
+                                                        .ambulance
+                                                        .toString(),
                                                 initialLanguage:
                                                     items[index].language,
                                                 initialcurrency:
@@ -179,9 +184,17 @@ class _PopularDstinationState extends State<PopularDstination> {
                                                 initialWeather:
                                                     items[index].weather,
                                                 initialPoliceNumber:
-                                                    items[index].police.toString(),
+                                                    items[index]
+                                                        .police
+                                                        .toString(),
                                                 initialImages: items[index]
                                                     .images
+                                                    .toString(),
+                                                initialMajorCities: items[index]
+                                                    .majorCities
+                                                    .toString(),
+                                                initialknownFor: items[index]
+                                                    .knownFor
                                                     .toString(),
                                               )));
                                   // Navigator.pop(context);
@@ -222,11 +235,17 @@ class _PopularDstinationState extends State<PopularDstination> {
                                   initialcurrency: items[index].currency,
                                   initialDialCode: items[index].digitialCode,
                                   initialWeather: items[index].weather,
-                                  initialPoliceNumber: items[index].police.toString(),
+                                  initialPoliceNumber:
+                                      items[index].police.toString(),
                                   initialAmbulanceNumber:
                                       items[index].ambulance.toString(),
-                                  initialFireNumber: items[index].fire.toString(),
+                                  initialFireNumber:
+                                      items[index].fire.toString(),
                                   initialImages: items[index].images.toString(),
+                                  initialMajorCities:
+                                      items[index].majorCities.toString(),
+                                  initialknownFor:
+                                      items[index].knownFor.toString(),
                                 )));
                   },
                   child: Stack(children: [

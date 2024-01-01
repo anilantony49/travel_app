@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/admin/popular_destinations.dart';
 import 'package:new_travel_app/db/popular_destination_db.dart';
@@ -14,6 +14,9 @@ class DetailsEditPage extends StatefulWidget {
   final String initialImagePath;
   final String initialImages;
   final String initialCountryCapital;
+  final String initialMajorCities;
+  final String initialknownFor;
+
   final String initialLanguage;
   final String initialcurrency;
   final String initialDialCode;
@@ -36,7 +39,9 @@ class DetailsEditPage extends StatefulWidget {
       required this.initialPoliceNumber,
       required this.initialAmbulanceNumber,
       required this.initialFireNumber,
-      required this.initialImages});
+      required this.initialImages,
+      required this.initialMajorCities,
+      required this.initialknownFor});
 
   @override
   State<DetailsEditPage> createState() => _DetailsEditPageState();
@@ -59,7 +64,12 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
       TextEditingController();
   final TextEditingController _fireEmergencyController =
       TextEditingController();
-
+  final List<TextEditingController> _majorCitiesController = [
+    TextEditingController()
+  ];
+  final List<TextEditingController> _knownForController = [
+    TextEditingController()
+  ];
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
   List<String> categoryItems = [
@@ -214,6 +224,185 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
                         }),
               ),
             ),
+            ListView.builder(
+                itemCount: _majorCitiesController.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            // keyboardType: keyboardType,
+                            // maxLines: maxLines,
+                            controller: _majorCitiesController[index],
+                            style: const TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: InputDecoration(
+                              label: const Text(
+                                'Major Cities',
+                                style: TextStyle(color: Colors.black45),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                            ),
+                          ),
+                        ),
+                      )),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      index != 0
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  //  listController.add(TextEditingController());
+                                  _majorCitiesController[index].clear();
+                                  _majorCitiesController[index].dispose();
+                                  _majorCitiesController.removeAt(index);
+                                });
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Color(0xFF6B74D6),
+                                size: 35,
+                              ),
+                            )
+                          : const SizedBox()
+                    ],
+                  );
+                }),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _majorCitiesController.add(TextEditingController());
+                });
+              },
+              child: Center(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                      color: Constants.blackColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("Add More",
+                      style: GoogleFonts.nunito(
+                        color: Colors.white70,
+                      )),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            ListView.builder(
+                itemCount: _knownForController.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white70,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: TextField(
+                            // keyboardType: keyboardType,
+                            // maxLines: maxLines,
+                            controller: _knownForController[index],
+                            style: const TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            decoration: InputDecoration(
+                              label: const Text(
+                                'Known For',
+                                style: TextStyle(color: Colors.black45),
+                              ),
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.3),
+                              ),
+                              border: InputBorder.none,
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                            ),
+                          ),
+                        ),
+                      )),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      index != 0
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  //  listController.add(TextEditingController());
+                                  _knownForController[index].clear();
+                                  _knownForController[index].dispose();
+                                  _knownForController.removeAt(index);
+                                });
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Color(0xFF6B74D6),
+                                size: 35,
+                              ),
+                            )
+                          : const SizedBox()
+                    ],
+                  );
+                }),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _knownForController.add(TextEditingController());
+                });
+              },
+              child: Center(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  decoration: BoxDecoration(
+                      color: Constants.blackColor,
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text("Add More",
+                      style: GoogleFonts.nunito(
+                        color: Colors.white70,
+                      )),
+                ),
+              ),
+            ),
             textfields(_countryCapitalController, 'Capital', null),
             textfields(_languageController, 'Language', null),
             textfields(_currencyController, 'Currency', null),
@@ -237,10 +426,18 @@ class _DetailsEditPageState extends State<DetailsEditPage> {
                     digitialCode: _digitalCodeController.text,
                     weather: _wheatherController.text,
                     images: imageFileList.map((image) => image.path).toList(),
-                    police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-                    ambulance:int.tryParse(_ambulanceEmergencyController.text)??0 ,
-                    fire: int.tryParse(_fireEmergencyController.text)??0 ,
+                    police:
+                        int.tryParse(_ambulanceEmergencyController.text) ?? 0,
+                    ambulance:
+                        int.tryParse(_ambulanceEmergencyController.text) ?? 0,
+                    fire: int.tryParse(_fireEmergencyController.text) ?? 0,
                     capital: _countryCapitalController.text,
+                    knownFor: _knownForController
+                        .map((controller) => controller.text)
+                        .toList(),
+                    majorCities: _majorCitiesController
+                        .map((controller) => controller.text)
+                        .toList(),
                     // knownFor: [],
                   );
                   // ignore: use_build_context_synchronously

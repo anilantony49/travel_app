@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_mdi_icons/flutter_mdi_icons.dart';
+import 'package:new_travel_app/models/africa.dart';
 import 'package:new_travel_app/models/europe.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
 import 'package:new_travel_app/others/contants.dart';
@@ -10,14 +11,17 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ShowDetailsPage extends StatefulWidget {
-  const ShowDetailsPage(
-    this.selectedItem,
-    this.selectedEuropeItem, {
+  const ShowDetailsPage({
+    required this.selectedItem,
+    required this.selectedEuropeItem,
     super.key,
     required this.category,
+    required this.selectedAfricaItem,
   });
   final PopularDestinationModels? selectedItem;
   final EuropeDestinationModels? selectedEuropeItem;
+  final AfricaDestinationModels? selectedAfricaItem;
+
   final String category;
 
   @override
@@ -53,12 +57,19 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
               backgroundColor: Colors.grey,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(
-                  widget.category == 'Popular Destination'
-                      ? widget.selectedItem!.countryName
-                      : widget.selectedEuropeItem!.countryName,
-                  style: const TextStyle(
-                      fontSize: 35, fontWeight: FontWeight.bold),
+                title: Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 8,
+                  ),
+                  child: Text(
+                    widget.category == 'Popular Destination'
+                        ? widget.selectedItem!.countryName
+                        : widget.category == 'Africa'
+                            ? widget.selectedAfricaItem!.countryName
+                            : widget.selectedEuropeItem!.countryName,
+                    style: const TextStyle(
+                        fontSize: 28, fontWeight: FontWeight.bold),
+                  ),
                 ),
                 background: Stack(
                   fit: StackFit.expand,
@@ -66,7 +77,9 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                     Image.file(
                       File(widget.category == 'Popular Destination'
                           ? widget.selectedItem!.countryImage
-                          : widget.selectedEuropeItem!.countryImage),
+                          : widget.category == 'Africa'
+                              ? widget.selectedAfricaItem!.countryImage
+                              : widget.selectedEuropeItem!.countryImage),
                       width: double.maxFinite,
                       fit: BoxFit.cover,
                     ),
@@ -79,7 +92,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                         height: 40,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Colors.grey),
+                            color: Colors.transparent.withOpacity(.1)),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -94,13 +107,20 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                       ),
                     ),
                     Positioned(
-                      bottom: 60,
+                      bottom: 80,
                       right: 140,
                       child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent.withOpacity(.01)),
+                        ),
                         onPressed: () {
                           // Handle button press
                         },
-                        child: const Text('Plan Trip'),
+                        child: const Text(
+                          'Plan Trip',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -182,8 +202,11 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                     child: Text(
                                       widget.category == 'Popular Destination'
                                           ? widget.selectedItem!.description
-                                          : widget
-                                              .selectedEuropeItem!.description,
+                                          : widget.category == 'Africa'
+                                              ? widget.selectedAfricaItem!
+                                                  .description
+                                              : widget.selectedEuropeItem!
+                                                  .description,
                                       style: const TextStyle(
                                           color: Constants.blackColor,
                                           fontSize: 15,
@@ -194,7 +217,6 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                               ),
                             ),
                             headingText('Capital'),
-
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 15, bottom: 10),
@@ -209,7 +231,9 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                     child: Text(
                                   widget.category == 'Popular Destination'
                                       ? widget.selectedItem!.capital
-                                      : widget.selectedEuropeItem!.capital,
+                                      : widget.category == 'Africa'
+                                          ? widget.selectedAfricaItem!.capital
+                                          : widget.selectedEuropeItem!.capital,
                                   style: const TextStyle(
                                       color: Colors.purple,
                                       fontWeight: FontWeight.bold,
@@ -217,77 +241,169 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 )),
                               ),
                             ),
-                            // const Padding(
-                            //   padding: EdgeInsets.only(left: 15, bottom: 10),
-                            //   child: Text(
-                            //     'Known for',
-                            //     style: TextStyle(
-                            //         fontSize: 15,
-                            //         fontWeight: FontWeight.w500,
-                            //         color: Constants.blackColor),
-                            //   ),
-                            // ),
-                            // Container(
-                            //   // width: 100,
-                            //   height: 35,
-                            //   decoration: BoxDecoration(
-                            //     borderRadius: BorderRadius.circular(8),
-                            //   ),
-                            //   child: ListView.builder(
-                            //     scrollDirection: Axis.horizontal,
-                            //     itemCount: widget.selectedItem.knownFor.length,
-                            //     itemBuilder: (BuildContext context, int index) {
-                            //       return Padding(
-                            //         padding: const EdgeInsets.all(8.0),
-                            //         child: Container(
-                            //           decoration: BoxDecoration(
-                            //             color: const Color.fromARGB(
-                            //                 255, 231, 228, 228),
-                            //             borderRadius: BorderRadius.circular(6),
-                            //           ),
-                            //           width: 100,
-                            //           child:  Center(
-                            //               child: Text(
-                            //             widget.selectedItem.knownFor[index],
-                            //             style: TextStyle(
-                            //                 color: Constants.blackColor,
-                            //                 fontWeight: FontWeight.bold,
-                            //                 fontSize: 15),
-                            //           )),
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
-                            headingText('Major Cities'),
+                            headingText('Known For'),
                             Container(
-                              // width: 100,
-                              height: 35,
+                              height: 125,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: 3,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 231, 228, 228),
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      width: 100,
-                                      child: const Center(
-                                          child: Text(
-                                        'capital',
-                                        style: TextStyle(
-                                            color: Constants.blackColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15),
-                                      )),
-                                    ),
+                                itemExtent: 50,
+                                itemCount: ((widget.category ==
+                                                    'Popular Destination'
+                                                ? widget.selectedItem!.knownFor
+                                                : widget.category == 'Africa'
+                                                    ? widget.selectedAfricaItem!
+                                                        .knownFor
+                                                    : widget.selectedEuropeItem!
+                                                        .knownFor)
+                                            .length /
+                                        3)
+                                    .ceil(),
+                                itemBuilder:
+                                    (BuildContext context, int rowIndex) {
+                                  List<Color> colors = const [
+                                    Color.fromARGB(255, 223, 138, 163),
+                                    Color.fromARGB(255, 140, 182, 216),
+                                    Color.fromARGB(255, 129, 188, 161),
+                                    Color.fromARGB(255, 192, 175, 127),
+
+                                    // Add more colors as needed
+                                  ];
+
+                                  return Row(
+                                    children: List.generate(3, (int index) {
+                                      final knownForIndex =
+                                          rowIndex * 3 + index;
+                                      if (knownForIndex <
+                                          (widget.category ==
+                                                      'Popular Destination'
+                                                  ? widget
+                                                      .selectedItem!.knownFor
+                                                  : widget.category == 'Africa'
+                                                      ? widget
+                                                          .selectedAfricaItem!
+                                                          .knownFor
+                                                      : widget
+                                                          .selectedEuropeItem!
+                                                          .knownFor)
+                                              .length) {
+                                        Color selectedColor =
+                                            colors[index % colors.length];
+                                        String text = (widget.category ==
+                                                'Popular Destination'
+                                            ? widget.selectedItem!.knownFor
+                                            : widget.category == 'Africa'
+                                                ? widget.selectedAfricaItem!
+                                                    .knownFor
+                                                : widget.selectedEuropeItem!
+                                                    .knownFor)[knownForIndex];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: selectedColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                text,
+                                                style: const TextStyle(
+                                                  color: Constants.blackColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(); // Empty container if there are fewer than 3 cities in the row
+                                      }
+                                    }),
+                                  );
+                                },
+                              ),
+                            ),
+                            headingText('Major Cities'),
+                            Container(
+                              height: 125,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: ListView.builder(
+                                // scrollDirection: Axis
+                                //     .vertical, // Use vertical scroll direction
+                                itemExtent:
+                                    50, // Set the height of each item, adjust as needed
+                                itemCount: ((widget.category ==
+                                                    'Popular Destination'
+                                                ? widget
+                                                    .selectedItem!.majorCities
+                                                : widget.category == 'Africa'
+                                                    ? widget.selectedAfricaItem!
+                                                        .majorCities
+                                                    : widget.selectedEuropeItem!
+                                                        .majorCities)
+                                            .length /
+                                        3)
+                                    .ceil(),
+                                itemBuilder:
+                                    (BuildContext context, int rowIndex) {
+                                  return Row(
+                                    children: List.generate(3, (int index) {
+                                      final cityIndex = rowIndex * 3 + index;
+                                      if (cityIndex <
+                                          (widget.category ==
+                                                      'Popular Destination'
+                                                  ? widget
+                                                      .selectedItem!.majorCities
+                                                  : widget.category == 'Africa'
+                                                      ? widget
+                                                          .selectedAfricaItem!
+                                                          .majorCities
+                                                      : widget
+                                                          .selectedEuropeItem!
+                                                          .majorCities)
+                                              .length) {
+                                        String text = (widget.category ==
+                                                'Popular Destination'
+                                            ? widget.selectedItem!.majorCities
+                                            : widget.category == 'Africa'
+                                                ? widget.selectedAfricaItem!
+                                                    .majorCities
+                                                : widget.selectedEuropeItem!
+                                                    .majorCities)[cityIndex];
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 231, 228, 228),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                text,
+                                                style: const TextStyle(
+                                                  color: Constants.blackColor,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container(); // Empty container if there are fewer than 3 cities in the row
+                                      }
+                                    }),
                                   );
                                 },
                               ),
@@ -296,10 +412,14 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             Container(
                               height: 200,
                               child: ListView.builder(
-                                itemCount: widget.category ==
-                                        'Popular Destination'
-                                    ? widget.selectedItem!.images.length
-                                    : widget.selectedEuropeItem!.images.length,
+                                itemCount:
+                                    widget.category == 'Popular Destination'
+                                        ? widget.selectedItem!.images.length
+                                        : widget.category == 'Africa'
+                                            ? widget.selectedAfricaItem!.images
+                                                .length
+                                            : widget.selectedEuropeItem!.images
+                                                .length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Padding(
@@ -313,8 +433,13 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                               images: widget.category ==
                                                       'Popular Destination'
                                                   ? widget.selectedItem!.images
-                                                  : widget.selectedEuropeItem!
-                                                      .images,
+                                                  : widget.category == 'Africa'
+                                                      ? widget
+                                                          .selectedAfricaItem!
+                                                          .images
+                                                      : widget
+                                                          .selectedEuropeItem!
+                                                          .images,
                                               initialIndex: index,
                                             ),
                                           ),
@@ -338,8 +463,13 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                                       'Popular Destination'
                                                   ? widget.selectedItem!
                                                       .images[index]
-                                                  : widget.selectedEuropeItem!
-                                                      .images[index]),
+                                                  : widget.category == 'Africa'
+                                                      ? widget
+                                                          .selectedAfricaItem!
+                                                          .images[index]
+                                                      : widget
+                                                          .selectedEuropeItem!
+                                                          .images[index]),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -354,23 +484,25 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             section(
                               widget.category == 'Popular Destination'
                                   ? widget.selectedItem!.language
-                                  : widget.selectedEuropeItem!.language,
+                                  : widget.category == 'Africa'
+                                      ? widget.selectedAfricaItem!.language
+                                      : widget.selectedEuropeItem!.language,
                             ),
                             headingText('Currency'),
                             section(
                               widget.category == 'Popular Destination'
                                   ? widget.selectedItem!.currency
-                                  : widget.selectedEuropeItem!.currency,
+                                  : widget.category == 'Africa'
+                                      ? widget.selectedAfricaItem!.currency
+                                      : widget.selectedEuropeItem!.currency,
                             ),
-                            // headingText('Major Religions'),
-                            // section('Christianity'),
-                            // headingText('National Day'),
-                            // section('Bastile Day Jul- 14'),
                             headingText('Dial Code'),
                             section(
                               widget.category == 'Popular Destination'
                                   ? widget.selectedItem!.digitialCode
-                                  : widget.selectedEuropeItem!.digitialCode,
+                                  : widget.category == 'Africa'
+                                      ? widget.selectedAfricaItem!.digitialCode
+                                      : widget.selectedEuropeItem!.digitialCode,
                             ),
                             headingText('Mobile Phone Operators'),
                             section('French')
@@ -396,7 +528,9 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                           section(
                             widget.category == 'Popular Destination'
                                 ? widget.selectedItem!.currency
-                                : widget.selectedEuropeItem!.currency,
+                                : widget.category == 'Africa'
+                                    ? widget.selectedAfricaItem!.currency
+                                    : widget.selectedEuropeItem!.currency,
                           ),
                           headingText('Convert'),
                           Padding(
@@ -498,17 +632,21 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(20.0),
                               child: Container(
                                   width: double.infinity,
                                   height: 200,
                                   decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
                                     color: Color.fromARGB(255, 231, 228, 228),
                                   ),
                                   child: Text(widget.category ==
                                           'Popular Destination'
                                       ? widget.selectedItem!.weather
-                                      : widget.selectedEuropeItem!.weather)),
+                                      : widget.category == 'Africa'
+                                          ? widget.selectedAfricaItem!.weather
+                                          : widget
+                                              .selectedEuropeItem!.weather)),
                             ),
                             // const Text('When to visit'),
                             // Container(
@@ -567,22 +705,32 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 'Police',
                                 widget.category == 'Popular Destination'
                                     ? widget.selectedItem!.police.toString()
-                                    : widget.selectedEuropeItem!.police
-                                        .toString(),
+                                    : widget.category == 'Africa'
+                                        ? widget.selectedAfricaItem!.police
+                                            .toString()
+                                        : widget.selectedEuropeItem!.police
+                                            .toString(),
                                 Icons.local_police),
                             emergencyServices(
                               'Ambulance',
                               widget.category == 'Popular Destination'
                                   ? widget.selectedItem!.ambulance.toString()
-                                  : widget.selectedEuropeItem!.ambulance
-                                      .toString(),
+                                  : widget.category == 'Africa'
+                                      ? widget.selectedAfricaItem!.ambulance
+                                          .toString()
+                                      : widget.selectedEuropeItem!.ambulance
+                                          .toString(),
                               Mdi.ambulance,
                             ),
                             emergencyServices(
                               'Fire',
                               widget.category == 'Popular Destination'
                                   ? widget.selectedItem!.fire.toString()
-                                  : widget.selectedEuropeItem!.fire.toString(),
+                                  : widget.category == 'Africa'
+                                      ? widget.selectedAfricaItem!.fire
+                                          .toString()
+                                      : widget.selectedEuropeItem!.fire
+                                          .toString(),
                               Mdi.fire,
                             ),
                           ],
@@ -618,9 +766,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
       child: Text(
         text,
         style: const TextStyle(
-            color: Constants.blackColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold),
+            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

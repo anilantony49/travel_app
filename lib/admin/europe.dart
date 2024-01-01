@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/add_details_page.dart';
-import 'package:new_travel_app/admin/add_details_page_europe.dart';
 import 'package:new_travel_app/admin/edit_details_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
@@ -76,7 +75,9 @@ class _EuropePageState extends State<EuropePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DetailsAddPage(category: 'Europe',)));
+                      builder: (context) => const DetailsAddPage(
+                            category: 'Europe',
+                          )));
             },
             child: const Icon(Icons.add)),
         backgroundColor: const Color.fromARGB(255, 234, 227, 227),
@@ -189,6 +190,9 @@ class _EuropePageState extends State<EuropePage> {
                                                 initialImages: items[index]
                                                     .images
                                                     .toString(),
+                                                initialMajorCities: items[index]
+                                                    .majorCities
+                                                    .toString(), initialknownFor:  items[index].knownFor.toString(),
                                               )));
                                   // Navigator.pop(context);
                                 },
@@ -235,6 +239,8 @@ class _EuropePageState extends State<EuropePage> {
                                   initialFireNumber:
                                       items[index].fire.toString(),
                                   initialImages: items[index].images.toString(),
+                                  initialMajorCities:
+                                      items[index].majorCities.toString(), initialknownFor:  items[index].knownFor.toString(),
                                 )));
                   },
                   child: Stack(children: [

@@ -23,10 +23,12 @@ class EuropeDestinationModelsAdapter
       countryImage: fields[2] as String,
       description: fields[3] as String,
       capital: fields[4] as String,
-      images: (fields[5] as List).cast<String>(),
-      language: fields[7] as String,
-      currency: fields[8] as String,
-      digitialCode: fields[9] as String,
+      knownFor: (fields[5] as List).cast<String>(),
+      images: (fields[6] as List).cast<String>(),
+      majorCities: (fields[7] as List).cast<String>(),
+      language: fields[8] as String,
+      currency: fields[9] as String,
+      digitialCode: fields[10] as String,
       weather: fields[14] as String,
       police: fields[15] as int,
       ambulance: fields[16] as int,
@@ -37,7 +39,7 @@ class EuropeDestinationModelsAdapter
   @override
   void write(BinaryWriter writer, EuropeDestinationModels obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -49,12 +51,16 @@ class EuropeDestinationModelsAdapter
       ..writeByte(4)
       ..write(obj.capital)
       ..writeByte(5)
+      ..write(obj.knownFor)
+      ..writeByte(6)
       ..write(obj.images)
       ..writeByte(7)
-      ..write(obj.language)
+      ..write(obj.majorCities)
       ..writeByte(8)
-      ..write(obj.currency)
+      ..write(obj.language)
       ..writeByte(9)
+      ..write(obj.currency)
+      ..writeByte(10)
       ..write(obj.digitialCode)
       ..writeByte(14)
       ..write(obj.weather)

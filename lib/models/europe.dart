@@ -13,17 +13,17 @@ class EuropeDestinationModels {
   final String description;
     @HiveField(4)
   final String capital;
-  // @HiveField(4)
-  // final List <String> knownFor;
   @HiveField(5)
+  final List <String> knownFor;
+  @HiveField(6)
   final List<String> images;
-  // @HiveField(6)
-  // final String majorCities;
   @HiveField(7)
-  final String language;
+  final List<String> majorCities;
   @HiveField(8)
-  final String currency;
+  final String language;
   @HiveField(9)
+  final String currency;
+  @HiveField(10)
   final String digitialCode;
   // @HiveField(10)
   // final String mobilePhoneOperators;
@@ -48,9 +48,9 @@ class EuropeDestinationModels {
       required this.countryImage,
       required this.description,
        required this.capital,
-      // required this.knownFor,
+      required this.knownFor,
       required this.images,
-      // required this.majorCities,
+      required this.majorCities,
       required this.language,
       required this.currency,
       required this.digitialCode,
