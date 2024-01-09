@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/add_details_page.dart';
-import 'package:new_travel_app/admin/edit_details_page.dart';
+import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/popular_destination_db.dart';
@@ -35,17 +33,6 @@ class _PopularDstinationState extends State<PopularDstination> {
     });
   }
 
-  void deleteCategoryAndShowSnackbar(String id) {
-    PopularDestinationDb.singleton.deleteCountry(id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Category deleted successfully'),
-        duration: Duration(seconds: 3),
-      ),
-    );
-    fetchCategory();
-  }
-
   PopularDestinationModels? popularDestination;
 
   void deleteCountryAndShowSnackbar(String itemId) {
@@ -75,8 +62,9 @@ class _PopularDstinationState extends State<PopularDstination> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DetailsAddPage(
+                      builder: (context) => const DetailsAddEditPage(
                             category: 'Popular Destination',
+                            addOrEdit: 'Add',
                           )));
             },
             child: const Icon(Icons.add)),
@@ -101,7 +89,6 @@ class _PopularDstinationState extends State<PopularDstination> {
                             builder: (context) => const UsersDetailsPage()),
                       );
                     },
-                    // value: 'user_details',
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -158,7 +145,8 @@ class _PopularDstinationState extends State<PopularDstination> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => DetailsEditPage(
+                                          builder: (context) =>
+                                              DetailsAddEditPage(
                                                 initialitemId: items[index].id,
                                                 initialCountryName:
                                                     items[index].countryName,
@@ -196,6 +184,8 @@ class _PopularDstinationState extends State<PopularDstination> {
                                                 initialknownFor: items[index]
                                                     .knownFor
                                                     .toString(),
+                                                category: 'Popular Destination',
+                                                addOrEdit: 'Edit',
                                               )));
                                   // Navigator.pop(context);
                                 },
@@ -207,7 +197,7 @@ class _PopularDstinationState extends State<PopularDstination> {
                               ),
                               ListTile(
                                 onTap: () {
-                                  deleteCategoryAndShowSnackbar(
+                                  deleteCountryAndShowSnackbar(
                                       items[index].id);
                                   Navigator.pop(context);
                                 },
@@ -225,7 +215,7 @@ class _PopularDstinationState extends State<PopularDstination> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailsEditPage(
+                            builder: (context) => DetailsAddEditPage(
                                   initialitemId: items[index].id,
                                   initialCountryName: items[index].countryName,
                                   initialDescription: items[index].description,
@@ -246,6 +236,8 @@ class _PopularDstinationState extends State<PopularDstination> {
                                       items[index].majorCities.toString(),
                                   initialknownFor:
                                       items[index].knownFor.toString(),
+                                  category: 'Popular Destination',
+                                  addOrEdit: 'Edit',
                                 )));
                   },
                   child: Stack(children: [
@@ -282,14 +274,19 @@ class _PopularDstinationState extends State<PopularDstination> {
                       ),
                     ),
                     Positioned(
-                      bottom: 25,
-                      left: 50,
-                      child: Text(
-                        popularDestination!.countryName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: screenWidth * 0.07,
-                            color: Colors.white),
+                      bottom: 0,
+                      left: 0,
+                      child: Transform.translate(
+                        offset: Offset(15, -(screenWidth * 0.04)),
+                        child: Center(
+                          child: Text(
+                            popularDestination!.countryName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.055,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
                   ]),

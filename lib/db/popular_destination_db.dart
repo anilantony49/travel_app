@@ -17,18 +17,23 @@ class PopularDestinationDb implements PopularDestinationDbFunctions {
   ValueNotifier<List<PopularDestinationModels>> notifier = ValueNotifier([]);
 
   PopularDestinationDb._internal();
-  static final PopularDestinationDb singleton = PopularDestinationDb._internal();
+  static final PopularDestinationDb singleton =
+      PopularDestinationDb._internal();
 
   factory PopularDestinationDb() {
     return singleton;
   }
- 
+
+  // Future<void> refresh() async {
+  //   final allCountry = await getCountries();
+  //   notifier.value.clear();
+  //   await Future.forEach(allCountry,
+  //       (PopularDestinationModels country) => notifier.value.add(country));
+  //   notifier.notifyListeners();
+  // }
   Future<void> refresh() async {
     final allCountry = await getCountries();
-    notifier.value.clear();
-    await Future.forEach(allCountry,
-        (PopularDestinationModels country) => notifier.value.add(country));
-    notifier.notifyListeners();
+    notifier.value = List.from(allCountry);
   }
 
   @override

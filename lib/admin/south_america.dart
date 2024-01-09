@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/add_details_page.dart';
+import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/others/contants.dart';
@@ -47,15 +47,15 @@ class _SouthAmericaPageState extends State<SouthAmericaPage> {
   Widget build(BuildContext context) {
     final String title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      drawer: SideMenuBar(),
+      drawer: const SideMenuBar(),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Constants.greenColor,
           onPressed: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const DetailsAddPage(
-                          category: '',
+                    builder: (context) => const DetailsAddEditPage(
+                          category: 'South America', addOrEdit: 'Add',
                         )));
           },
           child: const Icon(Icons.add)),

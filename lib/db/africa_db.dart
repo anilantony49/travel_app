@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/europe.dart';
 
 const _dbName = 'africaBox';
 
@@ -24,12 +23,16 @@ class AfricaDb implements AfricaDbFunctions {
     return singleton;
   }
 
+  // Future<void> refresh() async {
+  //   final allCountry = await getCountries();
+  //   notifier.value.clear();
+  //   await Future.forEach(allCountry,
+  //       (AfricaDestinationModels country) => notifier.value.add(country));
+  //   notifier.notifyListeners();
+  // }
   Future<void> refresh() async {
     final allCountry = await getCountries();
-    notifier.value.clear();
-    await Future.forEach(allCountry,
-        (AfricaDestinationModels country) => notifier.value.add(country));
-    notifier.notifyListeners();
+    notifier.value = List.from(allCountry);
   }
 
   @override

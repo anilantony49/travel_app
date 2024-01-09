@@ -3,7 +3,7 @@ import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/account_page.dart';
 import 'package:new_travel_app/screen/calender_page.dart';
 import 'package:new_travel_app/screen/favorite_page.dart';
-import 'package:new_travel_app/screen/home_page.dart';
+import 'package:new_travel_app/screen/screen_home/home_page.dart';
 
 final List<Widget> _pages = [
   const HomePage(),

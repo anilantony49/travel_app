@@ -23,12 +23,16 @@ class EuropeDb implements EuropeDbFunctions {
     return singleton;
   }
 
+  // Future<void> refresh() async {
+  //   final allCountry = await getCountries();
+  //   notifier.value.clear();
+  //   await Future.forEach(allCountry,
+  //       (EuropeDestinationModels country) => notifier.value.add(country));
+  //   notifier.notifyListeners();
+  // }
   Future<void> refresh() async {
     final allCountry = await getCountries();
-    notifier.value.clear();
-    await Future.forEach(allCountry,
-        (EuropeDestinationModels country) => notifier.value.add(country));
-    notifier.notifyListeners();
+    notifier.value = List.from(allCountry);
   }
 
   @override

@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
-
 
 class UsersDetailsPage extends StatefulWidget {
   const UsersDetailsPage({Key? key}) : super(key: key);
@@ -13,21 +11,19 @@ class UsersDetailsPage extends StatefulWidget {
 }
 
 class _UsersDetailsPageState extends State<UsersDetailsPage> {
-   List<AuthenticationModels> users = [];
+  List<AuthenticationModels> users = [];
 
   @override
   void initState() {
     super.initState();
-    // Fetch users from the database when the page is initialized
+
     fetchUsers();
   }
 
-  // Function to fetch users from the database
   void fetchUsers() async {
-    // Assuming AuthenticationDb.singleton.getUsers() is a function to fetch users
     List<AuthenticationModels> fetchedUsers =
         await AuthenticationDb.singleton.getUsers();
-    // Sort users in descending order (latest user first)
+
     fetchedUsers.sort((a, b) => b.username.compareTo(a.username));
 
     setState(() {
@@ -38,7 +34,6 @@ class _UsersDetailsPageState extends State<UsersDetailsPage> {
   void deleteUserAndShowSnackbar(String userId) {
     AuthenticationDb.singleton.deleteUsers(userId);
 
-    // Show a Snackbar indicating that the user has been deleted
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('User deleted successfully'),
@@ -46,7 +41,6 @@ class _UsersDetailsPageState extends State<UsersDetailsPage> {
       ),
     );
 
-    // Refetch the users to update the list
     fetchUsers();
   }
 

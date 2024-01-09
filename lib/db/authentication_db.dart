@@ -22,14 +22,17 @@ class AuthenticationDb implements AuthenticationDbFunctions {
   factory AuthenticationDb() {
     return singleton;  
   }
+  // Future<void> refresh() async {
+  //   final allUsers = await getUsers();
+  //   userNotifier.value.clear();
+  //   await Future.forEach(allUsers,
+  //       (AuthenticationModels users) => userNotifier.value.add(users));
+  //   userNotifier.notifyListeners();
+  // }
   Future<void> refresh() async {
-    final allUsers = await getUsers();
-    userNotifier.value.clear();
-    await Future.forEach(allUsers,
-        (AuthenticationModels users) => userNotifier.value.add(users));
-    userNotifier.notifyListeners();
+    final allCountry = await getUsers();
+    userNotifier.value = List.from(allCountry);
   }
-
   @override
   Future<void> deleteUsers(String userId) async {
     final db = await Hive.openBox<AuthenticationModels>(_dbName);

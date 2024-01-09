@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:new_travel_app/models/africa.dart';
+import 'package:new_travel_app/models/asia.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/models/europe.dart';
+import 'package:new_travel_app/models/north_america.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
+import 'package:new_travel_app/models/south_america.dart';
 import 'package:new_travel_app/screen/splash_screen.dart';
 import 'package:new_travel_app/screen/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +19,9 @@ void main() async {
   Hive.registerAdapter(PopularDestinationModelsAdapter());
   Hive.registerAdapter(EuropeDestinationModelsAdapter());
   Hive.registerAdapter(AfricaDestinationModelsAdapter());
-
+  Hive.registerAdapter(NorthAmericaDestinationModelsAdapter());
+  Hive.registerAdapter(SouthAmericaDestinationModelsAdapter());
+  Hive.registerAdapter(AsiaDestinationModelsAdapter());
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool welcomeScreenShown = prefs.getBool('welcomeScreenShown') ?? false;
   runApp(MyApp(welcomeScreenShown: welcomeScreenShown));

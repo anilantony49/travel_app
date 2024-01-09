@@ -20,22 +20,16 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  // bool _isPasswordVisible = false;
+  bool isTyping = false;
 
   final formKey = GlobalKey<FormState>();
-  // void _passwordVisibility() {
-  //   setState(() {
-  //     _isPasswordVisible = !_isPasswordVisible;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.always,
         key: formKey,
         child: Stack(
           children: [
@@ -81,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-
             Positioned(
               left: screenWidth * .07,
               top: 250,
@@ -109,166 +102,32 @@ class _LoginPageState extends State<LoginPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the password';
                   }
-              
+
                   // Check if password is at least 8 characters long
                   if (value.length < 8) {
                     return 'Password must be at least 8 characters long';
                   }
-              
+
                   // Check if password contains at least one uppercase letter
                   if (!value.contains(RegExp(r'[A-Z]'))) {
                     return 'must contain at least one uppercase letter';
                   }
-              
+
                   // Check if password contains at least one lowercase letter
                   if (!value.contains(RegExp(r'[a-z]'))) {
                     return 'must contain at least one lowercase letter';
                   }
-              
+
                   // Check if password contains at least one special character (e.g., '@')
                   if (!value.contains(RegExp(r'[@,!,#,$,^,%,&,*]'))) {
                     return 'must contain at least one special character (e.g., @)';
                   }
-              
+
                   // If all conditions are met, return null (indicating a valid password)
                   return null;
                 },
               ),
             ),
-            // )
-            // Positioned(
-            //   left: screenWidth * .07,
-            //   top: 250,
-            //   child: SizedBox(
-            //     width: screenWidth * 0.85,
-            //     child: Container(
-            //       decoration: BoxDecoration(
-            //         color: Colors.white70,
-            //         borderRadius: BorderRadius.circular(8),
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.black.withOpacity(0.2), // Shadow color
-            //             spreadRadius: 2, // Spread radius
-            //             blurRadius: 5, // Blur radius
-            //             offset: const Offset(0, 2), // Offset in x and y axes
-            //           ),
-            //         ],
-            //       ),
-            //       child: TextFormField(
-            //           controller: _usernameController,
-            //           style: const TextStyle(
-            //             color: Colors.black54,
-            //             fontWeight: FontWeight.w400,
-            //           ),
-            //           decoration: InputDecoration(
-            //             label: const Text(
-            //               'Username',
-            //               style: TextStyle(color: Colors.black45),
-            //             ),
-            //             hintStyle: TextStyle(
-            //               color: Colors.black
-            //                   .withOpacity(0.3), // Set hint text color
-            //               // fontWeight: FontWeight.w700,
-            //             ),
-            //             border: InputBorder.none,
-            //             contentPadding:
-            //                 const EdgeInsets.symmetric(horizontal: 15),
-            //           ),
-            //           validator: (value) {
-            //             if (value == null || value.isEmpty) {
-            //               return 'Please fill this field';
-            //             } else {
-            //               return null;
-            //             }
-            //           }),
-            //     ),
-            //   ),
-            // ),
-            // Positioned(
-            //   left: screenWidth * .07,
-            //   top: 330,
-            //   child: SizedBox(
-            //     width: screenWidth * 0.85,
-            //     child: Container(
-            //       decoration: BoxDecoration(
-            //         color: Colors.white70,
-            //         borderRadius: BorderRadius.circular(8),
-            //         boxShadow: [
-            //           BoxShadow(
-            //             color: Colors.black.withOpacity(0.2), // Shadow color
-            //             spreadRadius: 2,
-            //             blurRadius: 5,
-            //             offset: const Offset(0, 2), // Offset in x and y axes
-            //           ),
-            //         ], // Set border radius if needed
-            //       ),
-            //       child: TextFormField(
-            //         controller: _passwordController,
-            //         style: const TextStyle(
-            //           color: Colors.black54,
-            //           fontWeight: FontWeight.w400,
-            //         ),
-            //         decoration: InputDecoration(
-            //           suffixIcon: IconButton(
-            //             onPressed: _passwordVisibility,
-            //             icon: _isPasswordVisible
-            //                 ? const Icon(
-            //                     Icons.visibility,
-            //                     color: Colors.black45,
-            //                   )
-            //                 : const Icon(
-            //                     Icons.visibility_off,
-            //                     color: Colors.black45,
-            //                   ),
-            //           ),
-            //           // hintText: 'Password',
-            //           label: const Text(
-            //             'Password',
-            //             style: TextStyle(color: Colors.black45),
-            //           ),
-            //           hintStyle: TextStyle(
-            //             color: Colors.black
-            //                 .withOpacity(0.3), // Set hint text color
-            //             // fontWeight: FontWeight.w700,
-            //           ),
-            //           border: InputBorder.none,
-            //           contentPadding:
-            //               const EdgeInsets.symmetric(horizontal: 15),
-            //         ),
-            //         obscureText: !_isPasswordVisible,
-            //         validator:
-            //          (value) {
-            //           if (value == null || value.isEmpty) {
-            //             return 'Please fill this field';
-            //           }
-
-            //           // Check if password is at least 8 characters long
-            //           if (value.length < 8) {
-            //             return 'Password must be at least 8 characters long';
-            //           }
-
-            //           // Check if password contains at least one uppercase letter
-            //           if (!value.contains(RegExp(r'[A-Z]'))) {
-            //             return 'must contain at least one uppercase letter';
-            //           }
-
-            //           // Check if password contains at least one lowercase letter
-            //           if (!value.contains(RegExp(r'[a-z]'))) {
-            //             return 'must contain at least one lowercase letter';
-            //           }
-
-            //           // Check if password contains at least one special character (e.g., '@')
-            //           if (!value.contains(RegExp(r'[@,!,#,$,^,%,&,*]'))) {
-            //             return 'must contain at least one special character (e.g., @)';
-            //           }
-
-            //           // If all conditions are met, return null (indicating a valid password)
-            //           return null;
-            //         },
-            //       ),
-            //     ),
-            //   ),
-            // ),
             Positioned(
               left: screenWidth * 0.1,
               bottom: 300,
@@ -276,6 +135,9 @@ class _LoginPageState extends State<LoginPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
+                      setState(() {
+                        isTyping = false;
+                      });
                       if (_usernameController.text ==
                               AdminCredentials.username &&
                           _passwordController.text ==

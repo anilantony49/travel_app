@@ -38,9 +38,11 @@ class AccountPage extends StatelessWidget {
     final sharedPrefs = await SharedPreferences.getInstance();
     await sharedPrefs.clear();
     // Navigate back to the login page
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginPage()),
         (route) => false);
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Logout succesfully'),
       behavior: SnackBarBehavior.floating,

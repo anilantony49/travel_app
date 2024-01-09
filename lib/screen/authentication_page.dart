@@ -7,7 +7,6 @@ import 'package:new_travel_app/screen/sign_up_page.dart';
 
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({super.key});
-
   @override
   State<AuthenticationPage> createState() => _AuthenticationPageState();
 }
@@ -16,7 +15,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   Timer? _timer;
-
   @override
   void initState() {
     super.initState();
@@ -50,7 +48,6 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
     Widget height = SizedBox(
       height: screenHeight * 0.02,
     );
-
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -170,10 +167,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
-       
       ),
     );
   }
-
- 
 }

@@ -1,7 +1,5 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/add_details_page.dart';
+import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/authentication_page.dart';
@@ -21,14 +19,6 @@ class _AsiaPageState extends State<AsiaPage> {
     // fetchCategory();
   }
 
-  void fetchCategory() async {
-    // List<AddCategoryModels> fetchedCategories =
-    //     await AddCategoryDb.singleton.getCategory();
-    // setState(() {
-    //   categories = fetchedCategories;
-    // });
-  }
-
   void deleteCategoryAndShowSnackbar(String categoryId) {
     // AddCategoryDb.singleton.deleteCategory(categoryId);
 
@@ -39,41 +29,32 @@ class _AsiaPageState extends State<AsiaPage> {
         duration: Duration(seconds: 3),
       ),
     );
-
-    // Refetch the users to update the list
-    fetchCategory();
   }
 
   @override
   Widget build(BuildContext context) {
-        final String title = ModalRoute.of(context)!.settings.arguments as String;
+    final String title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      drawer: SideMenuBar(),
+      drawer: const SideMenuBar(),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Constants.greenColor,
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const DetailsAddPage(category: '',)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const DetailsAddEditPage(
+                          category: 'Asia',
+                          addOrEdit: 'Add',
+                        )));
           },
           child: const Icon(Icons.add)),
       backgroundColor: const Color.fromARGB(255, 234, 227, 227),
       appBar: AppBar(
-        // leading: IconButton(
-        //     onPressed: () {
-        //       Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //               builder: (context) => const AuthenticationPage()));
-        //     },
-        //     icon: const Icon(
-        //       Icons.arrow_back_ios,
-        //       color: Constants.blackColor,
-        //     )),
         backgroundColor: Constants.greenColor,
         centerTitle: true,
-        title:  Text(
+        title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
               color: Constants.blackColor, fontWeight: FontWeight.bold),
         ),
         actions: [
@@ -81,13 +62,7 @@ class _AsiaPageState extends State<AsiaPage> {
             itemBuilder: (BuildContext context) {
               return [
                 PopupMenuItem<String>(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const UsersDetailsPage()),
-                    // );
-                  },
+                  onTap: () {},
                   // value: 'user_details',
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -127,6 +102,4 @@ class _AsiaPageState extends State<AsiaPage> {
       // body: buildBody(context),
     );
   }
-
-
 }

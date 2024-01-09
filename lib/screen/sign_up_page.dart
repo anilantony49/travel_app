@@ -35,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        // autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.always,
         key: formKey,
         child: Stack(
           children: [

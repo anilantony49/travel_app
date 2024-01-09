@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/add_details_page.dart';
-import 'package:new_travel_app/admin/edit_details_page.dart';
+import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/europe_db.dart';
@@ -75,8 +74,9 @@ class _EuropePageState extends State<EuropePage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DetailsAddPage(
+                      builder: (context) => const DetailsAddEditPage(
                             category: 'Europe',
+                            addOrEdit: 'Add',
                           )));
             },
             child: const Icon(Icons.add)),
@@ -158,7 +158,8 @@ class _EuropePageState extends State<EuropePage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => DetailsEditPage(
+                                          builder: (context) =>
+                                              DetailsAddEditPage(
                                                 initialitemId: items[index].id,
                                                 initialCountryName:
                                                     items[index].countryName,
@@ -192,7 +193,12 @@ class _EuropePageState extends State<EuropePage> {
                                                     .toString(),
                                                 initialMajorCities: items[index]
                                                     .majorCities
-                                                    .toString(), initialknownFor:  items[index].knownFor.toString(),
+                                                    .toString(),
+                                                initialknownFor: items[index]
+                                                    .knownFor
+                                                    .toString(),
+                                                category: 'Europe',
+                                                addOrEdit: 'Edit',
                                               )));
                                   // Navigator.pop(context);
                                 },
@@ -222,7 +228,7 @@ class _EuropePageState extends State<EuropePage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DetailsEditPage(
+                            builder: (context) => DetailsAddEditPage(
                                   initialitemId: items[index].id,
                                   initialCountryName: items[index].countryName,
                                   initialDescription: items[index].description,
@@ -240,7 +246,11 @@ class _EuropePageState extends State<EuropePage> {
                                       items[index].fire.toString(),
                                   initialImages: items[index].images.toString(),
                                   initialMajorCities:
-                                      items[index].majorCities.toString(), initialknownFor:  items[index].knownFor.toString(),
+                                      items[index].majorCities.toString(),
+                                  initialknownFor:
+                                      items[index].knownFor.toString(),
+                                  category: 'Europe',
+                                  addOrEdit: 'Edit',
                                 )));
                   },
                   child: Stack(children: [
@@ -277,14 +287,19 @@ class _EuropePageState extends State<EuropePage> {
                       ),
                     ),
                     Positioned(
-                      bottom: 25,
-                      left: 50,
-                      child: Text(
-                        europeDestination!.countryName,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: screenWidth * 0.07,
-                            color: Colors.white),
+                      bottom: 0,
+                      left: 0,
+                      child: Transform.translate(
+                        offset: Offset(15, -(screenWidth * 0.04)),
+                        child: Center(
+                          child: Text(
+                            europeDestination!.countryName,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenWidth * 0.055,
+                                color: Colors.white),
+                          ),
+                        ),
                       ),
                     ),
                   ]),
