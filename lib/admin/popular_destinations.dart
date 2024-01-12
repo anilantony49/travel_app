@@ -6,7 +6,7 @@ import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/popular_destination_db.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class PopularDstination extends StatefulWidget {
   const PopularDstination({

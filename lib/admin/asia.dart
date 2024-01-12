@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class AsiaPage extends StatefulWidget {
   const AsiaPage({super.key});

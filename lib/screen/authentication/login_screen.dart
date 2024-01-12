@@ -4,8 +4,8 @@ import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/others/admin_credentials.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
-import 'package:new_travel_app/screen/sign_up_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Stack(
           children: [
@@ -47,34 +47,34 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            Positioned(
-              left: 20,
-              top: 60,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AuthenticationPage()),
-                  );
-                },
-                icon: const Icon(Icons.arrow_back),
-              ),
-            ),
-            const Positioned(
-              left: 35,
-              top: 130,
-              child: Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w900,
-                  decoration: TextDecoration.none,
-                  // letterSpacing: 1.5,
-                ),
-              ),
-            ),
+            // Positioned(
+            //   left: 20,
+            //   top: 60,
+            //   child: IconButton(
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => const AuthenticationPage()),
+            //       );
+            //     },
+            //     icon: const Icon(Icons.arrow_back),
+            //   ),
+            // ),
+            // const Positioned(
+            //   left: 35,
+            //   top: 130,
+            //   child: Text(
+            //     'Login',
+            //     style: TextStyle(
+            //       color: Colors.black54,
+            //       fontSize: 25,
+            //       fontWeight: FontWeight.w900,
+            //       decoration: TextDecoration.none,
+            //       // letterSpacing: 1.5,
+            //     ),
+            //   ),
+            // ),
             Positioned(
               left: screenWidth * .07,
               top: 250,

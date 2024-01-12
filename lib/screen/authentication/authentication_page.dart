@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/login_screen.dart';
-import 'package:new_travel_app/screen/sign_up_page.dart';
+import 'package:new_travel_app/screen/authentication/login_screen.dart';
+import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 
 class AuthenticationPage extends StatefulWidget {
   const AuthenticationPage({super.key});

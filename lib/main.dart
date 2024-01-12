@@ -5,10 +5,11 @@ import 'package:new_travel_app/models/asia.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/models/europe.dart';
 import 'package:new_travel_app/models/north_america.dart';
+import 'package:new_travel_app/models/planned_trip.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
 import 'package:new_travel_app/models/south_america.dart';
-import 'package:new_travel_app/screen/splash_screen.dart';
-import 'package:new_travel_app/screen/welcome_screen.dart';
+import 'package:new_travel_app/screen/first_screen/splash_screen.dart';
+import 'package:new_travel_app/screen/first_screen/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const saveKey = 'isLoggedIn';
@@ -22,6 +23,8 @@ void main() async {
   Hive.registerAdapter(NorthAmericaDestinationModelsAdapter());
   Hive.registerAdapter(SouthAmericaDestinationModelsAdapter());
   Hive.registerAdapter(AsiaDestinationModelsAdapter());
+  Hive.registerAdapter(PlannedTripModelsAdapter());
+
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool welcomeScreenShown = prefs.getBool('welcomeScreenShown') ?? false;
   runApp(MyApp(welcomeScreenShown: welcomeScreenShown));

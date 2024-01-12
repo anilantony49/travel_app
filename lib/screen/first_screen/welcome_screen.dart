@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {

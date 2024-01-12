@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/side_menu_bar.dart';
@@ -7,13 +6,12 @@ import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/europe_db.dart';
 import 'package:new_travel_app/models/europe.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class EuropePage extends StatefulWidget {
   const EuropePage({
     super.key,
   });
-
   @override
   State<EuropePage> createState() => _EuropePageState();
 }
@@ -33,18 +31,6 @@ class _EuropePageState extends State<EuropePage> {
       items = fetchedItems;
     });
   }
-
-  void deleteCategoryAndShowSnackbar(String id) {
-    EuropeDb.singleton.deleteCountry(id);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Category deleted successfully'),
-        duration: Duration(seconds: 3),
-      ),
-    );
-    fetchCategory();
-  }
-
   EuropeDestinationModels? europeDestination;
 
   void deleteCountryAndShowSnackbar(String itemId) {
@@ -210,7 +196,7 @@ class _EuropePageState extends State<EuropePage> {
                               ),
                               ListTile(
                                 onTap: () {
-                                  deleteCategoryAndShowSnackbar(
+                                  deleteCountryAndShowSnackbar(
                                       items[index].id);
                                   Navigator.pop(context);
                                 },

@@ -29,6 +29,12 @@ Widget buildCategorySliverList(String category, List<dynamic> items) {
                               category == 'Europe' ? items[index] : null,
                           selectedAfricaItem:
                               category == 'Africa' ? items[index] : null,
+                          selectedSouthAmericaItem:
+                              category == 'South America' ? items[index] : null,
+                          selectedNorthAmericaItem:
+                              category == 'North America' ? items[index] : null,
+                          selectedAsiaItem:
+                              category == 'Asia' ? items[index] : null,
                         ),
                       ),
                     );

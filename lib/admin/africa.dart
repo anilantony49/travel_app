@@ -6,7 +6,7 @@ import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/africa_db.dart';
 import 'package:new_travel_app/models/africa.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class AfricaPage extends StatefulWidget {
   const AfricaPage({

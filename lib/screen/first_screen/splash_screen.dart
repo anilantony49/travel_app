@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/main.dart';
-import 'package:new_travel_app/screen/login_screen.dart';
+import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

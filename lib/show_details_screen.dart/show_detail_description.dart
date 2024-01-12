@@ -1,10 +1,14 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/africa.dart';
+import 'package:new_travel_app/models/asia.dart';
 import 'package:new_travel_app/models/europe.dart';
+import 'package:new_travel_app/models/north_america.dart';
 import 'package:new_travel_app/models/popular_destination.dart';
+import 'package:new_travel_app/models/south_america.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/calender_page.dart';
+import 'package:new_travel_app/screen/trips/plan_trip.dart';
 import 'package:new_travel_app/show_details_screen.dart/tab1_contents.dart';
 import 'package:new_travel_app/show_details_screen.dart/tab2_contents.dart';
 import 'package:new_travel_app/show_details_screen.dart/tab3_contents.dart';
@@ -21,10 +25,16 @@ class ShowDetailsPage extends StatefulWidget {
     super.key,
     required this.category,
     required this.selectedAfricaItem,
+    required this.selectedSouthAmericaItem,
+    required this.selectedNorthAmericaItem,
+    required this.selectedAsiaItem,
   });
   final PopularDestinationModels? selectedItem;
   final EuropeDestinationModels? selectedEuropeItem;
   final AfricaDestinationModels? selectedAfricaItem;
+  final SouthAmericaDestinationModels? selectedSouthAmericaItem;
+  final NorthAmericaDestinationModels? selectedNorthAmericaItem;
+  final AsiaDestinationModels? selectedAsiaItem;
 
   final String category;
 
@@ -70,7 +80,15 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                         ? widget.selectedItem!.countryName
                         : widget.category == 'Africa'
                             ? widget.selectedAfricaItem!.countryName
-                            : widget.selectedEuropeItem!.countryName,
+                            : widget.category == 'Europe'
+                                ? widget.selectedEuropeItem!.countryName
+                                : widget.category == 'South America'
+                                    ? widget
+                                        .selectedSouthAmericaItem!.countryName
+                                    : widget.category == 'North America'
+                                        ? widget.selectedNorthAmericaItem!
+                                            .countryName
+                                        : widget.selectedAsiaItem!.countryName,
                     style: const TextStyle(
                         fontSize: 28, fontWeight: FontWeight.bold),
                   ),
@@ -79,11 +97,22 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                   fit: StackFit.expand,
                   children: [
                     Image.file(
-                      File(widget.category == 'Popular Destination'
-                          ? widget.selectedItem!.countryImage
-                          : widget.category == 'Africa'
-                              ? widget.selectedAfricaItem!.countryImage
-                              : widget.selectedEuropeItem!.countryImage),
+                      File(
+                        widget.category == 'Popular Destination'
+                            ? widget.selectedItem!.countryImage
+                            : widget.category == 'Africa'
+                                ? widget.selectedAfricaItem!.countryImage
+                                : widget.category == 'Europe'
+                                    ? widget.selectedEuropeItem!.countryImage
+                                    : widget.category == 'South America'
+                                        ? widget.selectedSouthAmericaItem!
+                                            .countryImage
+                                        : widget.category == 'North America'
+                                            ? widget.selectedNorthAmericaItem!
+                                                .countryName
+                                            : widget
+                                                .selectedAsiaItem!.countryImage,
+                      ),
                       width: double.maxFinite,
                       fit: BoxFit.cover,
                     ),
@@ -119,9 +148,33 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                               Colors.transparent.withOpacity(.01)),
                         ),
                         onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const CalenderPage()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => PlanTrip(
+                                    category: widget.category,
+                                    selectedItem:
+                                        widget.category == 'Popular Destination'
+                                            ? widget.selectedItem
+                                            : null,
+                                    selectedEuropeItem:
+                                        widget.category == 'Europe'
+                                            ? widget.selectedEuropeItem
+                                            : null,
+                                    selectedAfricaItem:
+                                        widget.category == 'Africa'
+                                            ? widget.selectedAfricaItem
+                                            : null,
+                                    selectedSouthAmericaItem:
+                                        widget.category == 'South America'
+                                            ? widget.selectedSouthAmericaItem
+                                            : null,
+                                    selectedNorthAmericaItem:
+                                        widget.category == 'North America'
+                                            ? widget.selectedNorthAmericaItem
+                                            : null,
+                                    selectedAsiaItem: widget.category == 'Asia'
+                                        ? widget.selectedAsiaItem
+                                        : null,
+                                  )));
                         },
                         child: const Text(
                           'Plan Trip',

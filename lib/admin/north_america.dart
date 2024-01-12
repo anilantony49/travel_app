@@ -7,7 +7,7 @@ import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/north_america_db.dart';
 import 'package:new_travel_app/models/north_america.dart';
 import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class NorthAmericaPage extends StatefulWidget {
   const NorthAmericaPage({super.key});

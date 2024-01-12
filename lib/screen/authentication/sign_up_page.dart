@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/screen/authentication_page.dart';
-import 'package:new_travel_app/screen/login_screen.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
+import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +21,13 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  // final formKey2 = GlobalKey<FormState>();
+
+  // final formKey3 = GlobalKey<FormState>();
+
+  // final formKey4 = GlobalKey<FormState>();
+  // final formKey5 = GlobalKey<FormState>();
 
   void _passwordVisibility() {
     setState(() {
@@ -35,8 +41,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        autovalidateMode: AutovalidateMode.always,
-        key: formKey,
+          key: _formKey,
         child: Stack(
           children: [
             Container(
@@ -84,18 +89,23 @@ class _SignUpPageState extends State<SignUpPage> {
             Positioned(
                 left: screenWidth * .07,
                 top: 200,
-                child: textfield(screenWidth, _firstnameController,
-                    'First Name', 'Please enter the first name')),
+                child: textfield(
+                  screenWidth,
+                  _firstnameController,
+                  'First Name',
+                  'first name is required',
+               
+                )),
             Positioned(
                 left: screenWidth * .07,
                 top: 280,
                 child: textfield(screenWidth, _lastnameController, 'Last Name',
-                    'Please enter the last name')),
+                    'last name is required', )),
             Positioned(
                 left: screenWidth * .07,
                 top: 360,
                 child: textfield(screenWidth, _usernameController, 'Username',
-                    'Please enter the username')),
+                    ' username is required', )),
             Positioned(
               left: screenWidth * .07,
               top: 440,
@@ -115,6 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                   child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       controller: _passwordController,
                       style: const TextStyle(
                         color: Colors.black54,
@@ -148,29 +159,29 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: !_isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter the password';
+                          return 'password is required';
                         }
-
+                    
                         // Check if password is at least 8 characters long
                         if (value.length < 8) {
                           return 'Password must be at least 8 characters long';
                         }
-
+                    
                         // Check if password contains at least one numeric number
                         if (!value.contains(RegExp(r'[0-9]'))) {
                           return 'must contain at least one numeric number';
                         }
-
+                    
                         // Check if password contains at least one uppercase letter
                         if (!value.contains(RegExp(r'[A-Z]'))) {
                           return 'must contain at least one uppercase letter';
                         }
-
+                    
                         // Check if password contains at least one lowercase letter
                         if (!value.contains(RegExp(r'[a-z]'))) {
                           return 'must contain at least one lowercase letter';
                         }
-
+                    
                         // Check if password contains at least one special character (e.g., '@')
                         if (!value.contains(RegExp(r'[@,!,#,$,^,%,&,*]'))) {
                           return 'must contain at least one special character (e.g., @)';
@@ -188,11 +199,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (formKey.currentState?.validate() ?? false) {
+                      if (_formKey.currentState?.validate() ?? false  ) {
                         // Check if the username already exists
                         bool usernameExists = await AuthenticationDb.singleton
                             .usernameExists(_usernameController.text);
-
+        
                         if (usernameExists) {
                           // Username already exists, show an error SnackBar
                           // ignore: use_build_context_synchronously
@@ -206,26 +217,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         } else {
                           // Username doesn't exist, proceed with sign-up
                           final users = AuthenticationModels(
-                            id: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
+                            id: DateTime.now().millisecondsSinceEpoch.toString(),
                             name: _firstnameController.text +
                                 _lastnameController.text,
                             password: _passwordController.text,
                             username: _usernameController.text,
                           );
-
+        
                           AuthenticationDb.singleton.insertUsers(users);
                           // Clear the text fields
                           _firstnameController.text = '';
                           _lastnameController.text = '';
                           _usernameController.text = '';
                           _passwordController.text = '';
-
+        
                           // Unfocus the text fields to hide the keyboard
                           // ignore: use_build_context_synchronously
                           FocusScope.of(context).unfocus();
-
+        
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -274,8 +283,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
                     );
                   },
                   child: const Text(
@@ -299,14 +307,14 @@ class _SignUpPageState extends State<SignUpPage> {
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2), // Shadow color
-              spreadRadius: 2, // Spread radius
-              blurRadius: 5, // Blur radius
-              offset: const Offset(0, 2), // Offset in x and y axes
-            ),
+                color: Colors.black.withOpacity(0.2), // Shadow color
+                spreadRadius: 2, // Spread radius
+                blurRadius: 5, // Blur radius
+                offset: const Offset(0, 2)),
           ],
         ),
         child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: controller,
             style: const TextStyle(
               color: Colors.black54,
@@ -317,7 +325,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 label,
                 style: const TextStyle(color: Colors.black45),
               ),
-
+    
               hintStyle: TextStyle(
                 color: Colors.black.withOpacity(0.3), // Set hint text color
                 // fontWeight: FontWeight.w700,

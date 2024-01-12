@@ -3,14 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalenderPage extends StatefulWidget {
-  const CalenderPage({super.key});
+class ShowCalender extends StatefulWidget {
+  const ShowCalender({super.key});
 
   @override
-  State<CalenderPage> createState() => _CalenderPageState();
+  State<ShowCalender> createState() => _ShowCalenderState();
 }
 
-class _CalenderPageState extends State<CalenderPage> {
+class _ShowCalenderState extends State<ShowCalender> {
   CalendarFormat _calenderFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
@@ -33,6 +33,18 @@ class _CalenderPageState extends State<CalenderPage> {
     }
   }
 
+  String getSelectedDateRange() {
+    if (_rangeStart != null && _rangeEnd != null) {
+      final startFormatted = DateFormat('dd-MMM-yyyy').format(_rangeStart!);
+      final endFormatted = DateFormat('dd-MMM-yyyy').format(_rangeEnd!);
+      return '$startFormatted - $endFormatted';
+    } else if (_selectedDay != null) {
+      return DateFormat('dd-MMM-yyyy').format(_selectedDay!);
+    } else {
+      return DateFormat.yMMMMd('en_US').format(DateTime.now());
+    }
+  }
+
   void _onRangeSelected(DateTime? start, DateTime? end, DateTime focusedDay) {
     setState(() {
       _selectedDay = null;
@@ -48,22 +60,47 @@ class _CalenderPageState extends State<CalenderPage> {
       appBar: AppBar(
         backgroundColor: Constants.greenColor,
         centerTitle: true,
-        title: const Text('New Trip'),
+        title: const Text('Select Date'),
       ),
       body: Column(
         children: [
+          AnimatedOpacity(
+            opacity: _rangeStart != null && _rangeEnd != null ? 1.0 : 0.0,
+            duration: const Duration(milliseconds: 300),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pop(
+                  context,
+                  _rangeStart != null && _rangeEnd != null
+                      ? {'start': _rangeStart, 'end': _rangeEnd}
+                      : null,
+                );
+              },
+              child: const Text(
+                'Pick Date Trip',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
           Container(
             height: 50,
-            width: 120,
+            width: 250,
             decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(10)),
-            child: Center(
+                color: const Color.fromARGB(255, 234, 224, 224),
+                borderRadius: BorderRadius.circular(10)),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
                 child: Text(
-              DateFormat.yMMMMd('en_US').format(_focusedDay),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
+                  getSelectedDateRange(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-            )),
+            ),
           ),
           TableCalendar(
             locale: "en_US",
@@ -81,7 +118,7 @@ class _CalenderPageState extends State<CalenderPage> {
               day,
             ),
             focusedDay: _focusedDay,
-            firstDay: DateTime.utc(2024, 01, 01),
+            firstDay: DateTime.now(),
             lastDay: DateTime.utc(2050, 01, 01),
             calendarFormat: _calenderFormat,
             startingDayOfWeek: StartingDayOfWeek.monday,
@@ -96,7 +133,7 @@ class _CalenderPageState extends State<CalenderPage> {
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },
-          )
+          ),
         ],
       ),
     );

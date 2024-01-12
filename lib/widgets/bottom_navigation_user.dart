@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/account_page.dart';
-import 'package:new_travel_app/screen/calender_page.dart';
 import 'package:new_travel_app/screen/favorite_page.dart';
+import 'package:new_travel_app/screen/trips/planned_trips.dart';
 import 'package:new_travel_app/screen/screen_home/home_page.dart';
 
 final List<Widget> _pages = [
   const HomePage(),
-  const CalenderPage(),
+  const PlannedTrip(),
   const FavoritePage(),
   const AccountPage(),
 ];
@@ -45,7 +45,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month),
-            label: 'Calender',
+            label: 'Trips',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border_sharp),
