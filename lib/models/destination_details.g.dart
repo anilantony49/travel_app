@@ -1,55 +1,53 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'south_america.dart';
+part of 'destination_details.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class SouthAmericaDestinationModelsAdapter
-    extends TypeAdapter<SouthAmericaDestinationModels> {
+class DestinationModelsAdapter extends TypeAdapter<DestinationModels> {
   @override
-  final int typeId = 5;
+  final int typeId = 11;
 
   @override
-  SouthAmericaDestinationModels read(BinaryReader reader) {
+  DestinationModels read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return SouthAmericaDestinationModels(
+    return DestinationModels(
+      capital: fields[2] as String,
       id: fields[0] as String,
       countryName: fields[1] as String,
-      countryImage: fields[2] as String,
-      description: fields[3] as String,
-      capital: fields[4] as String,
+      countryImage: fields[3] as String,
       knownFor: (fields[5] as List).cast<String>(),
       images: (fields[6] as List).cast<String>(),
       majorCities: (fields[7] as List).cast<String>(),
       language: fields[8] as String,
       currency: fields[9] as String,
       digitialCode: fields[10] as String,
-      weather: fields[14] as String,
-      police: fields[15] as int,
-      ambulance: fields[16] as int,
-      fire: fields[17] as int,
+      weather: fields[11] as String,
+      details: fields[4] as String,
+      categories: fields[12] as String,
+      rating: fields[13] as double,
     );
   }
 
   @override
-  void write(BinaryWriter writer, SouthAmericaDestinationModels obj) {
+  void write(BinaryWriter writer, DestinationModels obj) {
     writer
-      ..writeByte(15)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.countryName)
       ..writeByte(2)
-      ..write(obj.countryImage)
-      ..writeByte(3)
-      ..write(obj.description)
-      ..writeByte(4)
       ..write(obj.capital)
+      ..writeByte(3)
+      ..write(obj.countryImage)
+      ..writeByte(4)
+      ..write(obj.details)
       ..writeByte(5)
       ..write(obj.knownFor)
       ..writeByte(6)
@@ -62,14 +60,12 @@ class SouthAmericaDestinationModelsAdapter
       ..write(obj.currency)
       ..writeByte(10)
       ..write(obj.digitialCode)
-      ..writeByte(14)
+      ..writeByte(11)
       ..write(obj.weather)
-      ..writeByte(15)
-      ..write(obj.police)
-      ..writeByte(16)
-      ..write(obj.ambulance)
-      ..writeByte(17)
-      ..write(obj.fire);
+      ..writeByte(12)
+      ..write(obj.categories)
+      ..writeByte(13)
+      ..write(obj.rating);
   }
 
   @override
@@ -78,7 +74,7 @@ class SouthAmericaDestinationModelsAdapter
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is SouthAmericaDestinationModelsAdapter &&
+      other is DestinationModelsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

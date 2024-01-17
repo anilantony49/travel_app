@@ -61,11 +61,11 @@ class _UsersDetailsPageState extends State<UsersDetailsPage> {
                         deleteUserAndShowSnackbar(users[index].id);
                       },
                       icon: const Icon(Icons.delete)),
-                  title: Text('Name: ${users[index].name}'),
+                  title: Text('Name: ${users[index].username}'),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Username: ${users[index].username}'),
+                      Text('Username: ${users[index].email}'),
                       Text('Password: ${users[index].password}'),
                     ],
                   ),

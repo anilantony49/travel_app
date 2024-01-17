@@ -1,9 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/models/destination_details.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/show_details_screen.dart/show_detail_description.dart';
 
-Widget buildCategorySliverList(String category, List<dynamic> items) {
+Widget buildCategorySliverList(List<DestinationModels> items,String category) {
+  // Filter the items to include only those belonging to the "Popular Destination" category
+   List<DestinationModels> categoryItems = items
+      .where((destination) => destination.categories == category)
+      .toList();
+
   return SliverList(
     delegate: SliverChildBuilderDelegate(
       (BuildContext context, int index) {
@@ -13,7 +20,7 @@ Widget buildCategorySliverList(String category, List<dynamic> items) {
             height: 160.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: items.length,
+              itemCount: categoryItems.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: () {
@@ -21,20 +28,7 @@ Widget buildCategorySliverList(String category, List<dynamic> items) {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ShowDetailsPage(
-                          category: category,
-                          selectedItem: category == 'Popular Destination'
-                              ? items[index]
-                              : null,
-                          selectedEuropeItem:
-                              category == 'Europe' ? items[index] : null,
-                          selectedAfricaItem:
-                              category == 'Africa' ? items[index] : null,
-                          selectedSouthAmericaItem:
-                              category == 'South America' ? items[index] : null,
-                          selectedNorthAmericaItem:
-                              category == 'North America' ? items[index] : null,
-                          selectedAsiaItem:
-                              category == 'Asia' ? items[index] : null,
+                          selectedItem:categoryItems[index],
                         ),
                       ),
                     );
@@ -58,14 +52,14 @@ Widget buildCategorySliverList(String category, List<dynamic> items) {
                                   topRight: Radius.circular(8),
                                 ),
                                 child: Image.file(
-                                  File(items[index].countryImage),
+                                  File(categoryItems[index].countryImage),
                                   fit: BoxFit.fill,
                                 ),
                               ),
                             ),
                           ),
                           Text(
-                            items[index].countryName,
+                            categoryItems[index].countryName,
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,

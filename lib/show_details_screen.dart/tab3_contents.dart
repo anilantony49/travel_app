@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/europe.dart';
-import 'package:new_travel_app/models/popular_destination.dart';
+import 'package:new_travel_app/models/destination_details.dart';
+
 
 class TabThreeContent extends StatelessWidget {
-  final String category;
-  final PopularDestinationModels? selectedItem;
-  final EuropeDestinationModels? selectedEuropeItem;
-  final AfricaDestinationModels? selectedAfricaItem;
-  const TabThreeContent(
-      {super.key,
-      required this.category,
-      required this.selectedItem,
-      required this.selectedEuropeItem,
-      required this.selectedAfricaItem});
+  // final String category;
+  final DestinationModels? selectedItem;
+  // final EuropeDestinationModels? selectedEuropeItem;
+  // final AfricaDestinationModels? selectedAfricaItem;
+  const TabThreeContent({
+    super.key,
+    // required this.category,
+    required this.selectedItem,
+    // required this.selectedEuropeItem,
+    // required this.selectedAfricaItem
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,7 @@ class TabThreeContent extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(category == 'Popular Destination'
-                      ? selectedItem?.weather ?? 'No Data available'
-                      : category == 'Africa'
-                          ? selectedAfricaItem?.weather ?? 'No Data available'
-                          : selectedEuropeItem?.weather ?? 'No Data available'),
+                  child: Text(selectedItem?.weather ?? 'No Data available'),
                 )),
           )
         ],

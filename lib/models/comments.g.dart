@@ -1,41 +1,41 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'authentication.dart';
+part of 'comments.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AuthenticationModelsAdapter extends TypeAdapter<AuthenticationModels> {
+class CommentModelsAdapter extends TypeAdapter<CommentModels> {
   @override
-  final int typeId = 1;
+  final int typeId = 12;
 
   @override
-  AuthenticationModels read(BinaryReader reader) {
+  CommentModels read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return AuthenticationModels(
-      id: fields[0] as String,
-      username: fields[1] as String,
-      email: fields[2] as String,
-      password: fields[3] as String,
+    return CommentModels(
+      commentindex: fields[1] as String,
+      userid: fields[0] as int,
+      comment: fields[2] as String,
+      date: fields[3] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, AuthenticationModels obj) {
+  void write(BinaryWriter writer, CommentModels obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.userid)
       ..writeByte(1)
-      ..write(obj.username)
+      ..write(obj.commentindex)
       ..writeByte(2)
-      ..write(obj.email)
+      ..write(obj.comment)
       ..writeByte(3)
-      ..write(obj.password);
+      ..write(obj.date);
   }
 
   @override
@@ -44,7 +44,7 @@ class AuthenticationModelsAdapter extends TypeAdapter<AuthenticationModels> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AuthenticationModelsAdapter &&
+      other is CommentModelsAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

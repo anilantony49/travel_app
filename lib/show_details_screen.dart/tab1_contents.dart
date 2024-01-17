@@ -1,24 +1,19 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/europe.dart';
-import 'package:new_travel_app/models/popular_destination.dart';
+import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/widgets.dart';
 import 'package:new_travel_app/show_details_screen.dart/show_detail_description.dart';
 
 class TabOneContent extends StatelessWidget {
-  final String category;
-  final PopularDestinationModels? selectedItem;
-  final EuropeDestinationModels? selectedEuropeItem;
-  final AfricaDestinationModels? selectedAfricaItem;
-  const TabOneContent(
-      {super.key,
-      required this.category,
-      required this.selectedItem,
-      required this.selectedEuropeItem,
-      required this.selectedAfricaItem});
+  // final String category;
+  final DestinationModels? selectedItem;
+
+  const TabOneContent({
+    super.key,
+    // required this.category,
+    required this.selectedItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +42,7 @@ class TabOneContent extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    category == 'Popular Destination'
-                        ? selectedItem?.description ?? 'No Data available'
-                        : category == 'Africa'
-                            ? selectedAfricaItem?.description ??
-                                'No Data available'
-                            : selectedEuropeItem?.description ??
-                                'No Data available',
+                 "   selectedItem.countryName,",
                     style: const TextStyle(
                         color: Constants.blackColor,
                         fontSize: 15,
@@ -74,11 +63,7 @@ class TabOneContent extends StatelessWidget {
                   color: const Color.fromARGB(255, 231, 228, 228)),
               child: Center(
                   child: Text(
-                category == 'Popular Destination'
-                    ? selectedItem?.capital ?? 'No Data available'
-                    : category == 'Africa'
-                        ? selectedAfricaItem?.capital ?? 'No Data available'
-                        : selectedEuropeItem?.capital ?? 'No Data available',
+                selectedItem?.capital ?? 'No Data available',
                 style: const TextStyle(
                     color: Colors.purple,
                     fontWeight: FontWeight.bold,
@@ -94,14 +79,7 @@ class TabOneContent extends StatelessWidget {
             ),
             child: ListView.builder(
               itemExtent: 50,
-              itemCount: ((category == 'Popular Destination'
-                          ? selectedItem?.knownFor
-                          : category == 'Africa'
-                              ? selectedAfricaItem?.knownFor
-                              : selectedEuropeItem?.knownFor) ??
-                      [])
-                  .length
-                  .ceil(),
+              itemCount: ((selectedItem?.knownFor) ?? []).length.ceil(),
               itemBuilder: (BuildContext context, int rowIndex) {
                 List<Color> colors = const [
                   Color.fromARGB(255, 223, 138, 163),
@@ -112,19 +90,9 @@ class TabOneContent extends StatelessWidget {
                 return Row(
                   children: List.generate(3, (int index) {
                     final knownForIndex = rowIndex * 3 + index;
-                    if (knownForIndex <
-                        (category == 'Popular Destination'
-                                ? selectedItem?.knownFor
-                                : category == 'Africa'
-                                    ? selectedAfricaItem?.knownFor
-                                    : selectedEuropeItem?.knownFor)!
-                            .length) {
+                    if (knownForIndex < (selectedItem?.knownFor)!.length) {
                       Color selectedColor = colors[index % colors.length];
-                      String text = (category == 'Popular Destination'
-                          ? selectedItem?.knownFor
-                          : category == 'Africa'
-                              ? selectedAfricaItem?.knownFor
-                              : selectedEuropeItem?.knownFor)![knownForIndex];
+                      String text = (selectedItem?.knownFor)![knownForIndex];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -161,30 +129,13 @@ class TabOneContent extends StatelessWidget {
             ),
             child: ListView.builder(
               itemExtent: 50,
-              itemCount: ((category == 'Popular Destination'
-                              ? selectedItem?.majorCities
-                              : category == 'Africa'
-                                  ? selectedAfricaItem?.majorCities
-                                  : selectedEuropeItem?.majorCities)!
-                          .length /
-                      3)
-                  .ceil(),
+              itemCount: ((selectedItem?.majorCities)!.length / 3).ceil(),
               itemBuilder: (BuildContext context, int rowIndex) {
                 return Row(
                   children: List.generate(3, (int index) {
                     final cityIndex = rowIndex * 3 + index;
-                    if (cityIndex <
-                        (category == 'Popular Destination'
-                                ? selectedItem?.majorCities
-                                : category == 'Africa'
-                                    ? selectedAfricaItem?.majorCities
-                                    : selectedEuropeItem?.majorCities)!
-                            .length) {
-                      String text = (category == 'Popular Destination'
-                          ? selectedItem?.majorCities
-                          : category == 'Africa'
-                              ? selectedAfricaItem?.majorCities
-                              : selectedEuropeItem?.majorCities)![cityIndex];
+                    if (cityIndex < (selectedItem?.majorCities)!.length) {
+                      String text = (selectedItem?.majorCities)![cityIndex];
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -217,11 +168,7 @@ class TabOneContent extends StatelessWidget {
           SizedBox(
             height: 200,
             child: ListView.builder(
-              itemCount: category == 'Popular Destination'
-                  ? selectedItem?.images.length
-                  : category == 'Africa'
-                      ? selectedAfricaItem?.images.length
-                      : selectedEuropeItem?.images.length,
+              itemCount: selectedItem?.images.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
@@ -231,11 +178,7 @@ class TabOneContent extends StatelessWidget {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => FullScreenImagePageView(
-                            images: category == 'Popular Destination'
-                                ? selectedItem?.images ?? []
-                                : category == 'Africa'
-                                    ? selectedAfricaItem?.images ?? []
-                                    : selectedEuropeItem?.images ?? [],
+                            images: selectedItem?.images ?? [],
                             initialIndex: index,
                           ),
                         ),
@@ -252,11 +195,7 @@ class TabOneContent extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.file(
-                            File(category == 'Popular Destination'
-                                ? selectedItem?.images[index] ?? ''
-                                : category == 'Africa'
-                                    ? selectedAfricaItem?.images[index] ?? ''
-                                    : selectedEuropeItem?.images[index] ?? ''),
+                            File(selectedItem?.images[index] ?? ''),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -269,27 +208,15 @@ class TabOneContent extends StatelessWidget {
           ),
           Widgets.headingText('Official Language'),
           Widgets.section(
-            category == 'Popular Destination'
-                ? selectedItem?.language ?? 'No Data available'
-                : category == 'Africa'
-                    ? selectedAfricaItem?.language ?? 'No Data available'
-                    : selectedEuropeItem?.language ?? 'No Data available',
+            selectedItem?.language ?? 'No Data available',
           ),
           Widgets.headingText('Currency'),
           Widgets.section(
-            category == 'Popular Destination'
-                ? selectedItem?.currency ?? 'No Data available'
-                : category == 'Africa'
-                    ? selectedAfricaItem?.currency ?? 'No Data available'
-                    : selectedEuropeItem?.currency ?? 'No Data available',
+            selectedItem?.currency ?? 'No Data available',
           ),
           Widgets.headingText('Dial Code'),
           Widgets.section(
-            category == 'Popular Destination'
-                ? selectedItem?.digitialCode ?? 'No Data available'
-                : category == 'Africa'
-                    ? selectedAfricaItem?.digitialCode ?? 'No Data available'
-                    : selectedEuropeItem?.digitialCode ?? 'No Data available',
+            selectedItem?.digitialCode ?? 'No Data available',
           ),
           // headingText('Mobile Phone Operators'),
           // section('French')

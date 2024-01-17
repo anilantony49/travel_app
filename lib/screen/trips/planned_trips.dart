@@ -40,7 +40,7 @@ class _PlannedTripState extends State<PlannedTrip> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('User deleted successfully'),
+        content: Text('Trip deleted successfully'),
         duration: Duration(seconds: 3),
       ),
     );

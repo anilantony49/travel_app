@@ -1,16 +1,21 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/admin/add_details.dart';
 import 'package:new_travel_app/admin/edit_datails.dart';
+import 'package:new_travel_app/db/category_db.dart';
+import 'package:new_travel_app/models/category.dart';
 
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/textfields.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 
 class DetailsAddEditPage extends StatefulWidget {
-  final String category, addOrEdit;
+  final String addOrEdit;
 
   final String? initialitemId,
       initialCountryName,
@@ -45,7 +50,6 @@ class DetailsAddEditPage extends StatefulWidget {
       this.initialImages,
       this.initialMajorCities,
       this.initialknownFor,
-      required this.category,
       required this.addOrEdit});
 
   @override
@@ -53,6 +57,7 @@ class DetailsAddEditPage extends StatefulWidget {
 }
 
 class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
+  final TextEditingController _addCategoryController = TextEditingController();
   final TextEditingController _descriptionEditingController =
       TextEditingController();
   final TextEditingController _countryNameController = TextEditingController();
@@ -76,19 +81,14 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
   ];
   final ImagePicker imagePicker = ImagePicker();
   List<XFile> imageFileList = [];
-  List<String> categoryItems = [
-    'Popular Destination',
-    'Europe',
-    'Africa',
-    'North America',
-    'South America',
-    'Asia'
-  ];
+
   bool isExpanded = false;
-  // String selectedImagePath1 = '';
-  // String images1 = '';
+
   String selectedImagePath = '';
   String images = '';
+  String? selectedCategories = AppStrings.popularDestination;
+  double? ratingValue = 0;
+
   void selectImages() async {
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
     if (selectedImages.isNotEmpty) {
@@ -110,6 +110,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     });
   }
 
+  List<CategoryModels> items = [];
+
   @override
   void initState() {
     super.initState();
@@ -125,11 +127,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     _ambulanceEmergencyController.text = widget.initialAmbulanceNumber ?? '';
     _fireEmergencyController.text = widget.initialFireNumber ?? '';
 
-    // if (widget.initialImages != null) {
-    //   imageFileList.addAll(
-    //     widget.initialImages!.split(',').map((imagePath) => XFile(imagePath)),
-    //   );
-    // }
     if (widget.initialMajorCities != null) {
       _majorCitiesController.clear();
       _majorCitiesController.addAll(
@@ -146,6 +143,24 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
             .map((knownFor) => TextEditingController(text: knownFor)),
       );
     }
+    fetchCategory();
+  }
+
+  void fetchCategory() async {
+    List<dynamic> fetchedItems;
+    fetchedItems = await CategoryDb.singleton.getCategory();
+    setState(() {
+      items = fetchedItems.cast<CategoryModels>();
+      updateDropdownItems();
+    });
+  }
+
+  void updateDropdownItems() {
+    List<String> combinedItems = [
+      for (var item in items) item.category,
+      ...dropdownItems,
+    ];
+    dropdownItems = combinedItems;
   }
 
   Future<bool> doesFileExist(String filePath) async {
@@ -157,15 +172,30 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     }
   }
 
+  List<String> dropdownItems = [
+    AppStrings.popularDestination,
+    AppStrings.europe,
+    AppStrings.africa,
+    AppStrings.northAmerica,
+    AppStrings.southAmerica,
+    AppStrings.asia,
+  ];
   @override
   Widget build(BuildContext context) {
-    final countryName =
-        ModalRoute.of(context)?.settings.arguments as String? ?? 'Category';
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Constants.greenColor,
-        title: Text(countryName),
+        title: const Text('Category'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _showAddCategoryDialog(context);
+            },
+            icon: const Icon(Icons.add),
+            tooltip: 'Add Category',
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -203,6 +233,96 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                         fit: BoxFit.fill,
                       ),
               ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    const Text('Select category'),
+                    Container(
+                      // width: MediaQuery.of(context).size.width * .30,
+                      // height: MediaQuery.of(context).size.width * .13,
+                      padding: const EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          color: AppColor.whiteOpacity,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: DropdownButton<String>(
+                        value: selectedCategories,
+                        icon: const Icon(Icons.arrow_drop_down),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                        ),
+                        items: dropdownItems.map<DropdownMenuItem<String>>(
+                          (String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          },
+                        ).toList(),
+                        onChanged: (String? newVlues) {
+                          setState(() {
+                            selectedCategories = newVlues.toString();
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        AppStrings.rating,
+                        // style: Apptext.text2,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * .40,
+                      height: MediaQuery.of(context).size.width * .13,
+                      padding: const EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                          color: AppColor.whiteOpacity,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 14, left: 10),
+                        child: RatingBar(
+                            itemPadding: const EdgeInsets.symmetric(
+                              horizontal: 1,
+                            ),
+                            direction: Axis.horizontal,
+                            itemCount: 5,
+                            itemSize: 20,
+                            minRating: 3,
+                            initialRating: 3,
+                            allowHalfRating: true,
+                            ratingWidget: RatingWidget(
+                              full: const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              half: const Icon(
+                                Icons.star_half,
+                                color: Colors.amber,
+                              ),
+                              empty: const Icon(
+                                Icons.star_border,
+                                color: Colors.amber,
+                              ),
+                            ),
+                            onRatingUpdate: (rating) {
+                              ratingValue = rating;
+                            }),
+                      ),
+                    )
+                  ],
+                ),
+              ],
             ),
             textfields(
               _countryNameController,
@@ -309,7 +429,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                           ? GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  //  listController.add(TextEditingController());
                                   _majorCitiesController[index].clear();
                                   _majorCitiesController[index].dispose();
                                   _majorCitiesController.removeAt(index);
@@ -492,7 +611,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   widget.addOrEdit == 'Add'
                       ? addDetails(
                           context,
-                          widget.category,
                           widget.addOrEdit,
                           widget.initialitemId ?? '',
                           widget.initialCountryName ?? '',
@@ -524,10 +642,10 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                           imageFileList,
                           selectedImagePath,
                           images,
-                        )
+                          selectedCategories,
+                          ratingValue)
                       : editDetails(
                           context,
-                          widget.category,
                           widget.addOrEdit,
                           widget.initialitemId ?? '',
                           widget.initialCountryName ?? '',
@@ -559,7 +677,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                           imageFileList,
                           selectedImagePath,
                           images,
-                        );
+                          selectedCategories,
+                          ratingValue);
                 },
                 icon: const Icon(Icons.save),
                 label: Text(widget.addOrEdit == 'Add' ? 'Add' : 'Edit'))
@@ -569,221 +688,39 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     );
   }
 
-  // void addDetails() {
-  //   final description = widget.category == 'Europe'
-  //       ? EuropeDestinationModels(
-  //           id: DateTime.now().millisecondsSinceEpoch.toString(),
-  //           majorCities: _majorCitiesController
-  //               .map((controller) => controller.text)
-  //               .toList(),
-  //           description: _descriptionEditingController.text,
-  //           countryName: _countryNameController.text,
-  //           countryImage: selectedImagePath,
-  //           language: _languageController.text,
-  //           currency: _currencyController.text,
-  //           digitialCode: _digitalCodeController.text,
-  //           weather: _wheatherController.text,
-  //           images: imageFileList.map((image) => image.path).toList(),
-  //           police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //           ambulance: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //           fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //           capital: _countryCapitalController.text,
-  //           knownFor: _knownForController
-  //               .map((controller) => controller.text)
-  //               .toList(),
-  //         )
-  //       : widget.category == 'Africa'
-  //           ? AfricaDestinationModels(
-  //               id: DateTime.now().millisecondsSinceEpoch.toString(),
-  //               countryName: _countryNameController.text,
-  //               countryImage: selectedImagePath,
-  //               description: _descriptionEditingController.text,
-  //               capital: _countryCapitalController.text,
-  //               images: imageFileList.map((image) => image.path).toList(),
-  //               language: _languageController.text,
-  //               currency: _currencyController.text,
-  //               digitialCode: _digitalCodeController.text,
-  //               weather: _wheatherController.text,
-  //               police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               ambulance:
-  //                   int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //               knownFor: _knownForController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //               majorCities: _majorCitiesController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //             )
-  //           : PopularDestinationModels(
-  //               id: DateTime.now().millisecondsSinceEpoch.toString(),
-  //               description: _descriptionEditingController.text,
-  //               countryName: _countryNameController.text,
-  //               countryImage: selectedImagePath,
-  //               language: _languageController.text,
-  //               currency: _currencyController.text,
-  //               digitialCode: _digitalCodeController.text,
-  //               weather: _wheatherController.text,
-  //               images: imageFileList.map((image) => image.path).toList(),
-  //               police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               ambulance:
-  //                   int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //               capital: _countryCapitalController.text,
-  //               knownFor: _knownForController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //               majorCities: _majorCitiesController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //             );
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => widget.category == 'Europe'
-  //           ? const EuropePage()
-  //           : widget.category == 'Africa'
-  //               ? const AfricaPage()
-  //               : const PopularDstination(),
-  //     ),
-  //   );
-  //   if (widget.category == 'Europe') {
-  //     EuropeDb.singleton.insertCountry(description as EuropeDestinationModels);
-  //   } else if (widget.category == 'Africa') {
-  //     AfricaDb.singleton.insertCountry(description as AfricaDestinationModels);
-  //   } else {
-  //     PopularDestinationDb.singleton
-  //         .insertCountry(description as PopularDestinationModels);
-  //   }
-  //   _descriptionEditingController.text = '';
-  //   _countryNameController.text = '';
-  //   _countryCapitalController.text = '';
-  //   _currencyController.text = '';
-  //   _digitalCodeController.text = '';
-  //   _languageController.text = '';
-  //   _wheatherController.text = '';
-  //   _policeEmergencyController.text = '';
-  //   _ambulanceEmergencyController.text = '';
-  //   _fireEmergencyController.text = '';
-
-  //   FocusScope.of(context).unfocus();
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(
-  //       content: Text('Details added successfully!'),
-  //       duration: Duration(seconds: 3),
-  //     ),
-  //   );
-  // }
-
-  // void editDetails() {
-  //   final description = widget.category == 'Europe'
-  //       ? EuropeDestinationModels(
-  //           id: widget.initialitemId!,
-  //           countryName: _countryNameController.text,
-  //           countryImage: selectedImagePath,
-  //           description: _descriptionEditingController.text,
-  //           capital: _countryCapitalController.text,
-  //           knownFor: _knownForController
-  //               .map((controller) => controller.text)
-  //               .toList(),
-  //           images: imageFileList.map((image) => image.path).toList(),
-  //           majorCities: _majorCitiesController
-  //               .map((controller) => controller.text)
-  //               .toList(),
-  //           language: _languageController.text,
-  //           currency: _currencyController.text,
-  //           digitialCode: _digitalCodeController.text,
-  //           weather: _wheatherController.text,
-  //           police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //           ambulance: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //           fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //         )
-  //       : widget.category == 'Africa'
-  //           ? AfricaDestinationModels(
-  //               id: widget.initialitemId!,
-  //               countryName: _countryNameController.text,
-  //               countryImage: selectedImagePath,
-  //               description: _descriptionEditingController.text,
-  //               capital: _countryCapitalController.text,
-  //               knownFor: _knownForController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //               images: imageFileList.map((image) => image.path).toList(),
-  //               majorCities: _majorCitiesController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //               language: _languageController.text,
-  //               currency: _currencyController.text,
-  //               digitialCode: _digitalCodeController.text,
-  //               weather: _wheatherController.text,
-  //               police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               ambulance:
-  //                   int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //             )
-  //           : PopularDestinationModels(
-  //               id: widget.initialitemId!,
-  //               description: _descriptionEditingController.text,
-  //               countryName: _countryNameController.text,
-  //               countryImage: selectedImagePath,
-  //               language: _languageController.text,
-  //               currency: _currencyController.text,
-  //               digitialCode: _digitalCodeController.text,
-  //               weather: _wheatherController.text,
-  //               images: imageFileList.map((image) => image.path).toList(),
-  //               police: int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               ambulance:
-  //                   int.tryParse(_ambulanceEmergencyController.text) ?? 0,
-  //               fire: int.tryParse(_fireEmergencyController.text) ?? 0,
-  //               capital: _countryCapitalController.text,
-  //               knownFor: _knownForController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //               majorCities: _majorCitiesController
-  //                   .map((controller) => controller.text)
-  //                   .toList(),
-  //             );
-  //   // ignore: use_build_context_synchronously
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => widget.category == 'Europe'
-  //           ? const EuropePage()
-  //           : widget.category == 'Africa'
-  //               ? const AfricaPage()
-  //               : const PopularDstination(),
-  //     ),
-  //   );
-
-  //   if (widget.category == 'Europe') {
-  //     EuropeDb.singleton
-  //         .editCountry(description as EuropeDestinationModels, description.id);
-  //   } else if (widget.category == 'Africa') {
-  //     AfricaDb.singleton
-  //         .editCountry(description as AfricaDestinationModels, description.id);
-  //   } else {
-  //     PopularDestinationDb.singleton
-  //         .editCountry(description as PopularDestinationModels, description.id);
-  //   }
-
-  //   _descriptionEditingController.text = '';
-  //   _countryNameController.text = '';
-  //   _countryCapitalController.text = '';
-  //   _currencyController.text = '';
-  //   _digitalCodeController.text = '';
-  //   _languageController.text = '';
-  //   _wheatherController.text = '';
-  //   _policeEmergencyController.text = '';
-  //   _ambulanceEmergencyController.text = '';
-  //   _fireEmergencyController.text = '';
-  //   // ignore: use_build_context_synchronously
-  //   FocusScope.of(context).unfocus();
-  //   // ignore: use_build_context_synchronously
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     const SnackBar(
-  //       content: Text('Details Edit successfully!'),
-  //       duration: Duration(seconds: 3),
-  //     ),
-  //   );
-  // }
+  void _showAddCategoryDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Category'),
+          content: TextField(
+            decoration: const InputDecoration(
+              labelText: 'New Category',
+            ),
+            controller: _addCategoryController,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                String newCategory = _addCategoryController.text;
+                setState(() {
+                  dropdownItems.add(newCategory);
+                  selectedCategories = newCategory;
+                });
+                final addCategory = CategoryModels(
+                  category: newCategory,
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                );
+                CategoryDb.singleton.insertCategory(addCategory);
+                updateDropdownItems();
+                Navigator.pop(context);
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

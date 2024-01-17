@@ -1,18 +1,19 @@
-import 'package:hive_flutter/adapters.dart';
-part 'asia.g.dart';
+import 'package:hive/hive.dart';
+part 'destination_details.g.dart';
 
-@HiveType(typeId: 7)
-class AsiaDestinationModels {
+@HiveType(typeId: 11)
+class DestinationModels {
   @HiveField(0)
   final String id;
   @HiveField(1)
   final String countryName;
   @HiveField(2)
-  final String countryImage;
-  @HiveField(3)
-  final String description;
-  @HiveField(4)
   final String capital;
+
+  @HiveField(3)
+  final String countryImage;
+  @HiveField(4)
+  final String details;
   @HiveField(5)
   final List<String> knownFor;
   @HiveField(6)
@@ -25,21 +26,18 @@ class AsiaDestinationModels {
   final String currency;
   @HiveField(10)
   final String digitialCode;
-  @HiveField(14)
+  @HiveField(11)
   final String weather;
-  @HiveField(15)
-  final int police;
-  @HiveField(16)
-  final int ambulance;
-  @HiveField(17)
-  final int fire;
+  @HiveField(12)
+  final String categories;
+  @HiveField(13)
+  final double rating;
 
-  AsiaDestinationModels({
+  DestinationModels({
+    required this.capital,
     required this.id,
     required this.countryName,
     required this.countryImage,
-    required this.description,
-    required this.capital,
     required this.knownFor,
     required this.images,
     required this.majorCities,
@@ -47,8 +45,8 @@ class AsiaDestinationModels {
     required this.currency,
     required this.digitialCode,
     required this.weather,
-    required this.police,
-    required this.ambulance,
-    required this.fire,
+    required this.details,
+    required this.categories,
+    required this.rating,
   });
 }

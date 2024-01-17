@@ -1,23 +1,23 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
-import 'package:new_travel_app/admin/side_menu_bar.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
-import 'package:new_travel_app/db/north_america_db.dart';
-import 'package:new_travel_app/models/north_america.dart';
+import 'package:new_travel_app/db/destination_details_db.dart';
+import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
-class NorthAmericaPage extends StatefulWidget {
-  const NorthAmericaPage({super.key});
+class DestintationScreen extends StatefulWidget {
+  const DestintationScreen ({
+    super.key,
+  });
 
   @override
-  State<NorthAmericaPage> createState() => _NorthAmericaPageState();
+  State<DestintationScreen> createState() => _DestintationScreenState();
 }
 
-class _NorthAmericaPageState extends State<NorthAmericaPage> {
-  List<NorthAmericaDestinationModels> items = [];
+class _DestintationScreenState extends State<DestintationScreen> {
+  List<DestinationModels> items = [];
   @override
   void initState() {
     super.initState();
@@ -25,21 +25,22 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
   }
 
   void fetchCategory() async {
-    List<NorthAmericaDestinationModels> fetchedItems =
-        await NorthAmericaDb.singleton.getCountries();
+    List<DestinationModels> fetchedItems =
+        await DestinationDb.singleton.getDestination();
     setState(() {
       items = fetchedItems;
     });
   }
 
-  NorthAmericaDestinationModels? northAmerica;
+  DestinationModels? destinations;
+
   void deleteCountryAndShowSnackbar(String itemId) {
-    NorthAmericaDb.singleton.deleteCountry(itemId);
+    DestinationDb.singleton.deleteDestination(itemId);
 
     // Show a Snackbar indicating that the user has been deleted
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Category deleted successfully'),
+        content: Text('Country deleted successfully'),
         duration: Duration(seconds: 3),
       ),
     );
@@ -50,88 +51,82 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    final String title =
-        ModalRoute.of(context)!.settings.arguments as String? ?? 'Category';
 
     return Scaffold(
-      drawer: const SideMenuBar(),
-      floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(
+            backgroundColor: Constants.greenColor,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const DetailsAddEditPage(
+                            addOrEdit: 'Add',
+                          )));
+            },
+            child: const Icon(Icons.add)),
+        backgroundColor: const Color.fromARGB(255, 234, 227, 227),
+        appBar: AppBar(
           backgroundColor: Constants.greenColor,
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const DetailsAddEditPage(
-                          category: 'North America',
-                          addOrEdit: 'Add',
-                        )));
-          },
-          child: const Icon(Icons.add)),
-      backgroundColor: const Color.fromARGB(255, 234, 227, 227),
-      appBar: AppBar(
-        backgroundColor: Constants.greenColor,
-        centerTitle: true,
-        title: Text(
-          title,
-          style: const TextStyle(
-              color: Constants.blackColor, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          PopupMenuButton<String>(
-            itemBuilder: (BuildContext context) {
-              return [
-                PopupMenuItem<String>(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const UsersDetailsPage()),
-                    );
-                  },
-                  // value: 'user_details',
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.group, color: Constants.greenColor),
-                      SizedBox(width: 10),
-                      Text('User Details',
-                          style: TextStyle(color: Constants.blackColor)),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<String>(
-                  // value: 'log_out',
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
+          centerTitle: true,
+          title: const Text(
+            'Destinations',
+            style: TextStyle(
+                color: Constants.blackColor, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            PopupMenuButton<String>(
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem<String>(
+                    onTap: () {
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const AuthenticationPage()),
-                        (route) => false);
-                    //  exit(0);
-                  },
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(Icons.exit_to_app, color: Constants.greenColor),
-                      SizedBox(width: 10),
-                      Text('Log Out',
-                          style: TextStyle(color: Constants.blackColor)),
-                    ],
+                            builder: (context) => const UsersDetailsPage()),
+                      );
+                    },
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.group, color: Constants.greenColor),
+                        SizedBox(width: 10),
+                        Text('User Details',
+                            style: TextStyle(color: Constants.blackColor)),
+                      ],
+                    ),
                   ),
-                ),
-              ];
-            },
-          )
-        ],
-      ),
-      body:Padding(
+                  PopupMenuItem<String>(
+                    // value: 'log_out',
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AuthenticationPage()),
+                          (route) => false);
+                    },
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.exit_to_app, color: Constants.greenColor),
+                        SizedBox(width: 10),
+                        Text('Log Out',
+                            style: TextStyle(color: Constants.blackColor)),
+                      ],
+                    ),
+                  ),
+                ];
+              },
+            )
+          ],
+        ),
+        body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 5),
               itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
-                northAmerica = items.isNotEmpty ? items[index] : null;
+                destinations = items.isNotEmpty ? items[index] : null;
                 return GestureDetector(
                   onLongPress: () {
                     showModalBottomSheet(
@@ -151,18 +146,11 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                                                 initialCountryName:
                                                     items[index].countryName,
                                                 initialDescription:
-                                                    items[index].description,
+                                                    items[index].details,
                                                 initialImagePath:
                                                     items[index].countryImage,
                                                 initialCountryCapital:
                                                     items[index].capital,
-                                                initialFireNumber: items[index]
-                                                    .fire
-                                                    .toString(),
-                                                initialAmbulanceNumber:
-                                                    items[index]
-                                                        .ambulance
-                                                        .toString(),
                                                 initialLanguage:
                                                     items[index].language,
                                                 initialcurrency:
@@ -171,10 +159,6 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                                                     items[index].digitialCode,
                                                 initialWeather:
                                                     items[index].weather,
-                                                initialPoliceNumber:
-                                                    items[index]
-                                                        .police
-                                                        .toString(),
                                                 initialImages: items[index]
                                                     .images
                                                     .toString(),
@@ -184,7 +168,6 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                                                 initialknownFor: items[index]
                                                     .knownFor
                                                     .toString(),
-                                                category: 'North America',
                                                 addOrEdit: 'Edit',
                                               )));
                                   // Navigator.pop(context);
@@ -197,8 +180,7 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                               ),
                               ListTile(
                                 onTap: () {
-                                  deleteCountryAndShowSnackbar(
-                                      items[index].id);
+                                  deleteCountryAndShowSnackbar(items[index].id);
                                   Navigator.pop(context);
                                 },
                                 leading: const Icon(Icons.delete,
@@ -218,25 +200,18 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                             builder: (context) => DetailsAddEditPage(
                                   initialitemId: items[index].id,
                                   initialCountryName: items[index].countryName,
-                                  initialDescription: items[index].description,
+                                  initialDescription: items[index].details,
                                   initialImagePath: items[index].countryImage,
                                   initialCountryCapital: items[index].capital,
                                   initialLanguage: items[index].language,
                                   initialcurrency: items[index].currency,
                                   initialDialCode: items[index].digitialCode,
                                   initialWeather: items[index].weather,
-                                  initialPoliceNumber:
-                                      items[index].police.toString(),
-                                  initialAmbulanceNumber:
-                                      items[index].ambulance.toString(),
-                                  initialFireNumber:
-                                      items[index].fire.toString(),
                                   initialImages: items[index].images.toString(),
                                   initialMajorCities:
                                       items[index].majorCities.toString(),
                                   initialknownFor:
                                       items[index].knownFor.toString(),
-                                  category: 'North America',
                                   addOrEdit: 'Edit',
                                 )));
                   },
@@ -259,9 +234,9 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                           color: Colors.grey),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                        child: northAmerica?.countryImage != null
+                        child: destinations?.countryImage != null
                             ? Image.file(
-                                File(northAmerica!.countryImage),
+                                File(destinations!.countryImage),
                                 fit: BoxFit.cover,
                               )
                             : Text(
@@ -280,7 +255,7 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                         offset: Offset(15, -(screenWidth * 0.04)),
                         child: Center(
                           child: Text(
-                            northAmerica!.countryName,
+                            destinations!.countryName,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: screenWidth * 0.055,
@@ -292,7 +267,6 @@ class _NorthAmericaPageState extends State<NorthAmericaPage> {
                   ]),
                 );
               }),
-        )
-    );
+        ));
   }
 }

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/europe.dart';
-import 'package:new_travel_app/models/popular_destination.dart';
+import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/widgets.dart';
 
 class TabTwoContent extends StatelessWidget {
-  final String category;
-  final PopularDestinationModels? selectedItem;
-  final EuropeDestinationModels? selectedEuropeItem;
-  final AfricaDestinationModels? selectedAfricaItem;
-  const TabTwoContent(
-      {super.key,
-      required this.category,
-      required this.selectedItem,
-      required this.selectedEuropeItem,
-      required this.selectedAfricaItem});
+  // final String category;
+  final DestinationModels? selectedItem;
+  // final EuropeDestinationModels? selectedEuropeItem;
+  // final AfricaDestinationModels? selectedAfricaItem;
+  const TabTwoContent({
+    super.key,
+    // required this.category,
+    required this.selectedItem,
+    // required this.selectedEuropeItem,
+    // required this.selectedAfricaItem
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +32,7 @@ class TabTwoContent extends StatelessWidget {
           ),
         ),
         Widgets.section(
-          category == 'Popular Destination'
-              ? selectedItem?.currency ?? 'No Data available'
-              : category == 'Africa'
-                  ? selectedAfricaItem?.currency ?? 'No Data available'
-                  : selectedEuropeItem?.currency ?? 'No Data available',
+          selectedItem?.currency ?? 'No Data available',
         ),
         Widgets.headingText('Convert'),
         Padding(

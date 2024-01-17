@@ -1,19 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/db/africa_db.dart';
-import 'package:new_travel_app/db/asia_db.dart';
-import 'package:new_travel_app/db/europe_db.dart';
-import 'package:new_travel_app/db/north_america_db.dart';
-import 'package:new_travel_app/db/popular_destination_db.dart';
-import 'package:new_travel_app/db/south_america_db.dart';
-import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/asia.dart';
-import 'package:new_travel_app/models/europe.dart';
-import 'package:new_travel_app/models/north_america.dart';
-import 'package:new_travel_app/models/popular_destination.dart';
-import 'package:new_travel_app/models/south_america.dart';
+import 'package:new_travel_app/db/category_db.dart';
+import 'package:new_travel_app/db/destination_details_db.dart';
+import 'package:new_travel_app/models/category.dart';
+
+import 'package:new_travel_app/models/destination_details.dart';
+
 import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/screen_home/pageview_image.dart';
 import 'package:new_travel_app/screen/screen_home/title_text.dart';
 import 'package:new_travel_app/screen/screen_home/image_container.dart';
@@ -26,12 +22,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<PopularDestinationModels> items = [];
-  List<EuropeDestinationModels> europeItems = [];
-  List<AfricaDestinationModels> africaItems = [];
-  List<SouthAmericaDestinationModels> southAmericaItems = [];
-  List<NorthAmericaDestinationModels> northAmericaItems = [];
-  List<AsiaDestinationModels> asiaItems = [];
+  List<DestinationModels> items = [];
+  // List<CategoryModels> newiItems = [];
+  List<String> newiItems = [];
 
   final PageController _pageController = PageController();
   int _currentPage = 0;
@@ -39,13 +32,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchCategory('Popular Destination');
-    fetchCategory('Europe');
-    fetchCategory('Africa');
-    fetchCategory('South America');
-    fetchCategory('North America');
-    fetchCategory('Asia');
-
+    fetchCategory();
+    fetchnewCategory();
     startHintTextTimer();
     // Auto slide every 3 seconds
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
@@ -62,40 +50,31 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void fetchCategory(String category) async {
+  void fetchCategory() async {
     List<dynamic> fetchedItems;
+    fetchedItems = await DestinationDb.singleton.getDestination();
+    setState(() {
+      items = fetchedItems.cast<DestinationModels>();
+    });
+  }
 
-    if (category == 'Popular Destination') {
-      fetchedItems = await PopularDestinationDb.singleton.getCountries();
-      setState(() {
-        items = fetchedItems.cast<PopularDestinationModels>();
-      });
-    } else if (category == 'Europe') {
-      fetchedItems = await EuropeDb.singleton.getCountries();
-      setState(() {
-        europeItems = fetchedItems.cast<EuropeDestinationModels>();
-      });
-    } else if (category == 'Africa') {
-      fetchedItems = await AfricaDb.singleton.getCountries();
-      setState(() {
-        africaItems = fetchedItems.cast<AfricaDestinationModels>();
-      });
-    } else if (category == 'South America') {
-      fetchedItems = await SouthAmericaDb.singleton.getCountries();
-      setState(() {
-        southAmericaItems = fetchedItems.cast<SouthAmericaDestinationModels>();
-      });
-    } else if (category == 'North America') {
-      fetchedItems = await NorthAmericaDb.singleton.getCountries();
-      setState(() {
-        northAmericaItems = fetchedItems.cast<NorthAmericaDestinationModels>();
-      });
-    } else {
-      fetchedItems = await AsiaDb.singleton.getCountries();
-      setState(() {
-        asiaItems = fetchedItems.cast<AsiaDestinationModels>();
-      });
+ void fetchnewCategory() async {
+  List<CategoryModels> fetchedItems;
+  fetchedItems = await CategoryDb.singleton.getCategory();
+  setState(() {
+     newiItems = fetchedItems.map((category) => category.category).toList();
+  });
+}
+
+  List<Widget> generateCategoryWidgets(List<String> categories) {
+    List<Widget> categoryWidgets = [];
+
+    for (var category in categories) {
+      categoryWidgets.add(titleText(category));
+      categoryWidgets.add(buildCategorySliverList(items, category));
     }
+
+    return categoryWidgets;
   }
 
   @override
@@ -105,7 +84,14 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
     super.dispose();
   }
-
+final List<String> initialCategories = [
+  AppStrings.popularDestination,
+  AppStrings.europe,
+  AppStrings.africa,
+  AppStrings.southAmerica,
+  AppStrings.northAmerica,
+  AppStrings.asia,
+];
   List<String> suggestions = [
     'Explore a "country"',
     'Explore "mountains"',
@@ -133,8 +119,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final usesrName = ModalRoute.of(context)?.settings.arguments as String?;
+   final dropdownItems = [
+    ...initialCategories, // Include initial categories
+    ...newiItems, // Include newly created categories
+  ];
     return Scaffold(
-        // backgroundColor: Constants.scaffoldColor,
         body: Stack(children: [
       CustomScrollView(
         slivers: [
@@ -168,11 +157,11 @@ class _HomePageState extends State<HomePage> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          'Welcome $usesrName',
+                          'Hi $usesrName',
                           style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 25,
                               color: Colors.white,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
@@ -183,16 +172,6 @@ class _HomePageState extends State<HomePage> {
                               3, (index) => animatedGreenBar(index))),
                     )
                   ])),
-              actions: [
-                IconButton(
-                    onPressed: () {},
-                    icon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.sort_sharp,
-                          weight: 50,
-                        ))),
-              ],
               title: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -239,18 +218,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               )),
-          titleText('Popular Destination'),
-          buildCategorySliverList('Popular Destination', items),
-          titleText('Europe'),
-          buildCategorySliverList('Europe', europeItems),
-          titleText('Africa'),
-          buildCategorySliverList('Africa', africaItems),
-          titleText('South America'),
-          buildCategorySliverList('South America', southAmericaItems),
-          titleText('North America'),
-          buildCategorySliverList('North America', northAmericaItems),
-          titleText('Asia'),
-          buildCategorySliverList('Asia', asiaItems),
+          // titleText('Popular Destination'),
+          // buildCategorySliverList(items, AppStrings.popularDestination),
+          // titleText('Europe'),
+          // buildCategorySliverList(items, AppStrings.europe),
+          // titleText('Africa'),
+          // buildCategorySliverList(items, AppStrings.africa),
+          // titleText('South America'),
+          // buildCategorySliverList(items, AppStrings.southAmerica),
+          // titleText('North America'),
+          // buildCategorySliverList(items, AppStrings.northAmerica),
+          // titleText('Asia'),
+          // buildCategorySliverList(items, AppStrings.asia),
+          ...generateCategoryWidgets(dropdownItems),
         ],
       ),
     ]));

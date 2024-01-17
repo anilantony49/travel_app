@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/popular_destinations.dart';
+import 'package:new_travel_app/admin/destinations_screen.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/others/admin_credentials.dart';
-import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
@@ -145,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const PopularDstination(),
+                            builder: (context) => const DestintationScreen(),
                           ), // Replace YourNextScreen with the actual screen widget you want to navigate to
                           (route) => false,
                         );

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
 import 'package:new_travel_app/models/planned_trip.dart';
-import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/trips/planned_trips.dart';
 import 'package:new_travel_app/screen/trips/show_calender.dart';
 

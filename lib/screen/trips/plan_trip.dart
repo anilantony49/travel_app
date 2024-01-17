@@ -3,35 +3,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
-import 'package:new_travel_app/models/africa.dart';
-import 'package:new_travel_app/models/asia.dart';
-import 'package:new_travel_app/models/europe.dart';
-import 'package:new_travel_app/models/north_america.dart';
+import 'package:new_travel_app/models/destination_details.dart';
+
 import 'package:new_travel_app/models/planned_trip.dart';
-import 'package:new_travel_app/models/popular_destination.dart';
-import 'package:new_travel_app/models/south_america.dart';
+
+import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/screen/trips/planned_trips.dart';
 import 'package:new_travel_app/screen/trips/show_calender.dart';
 
 class PlanTrip extends StatefulWidget {
   const PlanTrip({
     this.selectedItem,
-    this.selectedEuropeItem,
+    
     super.key,
-    this.category,
-    this.selectedAfricaItem,
-    this.selectedSouthAmericaItem,
-    this.selectedNorthAmericaItem,
-    this.selectedAsiaItem,
    
+   
+
   });
-  final PopularDestinationModels? selectedItem;
-  final EuropeDestinationModels? selectedEuropeItem;
-  final AfricaDestinationModels? selectedAfricaItem;
-  final SouthAmericaDestinationModels? selectedSouthAmericaItem;
-  final NorthAmericaDestinationModels? selectedNorthAmericaItem;
-  final AsiaDestinationModels? selectedAsiaItem;
-  final String? category;
+  final  DestinationModels? selectedItem;
+ 
  
 
   @override
@@ -65,11 +55,11 @@ class _PlanTripState extends State<PlanTrip> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Constants.greenColor,
-      //   centerTitle: true,
-      //   title: const Text('New Trip'),
-      // ),
+      appBar: AppBar(
+        backgroundColor: Constants.greenColor,
+        centerTitle: true,
+        title: const Text('New Trip'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -85,20 +75,8 @@ class _PlanTripState extends State<PlanTrip> {
                   borderRadius: BorderRadius.circular(20),
                   child: Image.file(
                     File(
-                      widget.category == 'Popular Destination'
-                          ? widget.selectedItem!.countryImage
-                          : widget.category == 'Africa'
-                              ? widget.selectedAfricaItem!.countryImage
-                              : widget.category == 'Europe'
-                                  ? widget.selectedEuropeItem!.countryImage
-                                  : widget.category == 'South America'
-                                      ? widget.selectedSouthAmericaItem!
-                                          .countryImage
-                                      : widget.category == 'North America'
-                                          ? widget.selectedNorthAmericaItem!
-                                              .countryName
-                                          : widget
-                                              .selectedAsiaItem!.countryImage,
+                      widget.selectedItem!.countryImage
+                        
                     ),
                     fit: BoxFit.cover,
                   ),
@@ -145,31 +123,10 @@ class _PlanTripState extends State<PlanTrip> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  final String image = widget.category == 'Popular Destination'
-                      ? widget.selectedItem!.countryImage
-                      : widget.category == 'Africa'
-                          ? widget.selectedAfricaItem!.countryImage
-                          : widget.category == 'Europe'
-                              ? widget.selectedEuropeItem!.countryImage
-                              : widget.category == 'South America'
-                                  ? widget
-                                      .selectedSouthAmericaItem!.countryImage
-                                  : widget.category == 'North America'
-                                      ? widget.selectedNorthAmericaItem!
-                                          .countryImage
-                                      : widget.selectedAsiaItem!.countryImage;
-                  final String place = widget.category == 'Popular Destination'
-                      ? widget.selectedItem!.countryName
-                      : widget.category == 'Africa'
-                          ? widget.selectedAfricaItem!.countryName
-                          : widget.category == 'Europe'
-                              ? widget.selectedEuropeItem!.countryName
-                              : widget.category == 'South America'
-                                  ? widget.selectedSouthAmericaItem!.countryName
-                                  : widget.category == 'North America'
-                                      ? widget
-                                          .selectedNorthAmericaItem!.countryName
-                                      : widget.selectedAsiaItem!.countryName;
+                  final String image =  widget.selectedItem!.countryImage;
+                     
+                  final String place = widget.selectedItem!.countryName;
+                     
                   final String dateRange =
                       '${DateFormat('dd-MMM-yyyy').format(_rangeStart!)} - ${DateFormat('dd-MMM-yyyy').format(_rangeEnd!)}';
                   final planTrip = PlannedTripModels(
@@ -184,7 +141,7 @@ class _PlanTripState extends State<PlanTrip> {
                       duration: Duration(seconds: 3),
                     ),
                   );
-                  Navigator.push( 
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => PlannedTrip(
@@ -196,7 +153,6 @@ class _PlanTripState extends State<PlanTrip> {
                   );
                 },
                 child: const Text('Save')),
-      
           ],
         ),
       ),
