@@ -9,7 +9,6 @@ class DestinationModels {
   final String countryName;
   @HiveField(2)
   final String capital;
-
   @HiveField(3)
   final String countryImage;
   @HiveField(4)
@@ -32,6 +31,12 @@ class DestinationModels {
   final String categories;
   @HiveField(13)
   final double rating;
+  @HiveField(14)
+  final int police;
+  @HiveField(15)
+  final int ambulance;
+  @HiveField(16)
+  final int fire;
 
   DestinationModels({
     required this.capital,
@@ -48,5 +53,8 @@ class DestinationModels {
     required this.details,
     required this.categories,
     required this.rating,
+    required this.police,
+    required this.ambulance,
+    required this.fire,
   });
 }

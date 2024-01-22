@@ -23,13 +23,6 @@ class PlannedTripDb implements PlannedTripDbFunctions {
     return singleton;
   }
 
-  // Future<void> refresh() async {
-  //   final allCountry = await getCountries();
-  //   notifier.value.clear();
-  //   await Future.forEach(allCountry,
-  //       (AfricaDestinationModels country) => notifier.value.add(country));
-  //   notifier.notifyListeners();
-  // }
   Future<void> refresh() async {
     final allTrip = await getAllTrip();
     notifier.value = List.from(allTrip);
@@ -58,8 +51,6 @@ class PlannedTripDb implements PlannedTripDbFunctions {
   Future<void> insertTrip(PlannedTripModels value) async {
     final db = await Hive.openBox<PlannedTripModels>(_dbName);
     await db.put(value.id, value);
-
-    print('data saved');
     refresh();
   }
 

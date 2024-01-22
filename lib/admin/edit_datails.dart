@@ -5,7 +5,6 @@ import 'package:new_travel_app/models/destination_details.dart';
 
 void editDetails(
     BuildContext context,
-   
     String countryName,
     String initialItemId,
     String initialCountryName,
@@ -55,6 +54,9 @@ void editDetails(
     weather: wheatherController.text,
     categories: selectedCategories!,
     rating: ratingValue!,
+    police: int.tryParse(ambulanceEmergencyController.text) ?? 0,
+    ambulance: int.tryParse(ambulanceEmergencyController.text) ?? 0,
+    fire: int.tryParse(fireEmergencyController.text) ?? 0,
   );
   DestinationDb.singleton.editDestination(description, description.id);
 

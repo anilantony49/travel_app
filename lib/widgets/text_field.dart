@@ -46,6 +46,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
           ],
         ),
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           style: const TextStyle(
             color: Constants.blackColor,
@@ -54,12 +55,12 @@ class _CustomInputFieldState extends State<CustomInputField> {
           decoration: InputDecoration(
             suffixIcon: widget.isPassword
                 ? IconButton(
-                    onPressed:(){
+                    onPressed: () {
                       setState(() {
-                           _isPasswordVisible = !_isPasswordVisible;
+                        _isPasswordVisible = !_isPasswordVisible;
                       });
                     },
-                    icon: _isPasswordVisible 
+                    icon: _isPasswordVisible
                         ? const Icon(Icons.visibility,
                             color: Constants.blackColor)
                         : const Icon(Icons.visibility_off,
@@ -76,7 +77,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           ),
-         obscureText: widget.isPassword && !_isPasswordVisible,
+          obscureText: widget.isPassword && !_isPasswordVisible,
           validator: widget.validator,
         ),
       ),

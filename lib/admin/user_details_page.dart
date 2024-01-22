@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
+import 'package:new_travel_app/refractedClass/app_background.dart';
+import 'package:new_travel_app/refractedClass/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 
 class UsersDetailsPage extends StatefulWidget {
   const UsersDetailsPage({Key? key}) : super(key: key);
@@ -47,31 +50,31 @@ class _UsersDetailsPageState extends State<UsersDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Details'),
+      appBar: AppBarwidget(title: AppStrings.userDetails),
+      body: BackgroundColor(
+        child: users.isEmpty
+            ? const Center(child: Text('No users'))
+            : ListView.builder(
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    trailing: IconButton(
+                        onPressed: () {
+                          deleteUserAndShowSnackbar(users[index].id);
+                        },
+                        icon: const Icon(Icons.delete)),
+                    title: Text('Username: ${users[index].username}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('email: ${users[index].email}'),
+                        Text('Password: ${users[index].password}'),
+                      ],
+                    ),
+                  );
+                },
+              ),
       ),
-      body: users.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  trailing: IconButton(
-                      onPressed: () {
-                        deleteUserAndShowSnackbar(users[index].id);
-                      },
-                      icon: const Icon(Icons.delete)),
-                  title: Text('Name: ${users[index].username}'),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Username: ${users[index].email}'),
-                      Text('Password: ${users[index].password}'),
-                    ],
-                  ),
-                );
-              },
-            ),
     );
   }
 }

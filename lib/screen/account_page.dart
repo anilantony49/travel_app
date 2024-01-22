@@ -23,12 +23,26 @@ class AccountPage extends StatelessWidget {
               icon: const Icon(Icons.logout))
         ],
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Account page'),
-          ],
+      body: Container(
+         width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromARGB(255, 41, 199, 201),
+              Color(0xFFE4EfE9),
+            ], // Adjust colors to your liking
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Account page'),
+            ],
+          ),
         ),
       ),
     );

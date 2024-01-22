@@ -4,6 +4,8 @@ import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/others/admin_credentials.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
@@ -19,16 +21,29 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool isTyping = false;
+  // bool isTyping = false;
+  List<AuthenticationModels> items = [];
 
   final formKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    fetchUsers();
+    super.initState();
+  }
+    void fetchUsers() async {
+    List<AuthenticationModels> fetchedItems =
+        await AuthenticationDb.singleton.getUsers();
+    setState(() {
+      items = fetchedItems;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Form(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        // autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Stack(
           children: [
@@ -46,34 +61,34 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            // Positioned(
-            //   left: 20,
-            //   top: 60,
-            //   child: IconButton(
-            //     onPressed: () {
-            //       Navigator.push(
-            //         context,
-            //         MaterialPageRoute(
-            //             builder: (context) => const AuthenticationPage()),
-            //       );
-            //     },
-            //     icon: const Icon(Icons.arrow_back),
-            //   ),
-            // ),
-            // const Positioned(
-            //   left: 35,
-            //   top: 130,
-            //   child: Text(
-            //     'Login',
-            //     style: TextStyle(
-            //       color: Colors.black54,
-            //       fontSize: 25,
-            //       fontWeight: FontWeight.w900,
-            //       decoration: TextDecoration.none,
-            //       // letterSpacing: 1.5,
-            //     ),
-            //   ),
-            // ),
+            Positioned(
+              left: 20,
+              top: 60,
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const AuthenticationPage()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                icon: const Icon(Icons.arrow_back),
+              ),
+            ),
+            const Positioned(
+              left: 35,
+              top: 130,
+              child: Text(
+                'Login',
+                style: TextStyle(
+                  color: Colors.black54,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w900,
+                  decoration: TextDecoration.none,
+                  // letterSpacing: 1.5,
+                ),
+              ),
+            ),
             Positioned(
               left: screenWidth * .07,
               top: 250,
@@ -83,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   togglePasswordVisibility: null,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter the username';
+                      return AppStrings.userename;
                     } else {
                       return null;
                     }
@@ -99,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                 togglePasswordVisibility: null,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the password';
+                    return AppStrings.password;
                   }
 
                   // Check if password is at least 8 characters long
@@ -134,9 +149,9 @@ class _LoginPageState extends State<LoginPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
-                      setState(() {
-                        isTyping = false;
-                      });
+                      // setState(() {
+                      //   isTyping = false;
+                      // });
                       if (_usernameController.text ==
                               AdminCredentials.username &&
                           _passwordController.text ==
@@ -150,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text('Welcome to admin page'),
+                            content: Text(AppStrings.welcomeAdmin),
                             duration: Duration(seconds: 3),
                           ),
                         );
@@ -188,18 +203,20 @@ class _LoginPageState extends State<LoginPage> {
                                   RouteSettings(arguments: enteredUsername),
                             ),
                           );
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(AppStrings.loginSuccess),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
                         } else {
-                          if (_usernameController.text ==
-                                  AdminCredentials.username &&
-                              _passwordController.text ==
-                                  AdminCredentials.password) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Invalid username or password'),
-                                duration: Duration(seconds: 3),
-                              ),
-                            );
-                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(AppStrings.invalidError),
+                              duration: Duration(seconds: 3),
+                            ),
+                          );
                         }
                       }
                     },

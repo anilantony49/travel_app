@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +43,7 @@ class WelcomePage extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.03),
                     text(
                         screenWidth * 0.045,
-                        'Pick your bags, follow your curiosity, and let the adventure unfold one destination at a time.',
+                   AppStrings.welcomeScreenText  ,
                         Colors.white.withOpacity(0.7),
                         null,
                         1.2),

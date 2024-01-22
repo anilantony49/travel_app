@@ -1,18 +1,19 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/widgets.dart';
-import 'package:new_travel_app/show_details_screen.dart/show_detail_description.dart';
 
-class TabOneContent extends StatelessWidget {
+class TabTwoContent extends StatelessWidget {
   // final String category;
   final DestinationModels? selectedItem;
-
-  const TabOneContent({
+  // final EuropeDestinationModels? selectedEuropeItem;
+  // final AfricaDestinationModels? selectedAfricaItem;
+  const TabTwoContent({
     super.key,
     // required this.category,
     required this.selectedItem,
+    // required this.selectedEuropeItem,
+    // required this.selectedAfricaItem
   });
 
   @override
@@ -21,37 +22,6 @@ class TabOneContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 25),
-              child: Container(
-                width: 350,
-                height: 150,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                 "   selectedItem.countryName,",
-                    style: const TextStyle(
-                        color: Constants.blackColor,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-          ),
           Widgets.headingText('Capital'),
           Padding(
             padding: const EdgeInsets.only(left: 15, bottom: 10),
@@ -164,48 +134,6 @@ class TabOneContent extends StatelessWidget {
               },
             ),
           ),
-          Widgets.headingText('Images'),
-          SizedBox(
-            height: 200,
-            child: ListView.builder(
-              itemCount: selectedItem?.images.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => FullScreenImagePageView(
-                            images: selectedItem?.images ?? [],
-                            initialIndex: index,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Hero(
-                      tag: 'imageHero$index', // Unique tag for each image ,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.grey,
-                        ),
-                        width: 200,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            File(selectedItem?.images[index] ?? ''),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
           Widgets.headingText('Official Language'),
           Widgets.section(
             selectedItem?.language ?? 'No Data available',
@@ -218,8 +146,6 @@ class TabOneContent extends StatelessWidget {
           Widgets.section(
             selectedItem?.digitialCode ?? 'No Data available',
           ),
-          // headingText('Mobile Phone Operators'),
-          // section('French')
         ],
       ),
     );

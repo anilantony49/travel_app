@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
@@ -133,9 +134,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'email is required';
+                            return AppStrings.email;
                           } else if (!value.contains("@gmail.com")) {
-                            return 'Please enter a valid email address.with @gmail.com';
+                            return AppStrings.enterValidEmail;
                           }
                           return null;
                         }),
@@ -194,7 +195,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: !_isPasswordVisible,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'password is required';
+                          return AppStrings.password;
                         }
 
                         // Check if password is at least 8 characters long
@@ -244,8 +245,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text(
-                                  'Username already exists. Please choose another username.'),
+                              content: Text(AppStrings.alreadyExists),
                               duration: Duration(seconds: 3),
                             ),
                           );
@@ -275,7 +275,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Account created successfully!'),
+                              content: Text(AppStrings.accountCreated),
                               duration: Duration(seconds: 3),
                             ),
                           );

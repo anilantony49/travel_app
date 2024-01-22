@@ -55,6 +55,9 @@ void addDetails(
     rating: ratingValue!,
     images: imageFileList.map((image) => image.path).toList(),
     capital: countryCapitalController.text,
+    police: int.tryParse(ambulanceEmergencyController.text) ?? 0,
+    ambulance: int.tryParse(ambulanceEmergencyController.text) ?? 0,
+    fire: int.tryParse(fireEmergencyController.text) ?? 0,
   );
 
   DestinationDb.singleton.insertDestination(description);

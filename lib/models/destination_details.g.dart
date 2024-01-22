@@ -31,13 +31,16 @@ class DestinationModelsAdapter extends TypeAdapter<DestinationModels> {
       details: fields[4] as String,
       categories: fields[12] as String,
       rating: fields[13] as double,
+      police: fields[14] as int,
+      ambulance: fields[15] as int,
+      fire: fields[16] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, DestinationModels obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -65,7 +68,13 @@ class DestinationModelsAdapter extends TypeAdapter<DestinationModels> {
       ..writeByte(12)
       ..write(obj.categories)
       ..writeByte(13)
-      ..write(obj.rating);
+      ..write(obj.rating)
+      ..writeByte(14)
+      ..write(obj.police)
+      ..writeByte(15)
+      ..write(obj.ambulance)
+      ..writeByte(16)
+      ..write(obj.fire);
   }
 
   @override
