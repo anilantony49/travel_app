@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,9 +10,9 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.scaffoldColor,
+      backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
-        backgroundColor: Constants.greenColor,
+        backgroundColor: AppColors.greenColor,
         centerTitle: true,
         title: const Text('Profile'),
         actions: [

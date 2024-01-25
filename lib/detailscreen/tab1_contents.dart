@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/widgets.dart';
-import 'package:new_travel_app/refractedClass/app_full_screen_image.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_full_screen_image.dart';
 
 class TabOneContent extends StatelessWidget {
   final DestinationModels? selectedItem;
@@ -46,7 +46,7 @@ class TabOneContent extends StatelessWidget {
                     child: Text(
                       selectedItem!.details,
                       style: const TextStyle(
-                          color: Constants.blackColor,
+                          color: AppColors.blackColor,
                           fontSize: 15,
                           fontWeight: FontWeight.w500),
                     ),
@@ -80,7 +80,7 @@ class TabOneContent extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6),
-                          color: Colors.grey,
+                          color: AppColors.grey,
                         ),
                         width: 200,
                         child: ClipRRect(

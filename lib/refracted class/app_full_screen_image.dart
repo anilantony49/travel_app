@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+// ignore: depend_on_referenced_packages
 import 'package:photo_view/photo_view.dart';
+// ignore: depend_on_referenced_packages
 import 'package:photo_view/photo_view_gallery.dart';
 
 
@@ -32,7 +35,7 @@ class FullScreenImagePageView extends StatelessWidget {
         scrollPhysics: const BouncingScrollPhysics(),
         pageController: PageController(initialPage: initialIndex),
         backgroundDecoration: const BoxDecoration(
-          color: Colors.black,
+          color:AppColors.black,
         ),
       ),
     );

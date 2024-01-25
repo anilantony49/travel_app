@@ -7,11 +7,11 @@ import 'package:new_travel_app/models/destination_details.dart';
 
 import 'package:new_travel_app/models/planned_trip.dart';
 
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refractedClass/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/screen/trips/planned_trips.dart';
 import 'package:new_travel_app/screen/trips/show_calender.dart';
 
@@ -40,7 +40,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
   Widget build(BuildContext context) {
     final snackBarController = AnimationController(
       vsync: ScaffoldMessenger.of(context),
-      duration: const Duration(seconds: 3), // Adjust the duration as needed
+      duration: const Duration(seconds:2), // Adjust the duration as needed
     );
 
     return Scaffold(
@@ -57,7 +57,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                     ? widget.selectedPlace ?? ''
                     : 'Trip to ${widget.selectedItem!.countryName}',
                 style: const TextStyle(
-                    color: Constants.blackColor,
+                    color: AppColors.blackColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -68,7 +68,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                   width: 300,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey),
+                      color:AppColors.grey),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.file(
@@ -85,7 +85,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color:AppColors.grey,
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,7 +162,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(AppStrings.editTrip),
-                          duration: Duration(seconds: 3),
+                          duration: Duration(seconds:2),
                         ),
                       );
                     }
@@ -184,7 +184,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(AppStrings.planTrip),
-                          duration: Duration(seconds: 3),
+                          duration: Duration(seconds:2),
                         ),
                       );
                     }
@@ -205,7 +205,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                   },
                   child: const Text(
                     AppStrings.save,
-                    style: TextStyle(color: Constants.greenColor),
+                    style: TextStyle(color: AppColors.greenColor),
                   )),
             ],
           ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refractedClass/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 
 class UsersDetailsPage extends StatefulWidget {
   const UsersDetailsPage({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class _UsersDetailsPageState extends State<UsersDetailsPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('User deleted successfully'),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds:2),
       ),
     );
 

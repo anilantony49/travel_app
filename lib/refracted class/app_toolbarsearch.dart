@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 // ignore: must_be_immutable
 class AppBarwidget extends StatelessWidget implements PreferredSizeWidget {
@@ -25,7 +25,7 @@ class AppBarwidget extends StatelessWidget implements PreferredSizeWidget {
           style: textStyle,
         ),
         centerTitle: true,
-        backgroundColor: AppColor.background,
+        backgroundColor: AppColors.background,
         actions: action,
         elevation: 0,
       ),

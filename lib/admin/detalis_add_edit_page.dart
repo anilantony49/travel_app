@@ -7,11 +7,11 @@ import 'package:new_travel_app/admin/add_details.dart';
 import 'package:new_travel_app/admin/edit_datails.dart';
 import 'package:new_travel_app/db/category_db.dart';
 import 'package:new_travel_app/models/category.dart';
-import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/textfields.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 
 class DetailsAddEditPage extends StatefulWidget {
   final String? initialitemId,
@@ -84,8 +84,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
 
   String selectedImagePath = '';
   String images = '';
-  String? selectedCategories = AppStrings.popularDestination;
-  double? ratingValue = 0;
+  String selectedCategories = AppStrings.popularDestination;
+  double ratingValue = 0;
 
   void selectImages() async {
     final List<XFile> selectedImages = await imagePicker.pickMultiImage();
@@ -185,7 +185,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Constants.greenColor,
+        backgroundColor: AppColors.greenColor,
         title: Text(
             widget.addOrEdit == 'Add' ? 'Add Destination' : 'Edit Destination'),
         actions: [
@@ -213,10 +213,10 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.white70,
+                        color:AppColors.borderColor,
                         width: 4.0,
                       ),
-                      color: Colors.white70,
+                      color:AppColors.borderColor,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
@@ -264,13 +264,14 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                       Container(
                         padding: const EdgeInsets.only(left: 10),
                         decoration: BoxDecoration(
-                            color: Colors.white70,
+                            color:AppColors.borderColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: DropdownButton<String>(
+                          underline: Container(),
                           value: selectedCategories,
                           icon: const Icon(Icons.arrow_drop_down),
                           style: const TextStyle(
-                            color: Colors.black54,
+                            color:AppColors.blackColor,
                           ),
                           items: dropdownItems.map<DropdownMenuItem<String>>(
                             (String value) {
@@ -309,7 +310,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                         height: MediaQuery.of(context).size.width * .12,
                         padding: const EdgeInsets.only(left: 10),
                         decoration: BoxDecoration(
-                            color: Colors.white70,
+                            color:AppColors.borderColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Padding(
                           padding: const EdgeInsets.only(top: 14, left: 10),
@@ -320,21 +321,21 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                               direction: Axis.horizontal,
                               itemCount: 5,
                               itemSize: 20,
-                              minRating: 3,
+                              minRating: 1,
                               initialRating: 3,
                               allowHalfRating: true,
                               ratingWidget: RatingWidget(
                                 full: const Icon(
                                   Icons.star,
-                                  color: Colors.brown,
+                                  color:AppColors.rating,
                                 ),
                                 half: const Icon(
                                   Icons.star_half,
-                                  color: Colors.brown,
+                                  color:AppColors.rating,
                                 ),
                                 empty: const Icon(
                                   Icons.star_border,
-                                  color: Colors.brown,
+                                  color: AppColors.rating,
                                 ),
                               ),
                               onRatingUpdate: (rating) {
@@ -349,12 +350,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               AppSizedBoxes.box1,
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: textfields(
-                  _countryNameController,
-                  'Country Name',
-                  1,
-                  null,
-                ),
+                child: textfields(_countryNameController, 'Country Name', 1,
+                    TextInputType.name),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -362,7 +359,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   _descriptionEditingController,
                   'Description',
                   isExpanded ? null : 2,
-                  null,
+                  TextInputType.name,
                 ),
               ),
               Padding(
@@ -380,7 +377,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                       child: Text(
                         isExpanded ? 'Show less' : 'Show more',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color:AppColors.white,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -398,7 +395,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   height: 115,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Colors.grey),
+                      color:AppColors.grey),
                   child: Stack(children: [
                     GridView.builder(
                       itemCount: imageFileList.length,
@@ -438,7 +435,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white70,
+                              color:AppColors.borderColor,
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
@@ -501,11 +498,11 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: BoxDecoration(
-                        color: Constants.blackColor,
+                        color: AppColors.blackColor,
                         borderRadius: BorderRadius.circular(10)),
                     child: Text("Add More",
                         style: GoogleFonts.nunito(
-                          color: Colors.white70,
+                          color:AppColors.borderColor,
                         )),
                   ),
                 ),
@@ -521,7 +518,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                           padding: const EdgeInsets.all(12.0),
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white70,
+                              color:AppColors.borderColor,
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
@@ -535,13 +532,13 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                             child: TextField(
                               controller: _knownForController[index],
                               style: const TextStyle(
-                                color: Colors.black54,
+                                color:AppColors.blackColor,
                                 fontWeight: FontWeight.w400,
                               ),
                               decoration: InputDecoration(
                                 label: const Text(
                                   'Known For',
-                                  style: TextStyle(color: Colors.black45),
+                                  style: TextStyle(color: AppColors.blackColor),
                                 ),
                                 hintStyle: TextStyle(
                                   color: Colors.black.withOpacity(0.3),
@@ -585,11 +582,11 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     decoration: BoxDecoration(
-                        color: Constants.blackColor,
+                        color: AppColors.blackColor,
                         borderRadius: BorderRadius.circular(10)),
                     child: Text("Add More",
                         style: GoogleFonts.nunito(
-                          color: Colors.white70,
+                          color: AppColors.borderColor,
                         )),
                   ),
                 ),
@@ -600,8 +597,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 child: textfields(
                   _countryCapitalController,
                   'Capital',
-                  1,
-                  null,
                 ),
               ),
               AppSizedBoxes.box1,
@@ -610,8 +605,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 child: textfields(
                   _languageController,
                   'Language',
-                  1,
-                  null,
                 ),
               ),
               AppSizedBoxes.box1,
@@ -620,29 +613,19 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 child: textfields(
                   _currencyController,
                   'Currency',
-                  1,
-                  null,
                 ),
               ),
               AppSizedBoxes.box1,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
-                  _digitalCodeController,
-                  'Dial Code',
-                  1,
-                  null,
-                ),
+                    _digitalCodeController, 'Dial Code', 1, TextInputType.name),
               ),
               AppSizedBoxes.box1,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
-                  _wheatherController,
-                  'weather',
-                  5,
-                  null,
-                ),
+                    _wheatherController, 'weather', 5, TextInputType.name),
               ),
               AppSizedBoxes.box1,
               Padding(
@@ -680,89 +663,67 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 child: ElevatedButton.icon(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(
-                        Constants.greenColor,
+                        AppColors.greenColor,
                       ), // Set your desired background color
                     ),
                     onPressed: () async {
-                      widget.addOrEdit == 'Add'
-                          ? addDetails(
-                              context,
-                              widget.addOrEdit ?? '',
-                              widget.initialitemId ?? '',
-                              widget.initialCountryName ?? '',
-                              widget.initialDescription ?? '',
-                              widget.initialImagePath ?? '',
-                              widget.initialImages ?? '',
-                              widget.initialCountryCapital ?? '',
-                              widget.initialMajorCities ?? '',
-                              widget.initialknownFor ?? '',
-                              widget.initialLanguage ?? '',
-                              widget.initialcurrency ?? '',
-                              widget.initialDialCode ?? '',
-                              widget.initialWeather ?? '',
-                              widget.initialPoliceNumber ?? '',
-                              widget.initialAmbulanceNumber ?? '',
-                              widget.initialFireNumber ?? '',
-                              _descriptionEditingController,
-                              _countryNameController,
-                              _languageController,
-                              _currencyController,
-                              _digitalCodeController,
-                              _wheatherController,
-                              _countryCapitalController,
-                              _policeEmergencyController,
-                              _ambulanceEmergencyController,
-                              _fireEmergencyController,
-                              _majorCitiesController,
-                              _knownForController,
-                              imageFileList,
-                              selectedImagePath,
-                              images,
-                              selectedCategories,
-                              ratingValue)
-                          : editDetails(
-                              context,
-                              widget.addOrEdit ?? '',
-                              widget.initialitemId ?? '',
-                              widget.initialCountryName ?? '',
-                              widget.initialDescription ?? '',
-                              widget.initialImagePath ?? '',
-                              widget.initialImages ?? '',
-                              widget.initialCountryCapital ?? '',
-                              widget.initialMajorCities ?? '',
-                              widget.initialknownFor ?? '',
-                              widget.initialLanguage ?? '',
-                              widget.initialcurrency ?? '',
-                              widget.initialDialCode ?? '',
-                              widget.initialWeather ?? '',
-                              widget.initialPoliceNumber ?? '',
-                              widget.initialAmbulanceNumber ?? '',
-                              widget.initialFireNumber ?? '',
-                              _descriptionEditingController,
-                              _countryNameController,
-                              _languageController,
-                              _currencyController,
-                              _digitalCodeController,
-                              _wheatherController,
-                              _countryCapitalController,
-                              _policeEmergencyController,
-                              _ambulanceEmergencyController,
-                              _fireEmergencyController,
-                              _majorCitiesController,
-                              _knownForController,
-                              imageFileList,
-                              selectedImagePath,
-                              images,
-                              selectedCategories,
-                              ratingValue);
+                      if (selectedImagePath.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Please select an image.'),
+                            duration: Duration(seconds:2),
+                          ),
+                        );
+                      } else {
+                        widget.addOrEdit == 'Add'
+                            ? addDetails(
+                                context,
+                                _descriptionEditingController,
+                                _countryNameController,
+                                _languageController,
+                                _currencyController,
+                                _digitalCodeController,
+                                _wheatherController,
+                                _countryCapitalController,
+                                _policeEmergencyController,
+                                _ambulanceEmergencyController,
+                                _fireEmergencyController,
+                                _majorCitiesController,
+                                _knownForController,
+                                imageFileList,
+                                selectedImagePath,
+                                images,
+                                selectedCategories!,
+                                ratingValue)
+                            : editDetails(
+                                context,
+                                widget.initialitemId!,
+                                _descriptionEditingController,
+                                _countryNameController,
+                                _languageController,
+                                _currencyController,
+                                _digitalCodeController,
+                                _wheatherController,
+                                _countryCapitalController,
+                                _policeEmergencyController,
+                                _ambulanceEmergencyController,
+                                _fireEmergencyController,
+                                _majorCitiesController,
+                                _knownForController,
+                                imageFileList,
+                                selectedImagePath,
+                                images,
+                                selectedCategories,
+                                ratingValue);
+                      }
                     },
                     icon: Icon(
                       (widget.addOrEdit == 'Add' ? Icons.save : Icons.edit),
-                      color: Constants.blackColor,
+                      color: AppColors.blackColor,
                     ),
                     label: Text(
                       widget.addOrEdit == 'Add' ? 'Add' : 'Edit',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color:AppColors.white),
                     )),
               )
             ],
@@ -833,12 +794,12 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('categoey deleted successfully'),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds:2),
       ),
     );
     setState(() {
       dropdownItems.remove(id); // Update dropdown items directly
-      selectedCategories = dropdownItems.isEmpty ? null : dropdownItems.first;
+      selectedCategories = dropdownItems.first;
       // FocusScope.of(context).unfocus();
     });
 

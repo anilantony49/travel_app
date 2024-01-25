@@ -3,25 +3,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/admin/destinations_screen.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 
 void addDetails(
     BuildContext context,
-    String countryName,
-    String initialItemId,
-    String initialCountryName,
-    String initialDescription,
-    String initialImagePath,
-    String initialImages,
-    String initialCountryCapital,
-    String initialMajorCities,
-    String initialknownFor,
-    String initialLanguage,
-    String initialcurrency,
-    String initialDialCode,
-    String initialWeather,
-    String initialPoliceNumber,
-    String initialAmbulanceNumber,
-    String initialFireNumber,
     TextEditingController descriptionEditingController,
     TextEditingController countryNameController,
     TextEditingController languageController,
@@ -37,8 +22,8 @@ void addDetails(
     List<XFile> imageFileList,
     String selectedImagePath,
     String images,
-    String? selectedCategories,
-    double? ratingValue) {
+    String selectedCategories,
+    double ratingValue) {
   final description = DestinationModels(
     id: DateTime.now().millisecondsSinceEpoch.toString(),
     countryName: countryNameController.text,
@@ -51,8 +36,8 @@ void addDetails(
     digitialCode: digitalCodeController.text,
     weather: wheatherController.text,
     details: descriptionEditingController.text,
-    categories: selectedCategories!,
-    rating: ratingValue!,
+    categories: selectedCategories,
+    rating: ratingValue,
     images: imageFileList.map((image) => image.path).toList(),
     capital: countryCapitalController.text,
     police: int.tryParse(ambulanceEmergencyController.text) ?? 0,
@@ -68,22 +53,22 @@ void addDetails(
     MaterialPageRoute(builder: (context) => const DestintationScreen()),
   );
 
-  descriptionEditingController.text = '';
-  countryNameController.text = '';
-  countryCapitalController.text = '';
-  currencyController.text = '';
-  digitalCodeController.text = '';
-  languageController.text = '';
-  wheatherController.text = '';
-  policeEmergencyController.text = '';
-  ambulanceEmergencyController.text = '';
-  fireEmergencyController.text = '';
+  descriptionEditingController.clear();
+  countryNameController.clear();
+  countryCapitalController.clear();
+  currencyController.clear();
+  digitalCodeController.clear();
+  languageController.clear();
+  wheatherController.clear();
+  policeEmergencyController.clear();
+  ambulanceEmergencyController.clear();
+  fireEmergencyController.clear();
 
   FocusScope.of(context).unfocus();
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
-      content: Text('Details added successfully!'),
-      duration: Duration(seconds: 3),
+      content: Text(AppStrings.addMessage),
+      duration: Duration(seconds: 2),
     ),
   );
 }

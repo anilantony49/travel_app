@@ -4,9 +4,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/planned_trip.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedClass/app_rating.dart';
-import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_rating.dart';
+import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
 import 'package:new_travel_app/screen/trips/plan_edit_trip.dart';
 
 class PlannedTrip extends StatefulWidget {
@@ -47,7 +47,7 @@ class _PlannedTripState extends State<PlannedTrip> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Trip deleted successfully'),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds:2),
       ),
     );
 
@@ -58,7 +58,7 @@ class _PlannedTripState extends State<PlannedTrip> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.greenColor,
+        backgroundColor: AppColors.greenColor,
         centerTitle: true,
         title: const Text('Planned Trips'),
       ),
@@ -87,7 +87,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                   ),
                   Text(
                     'No Trip Planned',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(color:AppColors.grey),
                   )
                 ],
               ))
@@ -142,7 +142,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                                   // color: const Color.fromARGB(255, 94, 8, 8),
                                   boxShadow: const [
                                     BoxShadow(
-                                      color: Colors.grey,
+                                      color:AppColors.grey,
                                       blurRadius: 2,
                                       offset: Offset(0, 2),
                                     ),
@@ -162,7 +162,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                                         child: Icon(
                                           Icons.image,
                                           size: 40,
-                                          color: Colors.white,
+                                          color:AppColors.white,
                                         ),
                                       ),
                               ),
@@ -175,13 +175,13 @@ class _PlannedTripState extends State<PlannedTrip> {
                                     children: [
                                       const Icon(
                                         Icons.calendar_month_rounded,
-                                        color: Constants.blackColor,
+                                        color: AppColors.blackColor,
                                         size: 18,
                                       ),
                                       Text(
                                         '  ${plannedTrip.date}',
                                         style: const TextStyle(
-                                            color: Constants.blackColor),
+                                            color: AppColors.blackColor),
                                       ),
                                     ],
                                   ),
@@ -192,7 +192,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                                   Rating(
                                     itemSize: 15,
                                     initialRating:
-                                        widget.selectedItem?.rating ?? 0,
+                                        widget.selectedItem?.rating ?? 3,
                                   )
                                 ],
                               ),

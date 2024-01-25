@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/db/authentication_db.dart';
-import 'package:new_travel_app/main.dart';
-import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
-import 'package:new_travel_app/screen/authentication/authentication_page.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20function/app_login_signup_ui.dart';
+import 'package:new_travel_app/refracted%20function/app_password_validator.dart';
+import 'package:new_travel_app/refracted%20function/app_signupFunction.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
-import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-// TextEditingController _firstnameController = TextEditingController();
-TextEditingController _emailController = TextEditingController();
-TextEditingController _usernameController = TextEditingController();
-TextEditingController _passwordController = TextEditingController();
-bool _isPasswordVisible = false;
+import 'package:new_travel_app/widgets/text_field.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -21,14 +14,12 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final _formKey = GlobalKey<FormState>();
+TextEditingController _emailController = TextEditingController();
+TextEditingController _usernameController = TextEditingController();
+TextEditingController _passwordController = TextEditingController();
 
-  void _passwordVisibility() {
-    setState(() {
-      _isPasswordVisible = !_isPasswordVisible;
-    });
-  }
+class _SignUpPageState extends State<SignUpPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,193 +30,48 @@ class _SignUpPageState extends State<SignUpPage> {
         key: _formKey,
         child: Stack(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage(
-                    "assets/image/background_image.jpg",
-                  ),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.7),
-                    BlendMode.dstATop,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              left: 20,
-              top: 60,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AuthenticationPage()),
-                  );
-                },
-                icon: const Icon(Icons.arrow_back),
-              ),
-            ),
-            const Positioned(
-              left: 35,
-              top: 130,
-              child: Text(
-                'Sign Up',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontSize: 25,
-                  fontWeight: FontWeight.w900,
-                  decoration: TextDecoration.none,
-                  // letterSpacing: 1.5,
-                ),
-              ),
+            textWidget(
+              context,
+              AppStrings.signUpBackgroundImage,
+              'Sign Up',
             ),
             Positioned(
                 left: screenWidth * .07,
                 top: 280,
-                child: textfield(
-                  screenWidth,
-                  _usernameController,
-                  'Username',
-                  'username is required',
-                  TextInputType.name,
-                )),
+                child: CustomInputField(
+                    controller: _usernameController,
+                    label: 'Username',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.userename;
+                      } else {
+                        return null;
+                      }
+                    })),
             Positioned(
                 left: screenWidth * .07,
                 top: 360,
-                child: SizedBox(
-                  width: screenWidth * 0.85,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white70, // Set the background color
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                            color:
-                                Colors.black.withOpacity(0.2), // Shadow color
-                            spreadRadius: 2, // Spread radius
-                            blurRadius: 5, // Blur radius
-                            offset: const Offset(0, 2)),
-                      ],
-                    ),
-                    child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        keyboardType: TextInputType.emailAddress,
-                        controller: _emailController,
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        decoration: InputDecoration(
-                          label: const Text(
-                            'email',
-                            style: TextStyle(color: Colors.black45),
-                          ),
-
-                          hintStyle: TextStyle(
-                            color: Colors.black
-                                .withOpacity(0.3), // Set hint text color
-                            // fontWeight: FontWeight.w700,
-                          ),
-                          border: InputBorder.none, // Remove the default border
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 15),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return AppStrings.email;
-                          } else if (!value.contains("@gmail.com")) {
-                            return AppStrings.enterValidEmail;
-                          }
-                          return null;
-                        }),
-                  ),
-                )),
+                child: CustomInputField(
+                    controller: _emailController,
+                    label: 'email',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return AppStrings.email;
+                      } else if (!value.contains(AppStrings.gmailcom)) {
+                        return AppStrings.enterValidEmail;
+                      }
+                      return null;
+                    })),
             Positioned(
               left: screenWidth * .07,
               top: 440,
-              child: SizedBox(
-                width: screenWidth * 0.85,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: TextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: _passwordController,
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: _passwordVisibility,
-                          icon: _isPasswordVisible
-                              ? const Icon(
-                                  Icons.visibility,
-                                  color: Colors.black45,
-                                )
-                              : const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.black45,
-                                ),
-                        ),
-                        label: const Text(
-                          'Password',
-                          style: TextStyle(color: Colors.black45),
-                        ),
-                        hintStyle: TextStyle(
-                          color: Colors.black
-                              .withOpacity(0.3), // Set hint text color
-                        ),
-                        border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                      obscureText: !_isPasswordVisible,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppStrings.password;
-                        }
-
-                        // Check if password is at least 8 characters long
-                        if (value.length < 8) {
-                          return 'Password must be at least 8 characters long';
-                        }
-
-                        // Check if password contains at least one numeric number
-                        if (!value.contains(RegExp(r'[0-9]'))) {
-                          return 'must contain at least one numeric number';
-                        }
-
-                        // Check if password contains at least one uppercase letter
-                        if (!value.contains(RegExp(r'[A-Z]'))) {
-                          return 'must contain at least one uppercase letter';
-                        }
-
-                        // Check if password contains at least one lowercase letter
-                        if (!value.contains(RegExp(r'[a-z]'))) {
-                          return 'must contain at least one lowercase letter';
-                        }
-
-                        // Check if password contains at least one special character (e.g., '@')
-                        if (!value.contains(RegExp(r'[@,!,#,$,^,%,&,*]'))) {
-                          return 'must contain at least one special character (e.g., @)';
-                        }
-                        // If all conditions are met, return null (indicating a valid password)
-                        return null;
-                      }),
-                ),
+              child: CustomInputField(
+                controller: _passwordController,
+                label: 'Password',
+                isPassword: true,
+                validator: (value) {
+                  return validatePassword(value!);
+                },
               ),
             ),
             Positioned(
@@ -235,64 +81,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        // Check if the username already exists
-                        bool usernameExists = await AuthenticationDb.singleton
-                            .usernameExists(_usernameController.text);
-
-                        if (usernameExists) {
-                          // Username already exists, show an error SnackBar
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(AppStrings.alreadyExists),
-                              duration: Duration(seconds: 3),
-                            ),
-                          );
-                        } else {
-                          // Username doesn't exist, proceed with sign-up
-                          final users = AuthenticationModels(
-                            id: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            username: _usernameController.text,
-                          );
-
-                          AuthenticationDb.singleton.insertUsers(users);
-                          // Clear the text fields
-                          // _firstnameController.text = '';
-
-                          _usernameController.text = '';
-                          _emailController.text = '';
-                          _passwordController.text = '';
-
-                          // Unfocus the text fields to hide the keyboard
-                          // ignore: use_build_context_synchronously
-                          FocusScope.of(context).unfocus();
-
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(AppStrings.accountCreated),
-                              duration: Duration(seconds: 3),
-                            ),
-                          );
-                          final sharedpref =
-                              await SharedPreferences.getInstance();
-                          sharedpref.setBool(saveKey, true);
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BottomNavigation(),
-                              settings:
-                                  RouteSettings(arguments: users.username),
-                            ),
-                          );
-                        }
-                      }
+                      signUpFunction(context, _usernameController,
+                          _emailController, _passwordController, _formKey);
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 8,
@@ -311,8 +101,8 @@ class _SignUpPageState extends State<SignUpPage> {
                 left: 85,
                 bottom: 180,
                 child: Text(
-                  "Already have an account?",
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  AppStrings.alreadyHaveAccount,
+                  style: TextStyle(fontSize: 14, color: AppColors.blackColor),
                 )),
             Positioned(
                 right: 100,
@@ -332,54 +122,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 ))
           ],
         ),
-      ),
-    );
-  }
-
-  Widget textfield(double screenWidth, TextEditingController controller,
-      String label, String message, TextInputType keyboardType) {
-    return SizedBox(
-      width: screenWidth * 0.85,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white70, // Set the background color
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.2), // Shadow color
-                spreadRadius: 2, // Spread radius
-                blurRadius: 5, // Blur radius
-                offset: const Offset(0, 2)),
-          ],
-        ),
-        child: TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            keyboardType: keyboardType,
-            controller: controller,
-            style: const TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w400,
-            ),
-            decoration: InputDecoration(
-              label: Text(
-                label,
-                style: const TextStyle(color: Colors.black45),
-              ),
-
-              hintStyle: TextStyle(
-                color: Colors.black.withOpacity(0.3), // Set hint text color
-                // fontWeight: FontWeight.w700,
-              ),
-              border: InputBorder.none, // Remove the default border
-              contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-            ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return message;
-              } else {
-                return null;
-              }
-            }),
       ),
     );
   }

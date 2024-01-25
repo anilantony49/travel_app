@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 class CustomInputField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  final bool isPassword;
-  final bool isPasswordVisible;
-  final Function()? togglePasswordVisibility;
-  // final Function(String?) validator;
+  final bool? isPassword;
+  final bool? isPasswordVisible;
   final String? Function(String?)? validator;
 
   const CustomInputField({
@@ -16,7 +14,6 @@ class CustomInputField extends StatefulWidget {
     required this.label,
     this.isPassword = false,
     this.isPasswordVisible = false,
-    required this.togglePasswordVisibility,
     required this.validator,
   }) : super(key: key);
 
@@ -34,11 +31,11 @@ class _CustomInputFieldState extends State<CustomInputField> {
       width: screenWidth * 0.85,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white70,
+          color:AppColors.borderColor,
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color:AppColors.black.withOpacity(0.2),
               spreadRadius: 2,
               blurRadius: 5,
               offset: const Offset(0, 2),
@@ -49,11 +46,11 @@ class _CustomInputFieldState extends State<CustomInputField> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
           style: const TextStyle(
-            color: Constants.blackColor,
+            color: AppColors.blackColor,
             fontWeight: FontWeight.w400,
           ),
           decoration: InputDecoration(
-            suffixIcon: widget.isPassword
+            suffixIcon: widget.isPassword!
                 ? IconButton(
                     onPressed: () {
                       setState(() {
@@ -62,22 +59,22 @@ class _CustomInputFieldState extends State<CustomInputField> {
                     },
                     icon: _isPasswordVisible
                         ? const Icon(Icons.visibility,
-                            color: Constants.blackColor)
+                            color: AppColors.blackColor)
                         : const Icon(Icons.visibility_off,
-                            color: Constants.blackColor),
+                            color: AppColors.blackColor),
                   )
                 : null,
             label: Text(
               widget.label,
-              style: const TextStyle(color: Constants.blackColor),
+              style: const TextStyle(color: AppColors.blackColor),
             ),
             hintStyle: TextStyle(
-              color: Colors.black.withOpacity(0.3),
+              color: AppColors.black.withOpacity(0.3),
             ),
             border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(horizontal: 15),
           ),
-          obscureText: widget.isPassword && !_isPasswordVisible,
+          obscureText: widget.isPassword! && !_isPasswordVisible,
           validator: widget.validator,
         ),
       ),

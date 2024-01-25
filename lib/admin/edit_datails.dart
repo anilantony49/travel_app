@@ -5,22 +5,8 @@ import 'package:new_travel_app/models/destination_details.dart';
 
 void editDetails(
     BuildContext context,
-    String countryName,
     String initialItemId,
-    String initialCountryName,
-    String initialDescription,
-    String initialImagePath,
-    String initialImages,
-    String initialCountryCapital,
-    String initialMajorCities,
-    String initialknownFor,
-    String initialLanguage,
-    String initialcurrency,
-    String initialDialCode,
-    String initialWeather,
-    String initialPoliceNumber,
-    String initialAmbulanceNumber,
-    String initialFireNumber,
+   
     TextEditingController descriptionEditingController,
     TextEditingController countryNameController,
     TextEditingController languageController,

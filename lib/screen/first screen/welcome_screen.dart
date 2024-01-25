@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,7 +20,7 @@ class WelcomePage extends StatelessWidget {
               image: const AssetImage('assets/image/welcome_image.png'),
               fit: BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.7),
+              AppColors.black.withOpacity(0.7),
                 BlendMode.dstATop,
               ),
             ),
@@ -61,19 +62,19 @@ class WelcomePage extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(screenWidth * 0.04),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color:AppColors.white,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
                           Icons.arrow_forward_ios,
-                          color: Colors.black54,
+                          color: AppColors.blackColor,
                           size: screenWidth * 0.04,
                         ),
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.005),
                     text(screenWidth * 0.04, "Let's Start",
-                        Colors.white.withOpacity(0.7), null, 1.2),
+                        AppColors.white.withOpacity(0.7), null, 1.2),
                   ],
                 ),
               ),

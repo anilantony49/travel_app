@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 
@@ -19,7 +19,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   void initState() {
     super.initState();
     // Auto slide every 3 seconds
-    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds:2), (Timer timer) {
       if (_currentPage < 2) {
         _currentPage++;
       } else {
@@ -27,7 +27,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds:200),
         curve: Curves.easeInOut,
       );
     });
@@ -92,17 +92,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               textWidget(
                 'Plan your Trip',
                 25,
-                Constants.blackColor,
+                AppColors.blackColor,
                 FontWeight.w900,
               ),
               height,
               textWidget(
                 'Custom and fast planning',
                 13,
-                Constants.blackColor,
+                AppColors.blackColor,
                 null,
               ),
-              textWidget('With a low price', 13, Constants.blackColor, null),
+              textWidget('With a low price', 13, AppColors.blackColor, null),
               SizedBox(
                 height: screenHeight * 0.09,
               ),

@@ -6,12 +6,14 @@ import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/category.dart';
 
 import 'package:new_travel_app/models/destination_details.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refractedFunction/app_functions.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
-import 'package:new_travel_app/screen/screen_home/pageview_image.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20function/app_functions.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/screen/home/pageview_image.dart';
+import 'package:new_travel_app/screen/home/search_screen.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -21,10 +23,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<DestinationModels> items = [];
-  // List<CategoryModels> newiItems = [];
   List<String> newiItems = [];
 
   final PageController _pageController = PageController();
+  // TextEditingController _searchController = TextEditingController();
+
   int _currentPage = 0;
   Timer? _timer;
   @override
@@ -42,7 +45,7 @@ class _HomePageState extends State<HomePage> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
       );
     });
@@ -63,6 +66,7 @@ class _HomePageState extends State<HomePage> {
       newiItems = fetchedItems.map((category) => category.category).toList();
     });
   }
+
   @override
   void dispose() {
     _timer
@@ -88,7 +92,7 @@ class _HomePageState extends State<HomePage> {
   ];
   int _currentSuggestionIndex = 0;
   void startHintTextTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (mounted) {
         setState(() {
           if (_currentSuggestionIndex < suggestions.length - 1) {
@@ -116,7 +120,7 @@ class _HomePageState extends State<HomePage> {
         CustomScrollView(
           slivers: [
             SliverAppBar(
-                backgroundColor: Constants.greenColor,
+                backgroundColor: AppColors.greenColor,
                 stretch: true,
                 automaticallyImplyLeading: false,
                 expandedHeight: 300.0,
@@ -158,7 +162,7 @@ class _HomePageState extends State<HomePage> {
                             'Hi $usesrName',
                             style: const TextStyle(
                                 fontSize: 25,
-                                color: Colors.white,
+                                color: AppColors.white,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -175,45 +179,53 @@ class _HomePageState extends State<HomePage> {
                 title: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                  child: SizedBox(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ], // Set border radius if needed
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.borderColor,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: const Offset(0, 2),
+                        ),
+                      ], // Set border radius if needed
+                    ),
+                    child: TextFormField(
+                      textInputAction: TextInputAction.search,
+                      // controller: _searchController,
+                      style: const TextStyle(
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.w400,
                       ),
-                      child: TextFormField(
-                        // controller: _usernameController,
-                        style: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        decoration: InputDecoration(
-                          icon: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 40,
-                              top: 3,
-                            ),
-                            child: Icon(
+                      decoration: InputDecoration(
+                        icon: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 40,
+                            top: 3,
+                          ),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SearchScreen(destination: items)),
+                              );
+                            },
+                            child: const Icon(
                               Icons.search,
-                              color: Constants.greenColor,
+                              color: AppColors.greenColor,
                             ),
                           ),
-                          hintText: suggestions[_currentSuggestionIndex],
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.9),
-                          ),
-                          border: InputBorder.none,
-                          contentPadding:
-                              const EdgeInsets.symmetric(horizontal: 15),
                         ),
+                        hintText: suggestions[_currentSuggestionIndex],
+                        hintStyle: TextStyle(
+                          color: AppColors.black.withOpacity(0.9),
+                        ),
+                        border: InputBorder.none,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 15),
                       ),
                     ),
                   ),

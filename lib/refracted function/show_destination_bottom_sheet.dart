@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 void showDestinationBottomSheet(
   BuildContext context,
@@ -39,16 +39,16 @@ void showDestinationBottomSheet(
                 ), 
               );
             },
-            leading: const Icon(Icons.edit_square, color: Constants.greenColor),
-            title: const Text('Edit item', style: TextStyle(color: Constants.blackColor)),
+            leading: const Icon(Icons.edit_square, color: AppColors.greenColor),
+            title: const Text('Edit item', style: TextStyle(color: AppColors.blackColor)),
           ),
           ListTile(
             onTap: () {
               deleteCountryAndShowSnackbar(context,itemId, fetchCategory);
               Navigator.pop(context);
             },
-            leading: const Icon(Icons.delete, color: Constants.greenColor),
-            title: const Text('Delete item', style: TextStyle(color: Constants.blackColor)),
+            leading: const Icon(Icons.delete, color: AppColors.greenColor),
+            title: const Text('Delete item', style: TextStyle(color: AppColors.blackColor)),
           ),
         ],
       );
@@ -63,7 +63,7 @@ void deleteCountryAndShowSnackbar(BuildContext context,String itemId, Function f
   ScaffoldMessenger.of(context).showSnackBar(
     const SnackBar(
       content: Text('Country deleted successfully'),
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds:2),
     ),
   );
 

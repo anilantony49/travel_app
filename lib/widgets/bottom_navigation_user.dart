@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/screen/account_page.dart';
-import 'package:new_travel_app/favorite/favorite_page.dart';
-import 'package:new_travel_app/screen/screen_home/home_page.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/screen/account/account_page.dart';
+import 'package:new_travel_app/screen/favorite/favorite_page.dart';
+import 'package:new_travel_app/screen/home/home_page.dart';
 import 'package:new_travel_app/screen/trips/planned_trips.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -32,13 +32,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.scaffoldColor,
+      backgroundColor: AppColors.scaffoldColor,
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         unselectedFontSize: 10,
         showUnselectedLabels: true,
-        selectedItemColor: Constants.greenColor,
-        unselectedItemColor: Constants.blackColor,
+        selectedItemColor: AppColors.greenColor,
+        unselectedItemColor: AppColors.blackColor,
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

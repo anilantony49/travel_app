@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
-import 'package:new_travel_app/screen/screen_home/image_container.dart';
-import 'package:new_travel_app/screen/screen_home/title_text.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
+import 'package:new_travel_app/screen/home/image_container.dart';
+import 'package:new_travel_app/screen/home/title_text.dart';
 
 Widget animatedGreenBar(int index, int currentPage) {
   return AnimatedContainer(
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 2),
     // curve: Curves.linear,
     margin: const EdgeInsets.all(5),
     width: 25,
     height: 3,
     decoration: BoxDecoration(
-      color: currentPage == index ? const Color(0xFF00CEC9) : Colors.grey,
+      color: currentPage == index ? AppColors.greenColor : AppColors.grey,
     ),
   );
 }
@@ -42,7 +42,7 @@ List<Widget> generateCategoryWidgets(
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.red,
+                color: AppColors.red,
               ),
             ),
           ),
@@ -70,21 +70,18 @@ Widget emergencyServices(String text, String number, IconData icon) {
           children: [
             Icon(icon),
             AppSizedBoxes.box8,
-            // const SizedBox(
-            //   width: 10,
-            // ),
             Text(
               text,
               style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Constants.blackColor),
+                  color: AppColors.blackColor),
             ),
             const Spacer(),
             Text(number,
                 style: const TextStyle(
                     fontSize: 30,
-                    color: Colors.purple,
+                    color: AppColors.purple,
                     fontWeight: FontWeight.w500))
           ],
         ),
@@ -101,7 +98,7 @@ Widget headingText(String text) {
       style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w500,
-          color: Constants.blackColor),
+          color: AppColors.blackColor),
     ),
   );
 }
@@ -112,7 +109,7 @@ Widget section(String text) {
     child: Text(
       text,
       style: const TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          color: AppColors.black, fontSize: 20, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -142,7 +139,7 @@ Future<void> showEditCategoryDialog(
           ElevatedButton(
             onPressed: () {
               editCategory(editingController.text);
-              // _editCategory(editingController.text, currentCategory);
+
               Navigator.of(context).pop();
             },
             child: const Text('Edit'),
@@ -150,7 +147,7 @@ Future<void> showEditCategoryDialog(
           ElevatedButton(
             onPressed: () {
               deleteCategory(currentCategory);
-              // deleteCategoryAndShowSnackbar(currentCategory);
+
               Navigator.of(context).pop();
             },
             child: const Text('Delete'),

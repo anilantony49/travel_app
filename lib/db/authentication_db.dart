@@ -54,7 +54,6 @@ class AuthenticationDb implements AuthenticationDbFunctions {
   Future<void> insertUsers(AuthenticationModels value) async {
     final db = await Hive.openBox<AuthenticationModels>(_dbName);
     await db.put(value.id, value);
-    print('data saved');
     refresh();
   }
 

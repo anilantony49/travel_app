@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
 import 'package:new_travel_app/others/widgets.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 class TabTwoContent extends StatelessWidget {
   // final String category;
@@ -35,7 +35,7 @@ class TabTwoContent extends StatelessWidget {
                   child: Text(
                 selectedItem?.capital ?? 'No Data available',
                 style: const TextStyle(
-                    color: Colors.purple,
+                    color:AppColors.purple,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               )),
@@ -75,7 +75,7 @@ class TabTwoContent extends StatelessWidget {
                             child: Text(
                               text,
                               style: const TextStyle(
-                                color: Constants.blackColor,
+                                color: AppColors.blackColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),
@@ -118,7 +118,7 @@ class TabTwoContent extends StatelessWidget {
                             child: Text(
                               text,
                               style: const TextStyle(
-                                color: Constants.blackColor,
+                                color: AppColors.blackColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),

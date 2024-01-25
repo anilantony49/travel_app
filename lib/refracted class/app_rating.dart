@@ -25,7 +25,7 @@ class _RatingState extends State<Rating> {
       ),
       direction: Axis.horizontal,
       itemCount: 5,
-      minRating: 3,
+      minRating: 1,
       itemSize: widget.itemSize,
       initialRating: widget.initialRating,
       allowHalfRating: true,

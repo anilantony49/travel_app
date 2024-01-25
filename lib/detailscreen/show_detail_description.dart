@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/favorites_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/favorites.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refractedClass/app_rating.dart';
-import 'package:new_travel_app/refractedClass/app_tabBar_widget.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20class/app_rating.dart';
+import 'package:new_travel_app/refracted%20class/app_tabBar_widget.dart';
 import 'package:new_travel_app/screen/trips/plan_edit_trip.dart';
 import 'package:new_travel_app/detailscreen/tab1_contents.dart';
 import 'package:new_travel_app/detailscreen/tab2_contents.dart';
@@ -59,7 +59,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Removed from favorite'),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds:2),
       ),
     );
 
@@ -91,7 +91,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                 ),
               ),
               pinned: true,
-              backgroundColor: Constants.greenColor,
+              backgroundColor: AppColors.greenColor,
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
                 title: Padding(
@@ -140,14 +140,14 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Added to the favorite list!'),
-                                duration: Duration(seconds: 3),
+                                duration: Duration(seconds:2),
                               ),
                             );
                             FavoritesDb.singleton.deleteFavorites(favorite.id);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Added to the favorite list!'),
-                                duration: Duration(seconds: 3),
+                                duration: Duration(seconds:2),
                               ),
                             );
                             setState(() {
@@ -163,7 +163,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 const SnackBar(
                                   content:
                                       Text('Removed from the favorite list!'),
-                                  duration: Duration(seconds: 3),
+                                  duration: Duration(seconds:2),
                                 ),
                               );
                             }
@@ -174,7 +174,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             },
                             child: Icon(
                               Icons.favorite,
-                              color: isFavorite ? Colors.red : Colors.white,
+                              color: isFavorite ?AppColors.red:AppColors.white,
                             ),
                           ),
                         ),
@@ -195,7 +195,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                         },
                         child: const Text(
                           'Plan Trip',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: AppColors.white),
                         ),
                       ),
                     ),
@@ -216,7 +216,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
           child: Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color:AppColors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -262,7 +262,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Removed from favorite'),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds:2),
         ),
       );
     } else {
@@ -276,7 +276,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Added to the favorite list!'),
-          duration: Duration(seconds: 3),
+          duration: Duration(seconds:2),
         ),
       );
     }

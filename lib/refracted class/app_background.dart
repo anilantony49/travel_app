@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 class BackgroundColor extends StatelessWidget {
   final Widget child;
@@ -13,9 +14,9 @@ class BackgroundColor extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color.fromARGB(255, 41, 199, 201),
-            Color(0xFFE4EfE9),
-          ], 
+            AppColors.linearGradientColor1,
+            AppColors.linearGradientColor2
+          ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

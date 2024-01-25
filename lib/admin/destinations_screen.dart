@@ -4,11 +4,11 @@ import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedClass/app_background.dart';
-import 'package:new_travel_app/refractedFunction/show_destination_bottom_sheet.dart';
-import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20class/app_background.dart';
+import 'package:new_travel_app/refracted%20function/show_destination_bottom_sheet.dart';
+import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class DestintationScreen extends StatefulWidget {
@@ -44,8 +44,8 @@ class _DestintationScreenState extends State<DestintationScreen> {
     // Show a Snackbar indicating that the user has been deleted
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Country deleted successfully'),
-        duration: Duration(seconds: 3),
+        content: Text(AppStrings.deleteMessage),
+        duration: Duration(seconds:2),
       ),
     );
 
@@ -58,7 +58,7 @@ class _DestintationScreenState extends State<DestintationScreen> {
 
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-            backgroundColor: Constants.greenColor,
+            backgroundColor: AppColors.greenColor,
             onPressed: () {
               Navigator.push(
                   context,
@@ -70,12 +70,12 @@ class _DestintationScreenState extends State<DestintationScreen> {
             child: const Icon(Icons.add)),
         backgroundColor: const Color.fromARGB(255, 234, 227, 227),
         appBar: AppBar(
-          backgroundColor: Constants.greenColor,
+          backgroundColor: AppColors.greenColor,
           centerTitle: true,
           title: const Text(
             AppStrings.destination,
             style: TextStyle(
-                color: Constants.blackColor, fontWeight: FontWeight.bold),
+                color: AppColors.blackColor, fontWeight: FontWeight.bold),
           ),
           actions: [
             PopupMenuButton<String>(
@@ -92,12 +92,12 @@ class _DestintationScreenState extends State<DestintationScreen> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.group, color: Constants.greenColor),
+                        Icon(Icons.group, color: AppColors.greenColor),
 
                         AppSizedBoxes.box8,
                         // SizedBox(width: 10),
                         Text('User Details',
-                            style: TextStyle(color: Constants.blackColor)),
+                            style: TextStyle(color: AppColors.blackColor)),
                       ],
                     ),
                   ),
@@ -113,10 +113,10 @@ class _DestintationScreenState extends State<DestintationScreen> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.exit_to_app, color: Constants.greenColor),
+                        Icon(Icons.exit_to_app, color: AppColors.greenColor),
                         SizedBox(width: 10),
                         Text('Log Out',
-                            style: TextStyle(color: Constants.blackColor)),
+                            style: TextStyle(color: AppColors.blackColor)),
                       ],
                     ),
                   ),
@@ -218,7 +218,7 @@ class _DestintationScreenState extends State<DestintationScreen> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: screenWidth * 0.055,
-                                      color: Constants.blackColor),
+                                      color: AppColors.blackColor),
                                 ),
                               ),
                             ),

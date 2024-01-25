@@ -1,4 +1,5 @@
   import 'package:flutter/material.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 Widget titleText(String text) {
     return SliverList(
@@ -9,7 +10,7 @@ Widget titleText(String text) {
             child: Text(
               text,
               style: const TextStyle(
-                color: Colors.black54,
+                color: AppColors.blackColor,
                 fontSize: 25,
                 fontWeight: FontWeight.w900,
                 decoration: TextDecoration.none,

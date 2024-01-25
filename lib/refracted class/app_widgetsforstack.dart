@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refractedClass/app_textfields_borders.dart';
+import 'package:new_travel_app/refracted%20class/app_textfields_borders.dart';
 
 class AppWidgetsForStack extends StatelessWidget {
   final Widget mainwidget;

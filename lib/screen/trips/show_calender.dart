@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ShowCalender extends StatefulWidget {
@@ -58,7 +58,7 @@ class _ShowCalenderState extends State<ShowCalender> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.greenColor,
+        backgroundColor: AppColors.greenColor,
         centerTitle: true,
         title: const Text('Select Date'),
       ),
@@ -81,7 +81,7 @@ class _ShowCalenderState extends State<ShowCalender> {
               padding: const EdgeInsets.all(8.0),
               child: AnimatedOpacity(
                 opacity: _rangeStart != null && _rangeEnd != null ? 1.0 : 0.3,
-                duration: const Duration(milliseconds: 300),
+                duration: const Duration(milliseconds:200),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(
@@ -94,7 +94,7 @@ class _ShowCalenderState extends State<ShowCalender> {
                   child: const Text(
                     'Pick Date Trip',
                     style: TextStyle(
-                      color:  Colors.black // Set the color when the date is picked
+                      color:AppColors.black // Set the color when the date is picked
                       
                     ),
                   ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/others/contants.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 class Widgets {
   static Widget headingText(String text) {
@@ -10,7 +10,7 @@ class Widgets {
         style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
-            color: Constants.blackColor),
+            color: AppColors.blackColor),
       ),
     );
   }
@@ -21,7 +21,7 @@ class Widgets {
       child: Text(
         text,
         style: const TextStyle(
-            color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color:AppColors.black, fontSize: 20, fontWeight: FontWeight.bold),
       ),
     );
   }

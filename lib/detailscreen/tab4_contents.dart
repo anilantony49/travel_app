@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/others/contants.dart';
-import 'package:new_travel_app/refractedFunction/app_functions.dart';
+import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20function/app_functions.dart';
 
 class TabFourContent extends StatelessWidget {
   final DestinationModels? selectedItem;
@@ -21,7 +21,7 @@ class TabFourContent extends StatelessWidget {
           const Text(
             'Emergency Servises',
             style: TextStyle(
-                color: Constants.blackColor,
+                color: AppColors.blackColor,
                 fontWeight: FontWeight.w500,
                 fontSize: 15),
           ),
