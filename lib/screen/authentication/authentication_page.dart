@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 
@@ -19,7 +20,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
   void initState() {
     super.initState();
     // Auto slide every 3 seconds
-    _timer = Timer.periodic(const Duration(seconds:2), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       if (_currentPage < 2) {
         _currentPage++;
       } else {
@@ -27,7 +28,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       }
       _pageController.animateToPage(
         _currentPage,
-        duration: const Duration(milliseconds:200),
+        duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOut,
       );
     });
@@ -65,15 +66,15 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                     },
                     children: [
                       Image.asset(
-                        'assets/image/authentication_image_1.png',
+                        AppStrings.authenticationPageImageOne,
                         fit: BoxFit.cover,
                       ),
                       Image.asset(
-                        'assets/image/authentication_image_2.png',
+                        AppStrings.authenticationPageImageTwo,
                         fit: BoxFit.cover,
                       ),
                       Image.asset(
-                        'assets/image/authentication_image_3.png',
+                        AppStrings.authenticationPageImageThree,
                         fit: BoxFit.cover,
                       ),
                     ]),

@@ -9,6 +9,7 @@ import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
 import 'package:new_travel_app/refracted%20class/app_widgetsforstack.dart';
 import 'package:new_travel_app/refracted%20class/app_background.dart';
 import 'package:new_travel_app/refracted%20class/app_rating.dart';
+import 'package:new_travel_app/refracted%20widgets/app_data_fetches.dart';
 import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/refracted%20widgets/app_text_styles.dart';
@@ -25,16 +26,22 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    fetchFavorites();
+    DataFetcher.fetchFavorites();
+    // fetchFavorites();
   }
 
-  void fetchFavorites() async {
-    List<FavoritesModels> fetchedItems =
-        await FavoritesDb.singleton.getFavorites();
-    setState(() {
-      items = fetchedItems;
-    });
+  @override
+  void setState(VoidCallback fn) {
+    items = DataFetcher.favoritesItems;
+    super.setState(fn);
   }
+  // void fetchFavorites() async {
+  //   List<FavoritesModels> fetchedItems =
+  //       await FavoritesDb.singleton.getFavorites();
+  //   setState(() {
+  //     items = fetchedItems;
+  //   });
+  // }
 
   void removeFavoritesAndShowSnackbar(String favoriteId) {
     FavoritesDb.singleton.deleteFavorites(favoriteId);
@@ -42,11 +49,11 @@ class _FavoritePageState extends State<FavoritePage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Removed from favorite'),
-        duration: Duration(seconds:2),
+        duration: Duration(seconds: 2),
       ),
     );
 
-    fetchFavorites();
+    DataFetcher.fetchFavorites();
   }
 
   bool isFavorite = false;
@@ -57,7 +64,6 @@ class _FavoritePageState extends State<FavoritePage> {
         appBar: AppBarwidget(
           title: AppStrings.favorite,
         ),
-       
         body: BackgroundColor(
           child: items.isEmpty
               ? const Center(
@@ -70,7 +76,7 @@ class _FavoritePageState extends State<FavoritePage> {
                         size: 100,
                       ),
                       Text(
-                       AppStrings.emptyList,
+                        AppStrings.emptyList,
                         style: TextStyle(color: AppColors.grey),
                       )
                     ],
@@ -88,7 +94,7 @@ class _FavoritePageState extends State<FavoritePage> {
                       ),
                       itemBuilder: (context, index) {
                         final FavoritesModels favorites = items[index];
-          
+
                         return GridTile(
                           child: Column(
                             children: [
@@ -122,7 +128,8 @@ class _FavoritePageState extends State<FavoritePage> {
                                                         child: Icon(
                                                           Icons.image,
                                                           size: 40,
-                                                          color:AppColors.white,
+                                                          color:
+                                                              AppColors.white,
                                                         ),
                                                       ))),
                                         Padding(
@@ -151,7 +158,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                                     },
                                                     icon: const Icon(
                                                         Icons.favorite,
-                                                        color:AppColors.red),
+                                                        color: AppColors.red),
                                                   ),
                                                 ],
                                               ),

@@ -40,7 +40,7 @@ class DestinationListWidget extends StatelessWidget {
               width: 20,
             ),
             Column(
-           crossAxisAlignment:CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   destination.countryName,

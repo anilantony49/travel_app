@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/admin/add_details.dart';
 import 'package:new_travel_app/admin/edit_datails.dart';
@@ -213,10 +212,10 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color:AppColors.borderColor,
+                        color: AppColors.borderColor,
                         width: 4.0,
                       ),
-                      color:AppColors.borderColor,
+                      color: AppColors.borderColor,
                       borderRadius: BorderRadius.circular(15),
                       boxShadow: [
                         BoxShadow(
@@ -246,108 +245,116 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 5),
                         child: Text(
                           AppStrings.selectCategory,
                           // style: Apptext.text2,
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                            color:AppColors.borderColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: DropdownButton<String>(
-                          underline: Container(),
-                          value: selectedCategories,
-                          icon: const Icon(Icons.arrow_drop_down),
-                          style: const TextStyle(
-                            color:AppColors.blackColor,
-                          ),
-                          items: dropdownItems.map<DropdownMenuItem<String>>(
-                            (String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: GestureDetector(
-                                  onLongPress: () async {
-                                    // await showEditCategoryDialog(context, value, (p0) => null, (p0) => null);
-                                    _showEditCategoryDialog(context, value);
-                                  },
-                                  child: Text(value),
-                                ),
-                              );
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          padding: const EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                              color: AppColors.borderColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: DropdownButton<String>(
+                            underline: Container(),
+                            value: selectedCategories,
+                            icon: const Icon(Icons.arrow_drop_down),
+                            style: const TextStyle(
+                              color: AppColors.blackColor,
+                            ),
+                            items: dropdownItems.map<DropdownMenuItem<String>>(
+                              (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: GestureDetector(
+                                    onLongPress: () async {
+                                      _showDeleteCategoryDialog(
+                                        context,
+                                        value,
+                                      );
+                                    },
+                                    child: Text(value),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCategories = newValue.toString();
+                              });
                             },
-                          ).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              selectedCategories = newValue.toString();
-                            });
-                          },
+                          ),
                         ),
                       )
                     ],
                   ),
+                  const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.only(bottom: 5),
                         child: Text(
                           AppStrings.rating,
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * .40,
-                        height: MediaQuery.of(context).size.width * .12,
-                        padding: const EdgeInsets.only(left: 10),
-                        decoration: BoxDecoration(
-                            color:AppColors.borderColor,
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 14, left: 10),
-                          child: RatingBar(
-                              itemPadding: const EdgeInsets.symmetric(
-                                horizontal: 1,
-                              ),
-                              direction: Axis.horizontal,
-                              itemCount: 5,
-                              itemSize: 20,
-                              minRating: 1,
-                              initialRating: 3,
-                              allowHalfRating: true,
-                              ratingWidget: RatingWidget(
-                                full: const Icon(
-                                  Icons.star,
-                                  color:AppColors.rating,
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .40,
+                          height: MediaQuery.of(context).size.width * .12,
+                          padding: const EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                              color: AppColors.borderColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 14, left: 10),
+                            child: RatingBar(
+                                itemPadding: const EdgeInsets.symmetric(
+                                  horizontal: 1,
                                 ),
-                                half: const Icon(
-                                  Icons.star_half,
-                                  color:AppColors.rating,
+                                direction: Axis.horizontal,
+                                itemCount: 5,
+                                itemSize: 20,
+                                minRating: 1,
+                                initialRating: 3,
+                                allowHalfRating: true,
+                                ratingWidget: RatingWidget(
+                                  full: const Icon(
+                                    Icons.star,
+                                    color: AppColors.rating,
+                                  ),
+                                  half: const Icon(
+                                    Icons.star_half,
+                                    color: AppColors.rating,
+                                  ),
+                                  empty: const Icon(
+                                    Icons.star_border,
+                                    color: AppColors.rating,
+                                  ),
                                 ),
-                                empty: const Icon(
-                                  Icons.star_border,
-                                  color: AppColors.rating,
-                                ),
-                              ),
-                              onRatingUpdate: (rating) {
-                                ratingValue = rating;
-                              }),
+                                onRatingUpdate: (rating) {
+                                  ratingValue = rating;
+                                }),
+                          ),
                         ),
                       )
                     ],
                   ),
                 ],
               ),
-              AppSizedBoxes.box1,
+              // AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(_countryNameController, 'Country Name', 1,
@@ -377,7 +384,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                       child: Text(
                         isExpanded ? 'Show less' : 'Show more',
                         style: const TextStyle(
-                          color:AppColors.white,
+                          color: AppColors.white,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -395,7 +402,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   height: 115,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color:AppColors.grey),
+                      color: AppColors.borderColor),
                   child: Stack(children: [
                     GridView.builder(
                       itemCount: imageFileList.length,
@@ -422,176 +429,160 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   ]),
                 ),
               ),
-
-              // CustomListViewBuilder(controllers:  _majorCitiesController, labelText:   'Major Cities', hasDeleteButton: hasDeleteButton)
+              AppSizedBoxes.box5,
               ListView.builder(
-                  itemCount: _majorCitiesController.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
+                itemCount: _majorCitiesController.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color:AppColors.borderColor,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.borderColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: TextField(
+                                      controller: _majorCitiesController[index],
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        label: const Text(
+                                          'Major Cities',
+                                          style: TextStyle(
+                                              color: AppColors.blackColor),
+                                        ),
+                                        hintStyle: TextStyle(
+                                          color: Colors.black.withOpacity(0.3),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: _majorCitiesController[index],
-                              style: const TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w400,
                               ),
-                              decoration: InputDecoration(
-                                label: const Text(
-                                  'Major Cities',
-                                  style: TextStyle(color: Colors.black45),
-                                ),
-                                hintStyle: TextStyle(
-                                  color: Colors.black.withOpacity(0.3),
-                                ),
-                                border: InputBorder.none,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
+                                  setState(() {
+                                    _majorCitiesController
+                                        .add(TextEditingController());
+                                  });
+                                },
                               ),
-                            ),
-                          ),
-                        )),
-                        AppSizedBoxes.box8,
-                        index != 0
-                            ? GestureDetector(
-                                onTap: () {
+                              IconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed: () {
                                   setState(() {
                                     _majorCitiesController[index].clear();
                                     _majorCitiesController[index].dispose();
                                     _majorCitiesController.removeAt(index);
                                   });
                                 },
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Color(0xFF6B74D6),
-                                  size: 35,
-                                ),
-                              )
-                            : const SizedBox()
-                      ],
-                    );
-                  }),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _majorCitiesController.add(TextEditingController());
-                  });
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
                 },
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.blackColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text("Add More",
-                        style: GoogleFonts.nunito(
-                          color:AppColors.borderColor,
-                        )),
-                  ),
-                ),
               ),
               ListView.builder(
-                  itemCount: _knownForController.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        Expanded(
-                            child: Padding(
+                itemCount: _knownForController.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color:AppColors.borderColor,
-                              borderRadius: BorderRadius.circular(8),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.borderColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 5,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    child: TextField(
+                                      controller: _majorCitiesController[index],
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        label: const Text(
+                                          'Known For',
+                                          style: TextStyle(
+                                              color: AppColors.blackColor),
+                                        ),
+                                        hintStyle: TextStyle(
+                                          color: Colors.black.withOpacity(0.3),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ],
-                            ),
-                            child: TextField(
-                              controller: _knownForController[index],
-                              style: const TextStyle(
-                                color:AppColors.blackColor,
-                                fontWeight: FontWeight.w400,
                               ),
-                              decoration: InputDecoration(
-                                label: const Text(
-                                  'Known For',
-                                  style: TextStyle(color: AppColors.blackColor),
-                                ),
-                                hintStyle: TextStyle(
-                                  color: Colors.black.withOpacity(0.3),
-                                ),
-                                border: InputBorder.none,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                              ),
-                            ),
-                          ),
-                        )),
-                        AppSizedBoxes.box1,
-                        index != 0
-                            ? GestureDetector(
-                                onTap: () {
+                              IconButton(
+                                icon: const Icon(Icons.add),
+                                onPressed: () {
                                   setState(() {
-                                    //  listController.add(TextEditingController());
+                                    _majorCitiesController
+                                        .add(TextEditingController());
+                                  });
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.remove),
+                                onPressed: () {
+                                  setState(() {
                                     _knownForController[index].clear();
                                     _knownForController[index].dispose();
                                     _knownForController.removeAt(index);
                                   });
                                 },
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Color(0xFF6B74D6),
-                                  size: 35,
-                                ),
-                              )
-                            : const SizedBox()
-                      ],
-                    );
-                  }),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _knownForController.add(TextEditingController());
-                  });
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
                 },
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
-                    decoration: BoxDecoration(
-                        color: AppColors.blackColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text("Add More",
-                        style: GoogleFonts.nunito(
-                          color: AppColors.borderColor,
-                        )),
-                  ),
-                ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -599,7 +590,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   'Capital',
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -607,7 +598,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   'Language',
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -615,19 +606,19 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   'Currency',
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
                     _digitalCodeController, 'Dial Code', 1, TextInputType.name),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
                     _wheatherController, 'weather', 5, TextInputType.name),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -637,7 +628,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   TextInputType.number,
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -647,7 +638,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   TextInputType.number,
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: textfields(
@@ -657,7 +648,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   TextInputType.number,
                 ),
               ),
-              AppSizedBoxes.box1,
+              AppSizedBoxes.box5,
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: ElevatedButton.icon(
@@ -671,7 +662,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Please select an image.'),
-                            duration: Duration(seconds:2),
+                            duration: Duration(seconds: 2),
                           ),
                         );
                       } else {
@@ -693,7 +684,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                                 imageFileList,
                                 selectedImagePath,
                                 images,
-                                selectedCategories!,
+                                selectedCategories,
                                 ratingValue)
                             : editDetails(
                                 context,
@@ -723,7 +714,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     ),
                     label: Text(
                       widget.addOrEdit == 'Add' ? 'Add' : 'Edit',
-                      style: const TextStyle(color:AppColors.white),
+                      style: const TextStyle(color: AppColors.white),
                     )),
               )
             ],
@@ -733,7 +724,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     );
   }
 
-  Future<void> _showEditCategoryDialog(
+  Future<void> _showDeleteCategoryDialog(
       BuildContext context, String currentCategory) async {
     TextEditingController editingController =
         TextEditingController(text: currentCategory);
@@ -752,13 +743,6 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               },
               child: const Text('Cancel'),
             ),
-            // ElevatedButton(
-            //   onPressed: () {
-            //     _editCategory(editingController.text, currentCategory);
-            //     Navigator.of(context).pop();
-            //   },
-            //   child: const Text('Edit'),
-            // ),
             ElevatedButton(
               onPressed: () {
                 deleteCategoryAndShowSnackbar(currentCategory);
@@ -772,29 +756,14 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
     );
   }
 
-  // void _editCategory(String editedCategory, String currentCategory) async {
-  //   if (editedCategory.isNotEmpty) {
-  //     CategoryModels updatedCategory = CategoryModels(
-  //       id: currentCategory, // Use the currentCategory as the id for updating
-  //       category: editedCategory,
-  //     );
-
-  //     await CategoryDb.singleton.editCategory(updatedCategory, currentCategory);
-
-  //     setState(() {
-  //       updateDropdownItems();
-  //     });
-  //   }
-  // }
-
   void deleteCategoryAndShowSnackbar(String id) async {
     await CategoryDb.singleton.deleteCategory(id);
 
     // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('categoey deleted successfully'),
-        duration: Duration(seconds:2),
+        content: Text('category deleted successfully'),
+        duration: Duration(seconds: 2),
       ),
     );
     setState(() {

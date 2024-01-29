@@ -10,8 +10,6 @@ import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
 Future<void> loginFunction(BuildContext context, TextEditingController username,
     TextEditingController password, GlobalKey<FormState> formKey) async {
   if (username.text == AdminCredentials.username &&
@@ -32,7 +30,7 @@ Future<void> loginFunction(BuildContext context, TextEditingController username,
   } else if (formKey.currentState?.validate() ?? false) {
     // Access the users list from the userNotifier value
     List<AuthenticationModels> users =
-        AuthenticationDb.singleton.userNotifier.value;
+        await AuthenticationDb.singleton.getUsers();
 
     // Replace 'enteredUsername' and 'enteredPassword' with the actual values entered by the user
 
@@ -43,15 +41,28 @@ Future<void> loginFunction(BuildContext context, TextEditingController username,
     bool isUserAuthenticated = users.any((user) =>
         user.username == enteredUsername && user.password == enteredPassword);
 
-    // Clear the text fields
-    username.clear();
-    password.clear();
     // Unfocus the text fields to hide the keyboard
+    // ignore: use_build_context_synchronously
     FocusScope.of(context).unfocus();
 
     if (isUserAuthenticated) {
       final sharedpref = await SharedPreferences.getInstance();
       sharedpref.setBool(saveKey, true);
+
+      // Store the current user's ID in shared preferences
+      String currentUserId = users
+          .firstWhere((user) =>
+              user.username == enteredUsername &&
+              user.password == enteredPassword)
+          .id;
+      String currentUserName = users
+          .firstWhere((user) =>
+              user.username == enteredUsername &&
+              user.password == enteredPassword)
+          .username;
+      sharedpref.setString('current_user_id', currentUserId);
+      sharedpref.setString('current_user_name', currentUserName);
+
       // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
         context,
@@ -60,6 +71,9 @@ Future<void> loginFunction(BuildContext context, TextEditingController username,
           settings: RouteSettings(arguments: enteredUsername),
         ),
       );
+      // Clear the text fields
+      username.clear();
+      password.clear();
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -68,6 +82,7 @@ Future<void> loginFunction(BuildContext context, TextEditingController username,
         ),
       );
     } else {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(AppStrings.invalidError),

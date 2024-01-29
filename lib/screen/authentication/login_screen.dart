@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/admin/destinations_screen.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/others/admin_credentials.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 import 'package:new_travel_app/refracted%20widgets/app_data_fetches.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
@@ -83,25 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (_usernameController.text ==
-                              AdminCredentials.username &&
-                          _passwordController.text ==
-                              AdminCredentials.password) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DestintationScreen(),
-                          ), // Replace YourNextScreen with the actual screen widget you want to navigate to
-                          (route) => false,
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(AppStrings.welcomeAdmin),
-                            duration: Duration(seconds: 3),
-                          ),
-                        );
-                      }
-
                       loginFunction(context, _usernameController,
                           _passwordController, formKey);
                     },

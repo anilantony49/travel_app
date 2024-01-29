@@ -6,7 +6,6 @@ import 'package:new_travel_app/models/destination_details.dart';
 void editDetails(
     BuildContext context,
     String initialItemId,
-   
     TextEditingController descriptionEditingController,
     TextEditingController countryNameController,
     TextEditingController languageController,
@@ -48,16 +47,16 @@ void editDetails(
 
   Navigator.pop(context);
 
-  descriptionEditingController.text = '';
-  countryNameController.text = '';
-  countryCapitalController.text = '';
-  currencyController.text = '';
-  digitalCodeController.text = '';
-  languageController.text = '';
-  wheatherController.text = '';
-  policeEmergencyController.text = '';
-  ambulanceEmergencyController.text = '';
-  fireEmergencyController.text = '';
+  descriptionEditingController.clear();
+  countryNameController.clear();
+  countryCapitalController.clear();
+  currencyController.clear();
+  digitalCodeController.clear();
+  languageController.clear();
+  wheatherController.clear();
+  policeEmergencyController.clear();
+  ambulanceEmergencyController.clear();
+  fireEmergencyController.clear();
   // ignore: use_build_context_synchronously
   FocusScope.of(context).unfocus();
   // ignore: use_build_context_synchronously

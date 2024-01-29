@@ -42,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _usernameController,
                     label: 'Username',
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (value == null ||  value.trim().isEmpty) {
                         return AppStrings.userename;
                       } else {
                         return null;

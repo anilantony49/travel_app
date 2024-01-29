@@ -1,18 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/db/category_db.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
+import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/models/category.dart';
-
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-
 import 'package:new_travel_app/refracted%20class/app_background.dart';
 import 'package:new_travel_app/refracted%20function/app_functions.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/screen/home/pageview_image.dart';
 import 'package:new_travel_app/screen/home/search_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,20 +22,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AuthenticationModels? currentUser;
+
   List<DestinationModels> items = [];
   List<String> newiItems = [];
 
   final PageController _pageController = PageController();
-  // TextEditingController _searchController = TextEditingController();
-
+  late String userName = '';
   int _currentPage = 0;
   Timer? _timer;
   @override
   void initState() {
     super.initState();
+    loadUserName();
     fetchCategory();
     fetchnewCategory();
     startHintTextTimer();
+
     // Auto slide every 3 seconds
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
       if (_currentPage < 2) {
@@ -49,6 +52,37 @@ class _HomePageState extends State<HomePage> {
         curve: Curves.easeInOut,
       );
     });
+  }
+String _greetingMessage() {
+  var hour = DateTime.now().hour;
+  if (hour < 12) {
+    return 'Good morning';
+  } else if (hour < 18) {
+    return 'Good afternoon';
+  } else {
+    return 'Good evening';
+  }
+}
+  Future<void> loadUserName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // String? name = prefs.getString('current_user_name');
+    String? updatedName = prefs.getString('edited_user_name');
+
+    if (updatedName != null) {
+      currentUser =
+          await AuthenticationDb.singleton.getCurrentUser(updatedName);
+      setState(() {
+        userName = updatedName;
+      });
+    } else {
+      String? name = prefs.getString('current_user_name');
+      if (name != null) {
+        currentUser = await AuthenticationDb.singleton.getCurrentUser(name);
+        setState(() {
+          userName = name;
+        });
+      }
+    }
   }
 
   void fetchCategory() async {
@@ -109,7 +143,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final usesrName = ModalRoute.of(context)?.settings.arguments as String?;
     final dropdownItems = [
       ...initialCategories, // Include initial categories
       ...newiItems, // Include newly created categories
@@ -154,16 +187,27 @@ class _HomePageState extends State<HomePage> {
                             )
                           ]),
                       Positioned(
-                        top: 70,
-                        left: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Hi $usesrName',
-                            style: const TextStyle(
-                                fontSize: 25,
-                                color: AppColors.white,
-                                fontWeight: FontWeight.bold),
+                        top: 90,
+                        left: 10,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: AppColors.blackColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ConstrainedBox(
+                              constraints: const BoxConstraints(
+                                maxHeight: double.infinity,
+                                  maxWidth: double.infinity),
+                              child: Text(
+                             'Hi, ${_greetingMessage()}, $userName!',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: AppColors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
                         ),
                       ),

@@ -7,8 +7,12 @@ import 'package:new_travel_app/screen/home/home_page.dart';
 import 'package:new_travel_app/screen/trips/planned_trips.dart';
 
 class BottomNavigation extends StatefulWidget {
-  const BottomNavigation({super.key, this.selectedItem});
+  const BottomNavigation({
+    super.key,
+    this.selectedItem,
+  });
   final DestinationModels? selectedItem;
+
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
