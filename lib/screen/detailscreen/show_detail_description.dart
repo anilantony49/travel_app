@@ -8,10 +8,10 @@ import 'package:new_travel_app/refracted%20class/app_background.dart';
 import 'package:new_travel_app/refracted%20class/app_rating.dart';
 import 'package:new_travel_app/refracted%20class/app_tabBar_widget.dart';
 import 'package:new_travel_app/screen/trips/plan_edit_trip.dart';
-import 'package:new_travel_app/detailscreen/tab_one_contents.dart';
-import 'package:new_travel_app/detailscreen/tab_two_contents.dart';
-import 'package:new_travel_app/detailscreen/tab_three_contents.dart';
-import 'package:new_travel_app/detailscreen/tab_four_contents.dart';
+import 'package:new_travel_app/screen/detailscreen/tab_one_contents.dart';
+import 'package:new_travel_app/screen/detailscreen/tab_two_contents.dart';
+import 'package:new_travel_app/screen/detailscreen/tab_three_contents.dart';
+import 'package:new_travel_app/screen/detailscreen/tab_four_contents.dart';
 
 class ShowDetailsPage extends StatefulWidget {
   const ShowDetailsPage({

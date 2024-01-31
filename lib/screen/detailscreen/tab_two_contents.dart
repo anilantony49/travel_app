@@ -4,16 +4,11 @@ import 'package:new_travel_app/others/widgets.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 
 class TabTwoContent extends StatelessWidget {
-  // final String category;
   final DestinationModels? selectedItem;
-  // final EuropeDestinationModels? selectedEuropeItem;
-  // final AfricaDestinationModels? selectedAfricaItem;
+
   const TabTwoContent({
     super.key,
-    // required this.category,
     required this.selectedItem,
-    // required this.selectedEuropeItem,
-    // required this.selectedAfricaItem
   });
 
   @override
@@ -35,7 +30,7 @@ class TabTwoContent extends StatelessWidget {
                   child: Text(
                 selectedItem?.capital ?? 'No Data available',
                 style: const TextStyle(
-                    color:AppColors.purple,
+                    color: AppColors.purple,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               )),

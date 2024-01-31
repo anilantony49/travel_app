@@ -11,6 +11,7 @@ import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
 import 'package:new_travel_app/refracted%20class/app_background.dart';
 import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/widgets/image_pick_box.dart';
 
 class DetailsAddEditPage extends StatefulWidget {
   final String? initialitemId,
@@ -201,52 +202,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              GestureDetector(
-                onTap: () {
-                  pickImage(context, ImageSource.gallery);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 4.0,
-                      ),
-                      color: AppColors.borderColor,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: selectedImagePath.isEmpty
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              'assets/image/image.jpg',
-                              fit: BoxFit.fill,
-                            ),
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.file(
-                              File(selectedImagePath),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              imageBox(context, pickImage, selectedImagePath),
               Row(
                 children: [
                   Column(

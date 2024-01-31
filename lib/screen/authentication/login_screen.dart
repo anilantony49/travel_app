@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20widgets/app_data_fetches.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/refracted%20function/app_loginFunction.dart';
 import 'package:new_travel_app/refracted%20function/app_login_signup_ui.dart';
@@ -24,14 +24,16 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    DataFetcher.fetchUsers();
+    fetchUsers();
     super.initState();
   }
 
-  @override
-  void setState(VoidCallback fn) {
-    items = DataFetcher.authenticationItems;
-    super.setState(fn);
+  void fetchUsers() async {
+    List<AuthenticationModels> fetchedItems =
+        await AuthenticationDb.singleton.getUsers();
+    setState(() {
+      items = fetchedItems;
+    });
   }
 
   @override

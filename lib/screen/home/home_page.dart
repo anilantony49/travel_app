@@ -53,16 +53,18 @@ class _HomePageState extends State<HomePage> {
       );
     });
   }
-String _greetingMessage() {
-  var hour = DateTime.now().hour;
-  if (hour < 12) {
-    return 'Good morning';
-  } else if (hour < 18) {
-    return 'Good afternoon';
-  } else {
-    return 'Good evening';
+
+  String _greetingMessage() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good morning';
+    } else if (hour < 18) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
   }
-}
+
   Future<void> loadUserName() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // String? name = prefs.getString('current_user_name');
@@ -198,10 +200,10 @@ String _greetingMessage() {
                             padding: const EdgeInsets.all(8.0),
                             child: ConstrainedBox(
                               constraints: const BoxConstraints(
-                                maxHeight: double.infinity,
+                                  maxHeight: double.infinity,
                                   maxWidth: double.infinity),
                               child: Text(
-                             'Hi, ${_greetingMessage()}, $userName!',
+                                'Hi, ${_greetingMessage()}, $userName!',
                                 style: const TextStyle(
                                     fontSize: 20,
                                     color: AppColors.white,
@@ -238,29 +240,28 @@ String _greetingMessage() {
                     ),
                     child: TextFormField(
                       textInputAction: TextInputAction.search,
-                      // controller: _searchController,
+                      onTap: () {
+                        // Navigate to the search screen when the text field is tapped
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SearchScreen(destination: items),
+                          ),
+                        );
+                      },
                       style: const TextStyle(
                         color: AppColors.blackColor,
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: InputDecoration(
-                        icon: Padding(
-                          padding: const EdgeInsets.only(
+                        icon: const Padding(
+                          padding: EdgeInsets.only(
                             left: 40,
                             top: 3,
                           ),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SearchScreen(destination: items)),
-                              );
-                            },
-                            child: const Icon(
-                              Icons.search,
-                              color: AppColors.greenColor,
-                            ),
+                          child: Icon(
+                            Icons.search,
+                            color: AppColors.greenColor,
                           ),
                         ),
                         hintText: suggestions[_currentSuggestionIndex],

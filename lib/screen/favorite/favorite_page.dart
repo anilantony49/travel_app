@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/favorites_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
@@ -9,7 +8,6 @@ import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
 import 'package:new_travel_app/refracted%20class/app_widgetsforstack.dart';
 import 'package:new_travel_app/refracted%20class/app_background.dart';
 import 'package:new_travel_app/refracted%20class/app_rating.dart';
-import 'package:new_travel_app/refracted%20widgets/app_data_fetches.dart';
 import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
 import 'package:new_travel_app/refracted%20widgets/app_string.dart';
 import 'package:new_travel_app/refracted%20widgets/app_text_styles.dart';
@@ -26,22 +24,16 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    DataFetcher.fetchFavorites();
-    // fetchFavorites();
+    fetchFavorites();
   }
 
-  @override
-  void setState(VoidCallback fn) {
-    items = DataFetcher.favoritesItems;
-    super.setState(fn);
+  void fetchFavorites() async {
+    List<FavoritesModels> fetchedItems =
+        await FavoritesDb.singleton.getFavorites();
+    setState(() {
+      items = fetchedItems;
+    });
   }
-  // void fetchFavorites() async {
-  //   List<FavoritesModels> fetchedItems =
-  //       await FavoritesDb.singleton.getFavorites();
-  //   setState(() {
-  //     items = fetchedItems;
-  //   });
-  // }
 
   void removeFavoritesAndShowSnackbar(String favoriteId) {
     FavoritesDb.singleton.deleteFavorites(favoriteId);
@@ -53,7 +45,7 @@ class _FavoritePageState extends State<FavoritePage> {
       ),
     );
 
-    DataFetcher.fetchFavorites();
+    fetchFavorites();
   }
 
   bool isFavorite = false;

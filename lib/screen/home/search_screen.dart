@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_destination_list.dart';
 import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+
+import '../../refracted class/app_background.dart';
+import '../../refracted class/app_destination_list.dart';
 
 class SearchScreen extends StatefulWidget {
   final List<DestinationModels> destination;
 
-  SearchScreen({super.key, required this.destination}) {
-    filterDestination = destination;
-  }
+  const SearchScreen({Key? key, required this.destination}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -17,15 +16,33 @@ class SearchScreen extends StatefulWidget {
 
 List<DestinationModels> filterDestination = [];
 TextEditingController _searchController = TextEditingController();
+String? _selectedCategory;
 
 class _SearchScreenState extends State<SearchScreen> {
-  void filterDestinations(value) {
+  @override
+  void initState() {
+    filterDestination = widget.destination;
+    _selectedCategory = 'All';
+    super.initState();
+  }
+
+  void filterDestinations(String value) {
     setState(() {
-      filterDestination = widget.destination
-          .where((destination) => destination.countryName
-              .toLowerCase()
-              .contains(value.toLowerCase()))
-          .toList();
+      if (_selectedCategory == 'All') {
+        filterDestination = widget.destination
+            .where((destination) => destination.countryName
+                .toLowerCase()
+                .contains(value.toLowerCase()))
+            .toList();
+      } else {
+        filterDestination = widget.destination
+            .where((destination) =>
+                destination.countryName
+                    .toLowerCase()
+                    .contains(value.toLowerCase()) &&
+                (destination.categories == _selectedCategory))
+            .toList();
+      }
     });
   }
 
@@ -57,11 +74,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     color: AppColors.black.withOpacity(0.9),
                   ),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(color: Colors.red, width: 10)),
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(color: Colors.red, width: 10),
+                  ),
                   focusedBorder: OutlineInputBorder(
-                    // Customize focused border
                     borderRadius: BorderRadius.circular(20),
                     borderSide: const BorderSide(
                       color: AppColors.white,
@@ -80,9 +96,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         )
                       : null,
                 ),
-                onChanged: (value) {
-                  filterDestinations(value);
-                },
+                onChanged: filterDestinations,
               ),
             ),
             const SizedBox(
@@ -90,12 +104,27 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2.0,
+                  ), // Define the border style
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: DropdownButton<String>(
+                  value: _selectedCategory,
+                  hint: const Text('Category'),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedCategory = newValue;
+                      filterDestinations(_searchController.text);
+                    });
                   },
-                  child: const Text('Cancel')),
-            )
+                  items: _buildCategoryDropdownItems(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -123,5 +152,19 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
       ),
     );
+  }
+
+  List<DropdownMenuItem<String>> _buildCategoryDropdownItems() {
+    Set<String> categories =
+        widget.destination.map((destination) => destination.categories).toSet();
+    List<DropdownMenuItem<String>> items = categories
+        .map((category) => DropdownMenuItem<String>(
+              value: category,
+              child: Text(category),
+            ))
+        .toList();
+    items.insert(
+        0, const DropdownMenuItem<String>(value: 'All', child: Text('All')));
+    return items;
   }
 }

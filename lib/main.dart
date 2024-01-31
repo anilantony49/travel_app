@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/account': (context) => const AccountPage(),
       },
-     
       home: welcomeScreenShown ? const SplashScreen() : const WelcomePage(),
     );
   }
