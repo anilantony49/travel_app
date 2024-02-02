@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
-import 'package:new_travel_app/refracted%20widgets/app_text_styles.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_text_styles.dart';
 
 class TermsAndConditons extends StatelessWidget {
   const TermsAndConditons({super.key});

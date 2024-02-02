@@ -7,10 +7,10 @@ import 'package:new_travel_app/admin/edit_datails.dart';
 import 'package:new_travel_app/db/category_db.dart';
 import 'package:new_travel_app/models/category.dart';
 import 'package:new_travel_app/others/textfields.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/widgets/image_pick_box.dart';
 
 class DetailsAddEditPage extends StatefulWidget {

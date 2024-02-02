@@ -1,4 +1,4 @@
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 
 String? validatePassword(String value) {
   if (value.isEmpty) {

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:new_travel_app/admin/destinations_screen.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 
-void addDetails(
+Future<void> addDetails(
     BuildContext context,
     TextEditingController descriptionEditingController,
     TextEditingController countryNameController,
@@ -23,7 +22,7 @@ void addDetails(
     String selectedImagePath,
     String images,
     String selectedCategories,
-    double ratingValue) {
+    double ratingValue) async {
   final description = DestinationModels(
     id: DateTime.now().millisecondsSinceEpoch.toString(),
     countryName: countryNameController.text,
@@ -46,12 +45,8 @@ void addDetails(
   );
 
   DestinationDb.singleton.insertDestination(description);
-// Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DestintationScreen()));
-  // Navigator.pop(context);
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(builder: (context) => const DestintationScreen()),
-  );
+
+  Navigator.of(context).pop(true);
 
   descriptionEditingController.clear();
   countryNameController.clear();

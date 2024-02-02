@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/screen/authentication/sign_up_page.dart';
 

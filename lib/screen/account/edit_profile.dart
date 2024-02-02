@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/account/account_page.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -164,8 +164,7 @@ class _EditProfileState extends State<EditProfile> {
                       );
 
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const AccountPage()));
+                      Navigator.of(context).pop(true);
 
                       _emailController.clear();
                       _passwordController.clear();

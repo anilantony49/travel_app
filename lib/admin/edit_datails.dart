@@ -45,7 +45,7 @@ void editDetails(
   );
   DestinationDb.singleton.editDestination(description, description.id);
 
-  Navigator.pop(context);
+  Navigator.of(context).pop(true);
 
   descriptionEditingController.clear();
   countryNameController.clear();

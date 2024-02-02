@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 
-import '../../refracted class/app_background.dart';
-import '../../refracted class/app_destination_list.dart';
+import '../../refracted_class/app_background.dart';
+import '../../refracted_class/app_destination_list.dart';
 
 class SearchScreen extends StatefulWidget {
   final List<DestinationModels> destination;

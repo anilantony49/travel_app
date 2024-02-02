@@ -4,11 +4,11 @@ import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20function/show_destination_bottom_sheet.dart';
-import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_function/show_destination_bottom_sheet.dart';
+import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/authentication/authentication_page.dart';
 
 class DestintationScreen extends StatefulWidget {
@@ -45,7 +45,7 @@ class _DestintationScreenState extends State<DestintationScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text(AppStrings.deleteMessage),
-        duration: Duration(seconds:2),
+        duration: Duration(seconds: 2),
       ),
     );
 
@@ -61,11 +61,19 @@ class _DestintationScreenState extends State<DestintationScreen> {
             backgroundColor: AppColors.greenColor,
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const DetailsAddEditPage(
-                            addOrEdit: 'Add',
-                          )));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const DetailsAddEditPage(
+                    addOrEdit: 'Add',
+                  ),
+                ),
+              ).then((result) {
+                if (result == true) {
+                  setState(() {
+                    fetchCategory();
+                  });
+                }
+              });
             },
             child: const Icon(Icons.add)),
         backgroundColor: const Color.fromARGB(255, 234, 227, 227),
@@ -142,8 +150,14 @@ class _DestintationScreenState extends State<DestintationScreen> {
                       return GestureDetector(
                         onLongPress: () {
                           showDestinationBottomSheet(
-                              context, items[index].id, items, fetchCategory);
+                              context, items[index].id, items, fetchCategory,
+                              () {
+                            setState(() {
+                              fetchCategory();
+                            });
+                          });
                         },
+                        
                         onTap: () {
                           Navigator.push(
                               context,

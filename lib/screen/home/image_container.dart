@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/screen/detailscreen/show_detail_description.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 
 Widget buildCategorySliverList(List<DestinationModels> items,String category) {
   // Filter the items to include only those belonging to the "Popular Destination" category

@@ -1,16 +1,19 @@
 import 'dart:io';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/db/favorites_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/favorites.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted%20class/app_widgetsforstack.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_rating.dart';
-import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
-import 'package:new_travel_app/refracted%20widgets/app_text_styles.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_class/app_widgetsforstack.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_class/app_rating.dart';
+import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_text_styles.dart';
+import 'package:new_travel_app/screen/detailscreen/show_detail_description.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key, this.selectedItem});
@@ -94,36 +97,56 @@ class _FavoritePageState extends State<FavoritePage> {
                                   mainwidget: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Column(children: [
-                                        Container(
-                                            height: 90,
-                                            width: double.infinity,
-                                            decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(20)),
-                                            ),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                child: favorites
-                                                            .image.isNotEmpty &&
-                                                        File(favorites.image)
-                                                            .existsSync()
-                                                    ? ClipRRect(
-                                                        // borderRadius:
-                                                        // BorderRadius.circular(20),
-                                                        child: Image.file(
-                                                          File(favorites.image),
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )
-                                                    : const Center(
-                                                        child: Icon(
-                                                          Icons.image,
-                                                          size: 40,
-                                                          color:
-                                                              AppColors.white,
-                                                        ),
-                                                      ))),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            DestinationModels? destination =
+                                                await getDestination(
+                                                    favorites.id);
+                                            if (destination != null) {
+                                              // ignore: use_build_context_synchronously
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ShowDetailsPage(
+                                                    selectedItem: destination,
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          },
+                                          child: Container(
+                                              height: 90,
+                                              width: double.infinity,
+                                              decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)),
+                                              ),
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  child: favorites.image
+                                                              .isNotEmpty &&
+                                                          File(favorites.image)
+                                                              .existsSync()
+                                                      ? ClipRRect(
+                                                          // borderRadius:
+                                                          // BorderRadius.circular(20),
+                                                          child: Image.file(
+                                                            File(favorites
+                                                                .image),
+                                                            fit: BoxFit.fill,
+                                                          ),
+                                                        )
+                                                      : const Center(
+                                                          child: Icon(
+                                                            Icons.image,
+                                                            size: 40,
+                                                            color:
+                                                                AppColors.white,
+                                                          ),
+                                                        ))),
+                                        ),
                                         Padding(
                                           padding:
                                               const EdgeInsets.only(left: 4),
@@ -154,13 +177,21 @@ class _FavoritePageState extends State<FavoritePage> {
                                                   ),
                                                 ],
                                               ),
-                                              // AppSizedBoxes.box6,
-                                              Rating(
-                                                itemSize: 14,
-                                                initialRating: widget
-                                                        .selectedItem?.rating ??
-                                                    3,
-                                              ),
+                                              FutureBuilder(
+                                                  future: getDestination(
+                                                      favorites.id),
+                                                  builder: (context, snapshot) {
+                                                    final destination =
+                                                        snapshot.data;
+                                                    if (destination != null) {
+                                                      return Rating(
+                                                        itemSize: 14,
+                                                        initialRating:
+                                                            destination.rating,
+                                                      );
+                                                    }
+                                                    return const SizedBox();
+                                                  }),
                                             ],
                                           ),
                                         )
@@ -173,4 +204,10 @@ class _FavoritePageState extends State<FavoritePage> {
                 ),
         ));
   }
+}
+
+Future<DestinationModels?> getDestination(String id) async {
+  List<DestinationModels> destinations =
+      await DestinationDb.singleton.getDestination();
+  return destinations.firstWhereOrNull((destination) => destination.id == id);
 }

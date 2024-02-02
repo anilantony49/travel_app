@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 // ignore: depend_on_referenced_packages
 import 'package:photo_view/photo_view.dart';
 // ignore: depend_on_referenced_packages

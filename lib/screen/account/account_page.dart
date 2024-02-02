@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/screen/account/edit_profile.dart';
 import 'package:new_travel_app/screen/account/privacy_policy.dart';
 import 'package:new_travel_app/screen/account/terms_and_conditions.dart';
@@ -55,9 +55,16 @@ class _AccountPageState extends State<AccountPage> {
             child: ListView(
               children: [
                 textwidget(AppStrings.editProfile, () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          EditProfile(currentUser: currentUser)));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                    builder: (context) => EditProfile(currentUser: currentUser),
+                  ))
+                      .then((result) {
+                    if (result == true) {
+                      // Update UI or perform any necessary actions
+                      fetchCurrentUser(); // Update the current user information
+                    }
+                  });
                 }),
                 textwidget(AppStrings.favorite, () {
                   Navigator.of(context).push(MaterialPageRoute(

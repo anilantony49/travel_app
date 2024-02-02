@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
-import 'package:new_travel_app/refracted%20class/app_background.dart';
-import 'package:new_travel_app/refracted%20class/app_toolbarsearch.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_class/app_background.dart';
+import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 
 class UsersDetailsPage extends StatefulWidget {
   const UsersDetailsPage({Key? key}) : super(key: key);

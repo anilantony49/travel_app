@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
-import 'package:new_travel_app/refracted%20function/app_login_signup_ui.dart';
-import 'package:new_travel_app/refracted%20function/app_password_validator.dart';
-import 'package:new_travel_app/refracted%20function/app_signupFunction.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/refracted_function/app_login_signup_ui.dart';
+import 'package:new_travel_app/refracted_function/app_password_validator.dart';
+import 'package:new_travel_app/refracted_function/app_signupFunction.dart';
 import 'package:new_travel_app/screen/authentication/login_screen.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
 

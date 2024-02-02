@@ -6,7 +6,7 @@ import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/main.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/others/admin_credentials.dart';
-import 'package:new_travel_app/refracted%20widgets/app_string.dart';
+import 'package:new_travel_app/refracted_widgets/app_string.dart';
 import 'package:new_travel_app/widgets/bottom_navigation_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

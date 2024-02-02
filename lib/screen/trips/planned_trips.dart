@@ -4,9 +4,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/planned_trip.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
-import 'package:new_travel_app/refracted%20class/app_rating.dart';
-import 'package:new_travel_app/refracted%20widgets/app_sized_box.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_class/app_rating.dart';
+import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
 import 'package:new_travel_app/screen/trips/plan_edit_trip.dart';
 
 class PlannedTrip extends StatefulWidget {
@@ -47,7 +47,7 @@ class _PlannedTripState extends State<PlannedTrip> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Trip deleted successfully'),
-        duration: Duration(seconds:2),
+        duration: Duration(seconds: 2),
       ),
     );
 
@@ -87,7 +87,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                   ),
                   Text(
                     'No Trip Planned',
-                    style: TextStyle(color:AppColors.grey),
+                    style: TextStyle(color: AppColors.grey),
                   )
                 ],
               ))
@@ -104,12 +104,20 @@ class _PlannedTripState extends State<PlannedTrip> {
                           ActionPane(motion: const ScrollMotion(), children: [
                         SlidableAction(
                           onPressed: (context) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => PlanEditTrip(
-                                      selectedImage: plannedTrip.image,
-                                      selectedPlace: plannedTrip.place,
-                                      tripId: plannedTrip.id,
-                                    )));
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(
+                                    builder: (context) => PlanEditTrip(
+                                          selectedImage: plannedTrip.image,
+                                          selectedPlace: plannedTrip.place,
+                                          tripId: plannedTrip.id,
+                                        )))
+                                .then((result) {
+                              if (result == true) {
+                                // Update UI or perform any necessary actions
+                                fetchTrip(); // Update the current user information
+                              }
+                            });
+                            ;
                           },
                           backgroundColor:
                               const Color.fromARGB(255, 118, 121, 126),
@@ -142,7 +150,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                                   // color: const Color.fromARGB(255, 94, 8, 8),
                                   boxShadow: const [
                                     BoxShadow(
-                                      color:AppColors.grey,
+                                      color: AppColors.grey,
                                       blurRadius: 2,
                                       offset: Offset(0, 2),
                                     ),
@@ -162,7 +170,7 @@ class _PlannedTripState extends State<PlannedTrip> {
                                         child: Icon(
                                           Icons.image,
                                           size: 40,
-                                          color:AppColors.white,
+                                          color: AppColors.white,
                                         ),
                                       ),
                               ),

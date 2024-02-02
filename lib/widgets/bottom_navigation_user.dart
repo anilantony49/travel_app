@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:new_travel_app/screen/account/account_page.dart';
 import 'package:new_travel_app/screen/favorite/favorite_page.dart';
 import 'package:new_travel_app/screen/home/home_page.dart';

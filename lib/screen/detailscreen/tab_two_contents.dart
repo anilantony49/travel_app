@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/others/widgets.dart';
-import 'package:new_travel_app/refracted%20widgets/app_colors.dart';
+import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 
 class TabTwoContent extends StatelessWidget {
   final DestinationModels? selectedItem;
