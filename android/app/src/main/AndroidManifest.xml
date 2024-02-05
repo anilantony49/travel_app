@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <queries>
+         <intent>
+             <action android:name="android.intent.action.DIAL" />
+             <data android:scheme="tel" />
+         </intent>
+     </queries>
     <application
-        android:label="new_travel_app"
+        android:label="Triplings"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

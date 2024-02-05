@@ -100,11 +100,12 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
             ),
             const SizedBox(
-              width: 30,
+              width: 10,
             ),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Container(
+                height: 47,
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.white,

@@ -11,12 +11,14 @@ class TabThreeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding:  EdgeInsets.all(screenWidth*.09),
             child: Center(
               child: Container(
                   decoration: const BoxDecoration(
@@ -24,7 +26,7 @@ class TabThreeContent extends StatelessWidget {
                     color: Color.fromARGB(255, 231, 228, 228),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding:  EdgeInsets.all(screenWidth*.05),
                     child: ConstrainedBox(
                         constraints: const BoxConstraints(
                           maxHeight: double.infinity,

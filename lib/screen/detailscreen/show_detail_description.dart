@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/db/favorites_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/favorites.dart';
@@ -7,6 +8,7 @@ import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:new_travel_app/refracted_class/app_background.dart';
 import 'package:new_travel_app/refracted_class/app_rating.dart';
 import 'package:new_travel_app/refracted_class/app_tabBar_widget.dart';
+import 'package:new_travel_app/screen/home/home_page.dart';
 import 'package:new_travel_app/screen/trips/plan_edit_trip.dart';
 import 'package:new_travel_app/screen/detailscreen/tab_one_contents.dart';
 import 'package:new_travel_app/screen/detailscreen/tab_two_contents.dart';
@@ -59,23 +61,35 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Removed from favorite'),
-        duration: Duration(seconds:2),
+        duration: Duration(seconds: 2),
       ),
     );
 
     fetchFavorites();
   }
 
-  // bool isFavorite = false;
   double containerHeight = 100.0;
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
+              leading: Padding(
+                padding: EdgeInsets.only(top: screenWidth * .035),
+                child: GestureDetector(
+                  onTap: () => Navigator.of(context).pop(MaterialPageRoute(
+                      builder: (context) => const HomePage())),
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(20),
                 child: Container(
@@ -95,13 +109,15 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
               expandedHeight: 300,
               flexibleSpace: FlexibleSpaceBar(
                 title: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 8,
+                  padding: EdgeInsets.only(
+                    bottom: screenWidth * .025,
                   ),
                   child: Text(
                     widget.selectedItem!.countryName,
-                    style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.alata(
+                      fontSize: screenWidth * .06,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 background: Stack(
@@ -113,9 +129,8 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                       fit: BoxFit.cover,
                     ),
                     Positioned(
-                      top: 30,
-                      // bottom: 40,
-                      right: 14,
+                      top: screenWidth * .0999,
+                      right: screenWidth * .03,
                       child: Container(
                         width: 40,
                         height: 40,
@@ -140,14 +155,14 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Added to the favorite list!'),
-                                duration: Duration(seconds:2),
+                                duration: Duration(seconds: 2),
                               ),
                             );
                             FavoritesDb.singleton.deleteFavorites(favorite.id);
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text('Added to the favorite list!'),
-                                duration: Duration(seconds:2),
+                                duration: Duration(seconds: 2),
                               ),
                             );
                             setState(() {
@@ -163,7 +178,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                                 const SnackBar(
                                   content:
                                       Text('Removed from the favorite list!'),
-                                  duration: Duration(seconds:2),
+                                  duration: Duration(seconds: 2),
                                 ),
                               );
                             }
@@ -174,15 +189,16 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                             },
                             child: Icon(
                               Icons.favorite,
-                              color: isFavorite ?AppColors.red:AppColors.white,
+                              color:
+                                  isFavorite ? AppColors.red : AppColors.white,
                             ),
                           ),
                         ),
                       ),
                     ),
                     Positioned(
-                      bottom: 80,
-                      right: 140,
+                      bottom: screenWidth * .2,
+                      right: screenWidth * .338,
                       child: ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
@@ -193,17 +209,25 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
                               builder: (context) => PlanEditTrip(
                                   selectedItem: widget.selectedItem)));
                         },
-                        child: const Text(
+                        child: Text(
                           'Plan Trip',
-                          style: TextStyle(color: AppColors.white),
+                          style: GoogleFonts.alata(
+                            textStyle: TextStyle(
+                              color: AppColors.white,
+                              fontSize: screenWidth *
+                                  .05, // Adjust the font size as needed
+                              fontWeight: FontWeight
+                                  .normal, // Adjust the font weight as needed
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
-                        bottom: 30,
-                        right: 10,
+                        bottom: screenWidth * .06,
+                        right: screenWidth * .02,
                         child: Rating(
-                            itemSize: 17,
+                            itemSize: screenWidth * .05,
                             initialRating: widget.selectedItem!.rating)),
                   ],
                 ),
@@ -216,7 +240,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
           child: Container(
             width: double.infinity,
             decoration: const BoxDecoration(
-              color:AppColors.white,
+              color: AppColors.white,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -262,7 +286,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Removed from favorite'),
-          duration: Duration(seconds:2),
+          duration: Duration(seconds: 2),
         ),
       );
     } else {
@@ -276,7 +300,7 @@ class _ShowDetailsPageState extends State<ShowDetailsPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Added to the favorite list!'),
-          duration: Duration(seconds:2),
+          duration: Duration(seconds: 2),
         ),
       );
     }

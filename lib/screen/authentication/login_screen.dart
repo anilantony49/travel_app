@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Positioned(
               left: screenWidth * .07,
-              top: 250,
+              top: screenWidth * .6,
               child: CustomInputField(
                   controller: _usernameController,
                   label: 'Username',
@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Positioned(
               left: screenWidth * .07,
-              top: 330,
+              top: screenWidth * .8,
               child: CustomInputField(
                 isPassword: true,
                 controller: _passwordController,
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Positioned(
               left: screenWidth * 0.1,
-              bottom: 300,
+              bottom: screenWidth * 0.5,
               child: SizedBox(
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
@@ -95,16 +95,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   )),
             ),
-            const Positioned(
-                left: 90,
-                bottom: 270,
+            Positioned(
+                left: screenWidth * 0.22,
+                bottom: screenWidth * 0.4,
                 child: Text(
                   AppStrings.createNewAccount,
-                  style: TextStyle(fontSize: 14, color: AppColors.blackColor),
+                  style: TextStyle(
+                      fontSize: screenWidth * 0.035,
+                      color: AppColors.blackColor),
                 )),
             Positioned(
-                right: 100,
-                bottom: 270,
+                right: screenWidth * 0.27,
+                bottom: screenWidth * 0.4,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -113,9 +115,11 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context) => const SignUpPage()),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "Sign Up",
-                    style: TextStyle(fontSize: 14, color: AppColors.greenColor),
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.035,
+                        color: AppColors.greenColor),
                   ),
                 ))
           ],

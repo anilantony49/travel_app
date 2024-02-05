@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Widget textwidget(String text, VoidCallback onTap, [MaterialPageRoute? materialPageRoute]) {
   return Padding(
@@ -7,7 +8,7 @@ Widget textwidget(String text, VoidCallback onTap, [MaterialPageRoute? materialP
         onTap: onTap,
         child: Text(
           text,
-          style: const TextStyle(fontSize: 20),
+          style: GoogleFonts.alata(fontSize: 20)
         )),
   );
 }

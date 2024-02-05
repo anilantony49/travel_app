@@ -37,12 +37,12 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Positioned(
                 left: screenWidth * .07,
-                top: 280,
+                top: screenWidth * .55,
                 child: CustomInputField(
                     controller: _usernameController,
                     label: 'Username',
                     validator: (value) {
-                      if (value == null ||  value.trim().isEmpty) {
+                      if (value == null || value.trim().isEmpty) {
                         return AppStrings.userename;
                       } else {
                         return null;
@@ -50,7 +50,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     })),
             Positioned(
                 left: screenWidth * .07,
-                top: 360,
+                top: screenWidth * .75,
                 child: CustomInputField(
                     controller: _emailController,
                     label: 'email',
@@ -64,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     })),
             Positioned(
               left: screenWidth * .07,
-              top: 440,
+              top: screenWidth * .95,
               child: CustomInputField(
                 controller: _passwordController,
                 label: 'Password',
@@ -76,7 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             Positioned(
               left: screenWidth * 0.1,
-              bottom: 200,
+              bottom: screenWidth * .34,
               child: SizedBox(
                   width: screenWidth * 0.8,
                   child: ElevatedButton(
@@ -97,16 +97,16 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   )),
             ),
-            const Positioned(
-                left: 85,
-                bottom: 180,
-                child: Text(
+            Positioned(
+                left: screenWidth * .23,
+                bottom: screenWidth * .25,
+                child: const Text(
                   AppStrings.alreadyHaveAccount,
                   style: TextStyle(fontSize: 14, color: AppColors.blackColor),
                 )),
             Positioned(
-                right: 100,
-                bottom: 180,
+                right: screenWidth * .25,
+                bottom: screenWidth * .25,
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(

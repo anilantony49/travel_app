@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/planned_trip.dart';
@@ -56,11 +57,13 @@ class _PlannedTripState extends State<PlannedTrip> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
         centerTitle: true,
-        title: const Text('Planned Trips'),
+        title: Text('Planned Trips', style: GoogleFonts.alata()),
       ),
       body: Container(
         width: double.infinity,
@@ -76,19 +79,17 @@ class _PlannedTripState extends State<PlannedTrip> {
           ),
         ),
         child: items.isEmpty
-            ? const Center(
+            ? Center(
                 child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.explore_off_outlined,
                     color: Color.fromARGB(255, 202, 200, 200),
                     size: 100,
                   ),
-                  Text(
-                    'No Trip Planned',
-                    style: TextStyle(color: AppColors.grey),
-                  )
+                  Text('No Trip Planned',
+                      style: GoogleFonts.alata(color: AppColors.grey))
                 ],
               ))
             : ListView.separated(
@@ -117,7 +118,6 @@ class _PlannedTripState extends State<PlannedTrip> {
                                 fetchTrip(); // Update the current user information
                               }
                             });
-                            ;
                           },
                           backgroundColor:
                               const Color.fromARGB(255, 118, 121, 126),
@@ -188,17 +188,20 @@ class _PlannedTripState extends State<PlannedTrip> {
                                       ),
                                       Text(
                                         '  ${plannedTrip.date}',
-                                        style: const TextStyle(
-                                            color: AppColors.blackColor),
+                                        style: GoogleFonts.alata(
+                                            color: AppColors.blackColor,
+                                            fontSize: screenWidth * .035),
                                       ),
                                     ],
                                   ),
                                   Text(
                                     plannedTrip.place,
-                                    style: const TextStyle(fontSize: 20),
+                                    style: GoogleFonts.alata(
+                                        color: AppColors.blackColor,
+                                        fontSize: screenWidth * .05),
                                   ),
                                   Rating(
-                                    itemSize: 15,
+                                    itemSize: screenWidth * .04,
                                     initialRating:
                                         widget.selectedItem?.rating ?? 3,
                                   )

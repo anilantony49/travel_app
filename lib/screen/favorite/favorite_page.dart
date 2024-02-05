@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
 import 'package:new_travel_app/db/favorites_db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
@@ -57,23 +58,20 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBarwidget(
-          title: AppStrings.favorite,
-        ),
+            title: AppStrings.favorite, textStyle: GoogleFonts.alata()),
         body: BackgroundColor(
           child: items.isEmpty
-              ? const Center(
+              ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.favorite_border,
-                        color: Color.fromARGB(255, 238, 234, 234),
+                        color: Color.fromARGB(255, 202, 200, 200),
                         size: 100,
                       ),
-                      Text(
-                        AppStrings.emptyList,
-                        style: TextStyle(color: AppColors.grey),
-                      )
+                      Text(AppStrings.emptyList,
+                          style: GoogleFonts.alata(color: AppColors.grey))
                     ],
                   ),
                 )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -60,7 +61,10 @@ class _ShowCalenderState extends State<ShowCalender> {
       appBar: AppBar(
         backgroundColor: AppColors.greenColor,
         centerTitle: true,
-        title: const Text('Select Date'),
+        title: Text(
+          'Select Date',
+          style: GoogleFonts.alata(),
+        ),
       ),
       body: Container(
         width: double.infinity,
@@ -81,7 +85,7 @@ class _ShowCalenderState extends State<ShowCalender> {
               padding: const EdgeInsets.all(8.0),
               child: AnimatedOpacity(
                 opacity: _rangeStart != null && _rangeEnd != null ? 1.0 : 0.3,
-                duration: const Duration(milliseconds:200),
+                duration: const Duration(milliseconds: 200),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(
@@ -94,9 +98,10 @@ class _ShowCalenderState extends State<ShowCalender> {
                   child: const Text(
                     'Pick Date Trip',
                     style: TextStyle(
-                      color:AppColors.black // Set the color when the date is picked
-                      
-                    ),
+                        color: AppColors
+                            .black // Set the color when the date is picked
+
+                        ),
                   ),
                 ),
               ),
@@ -145,7 +150,6 @@ class _ShowCalenderState extends State<ShowCalender> {
               calendarStyle: const CalendarStyle(
                   todayTextStyle: TextStyle(
                       color: Color.fromARGB(255, 195, 25, 25), fontSize: 18.0),
-              
                   disabledTextStyle:
                       TextStyle(color: Color.fromARGB(255, 231, 8, 52)),
                   outsideDaysVisible: false),

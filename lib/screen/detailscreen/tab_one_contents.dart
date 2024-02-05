@@ -14,13 +14,15 @@ class TabOneContent extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 25),
+              padding:  EdgeInsets.only(top:screenWidth* .08),
               child: Container(
                 constraints: const BoxConstraints(
                   maxWidth: 350,
@@ -38,16 +40,16 @@ class TabOneContent extends StatelessWidget {
                   color: const Color.fromARGB(255, 123, 216, 218),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  EdgeInsets.all(screenWidth*.03),
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
                       maxHeight: double.infinity,
                     ),
                     child: Text(
                       selectedItem!.details,
-                      style: const TextStyle(
+                      style:  TextStyle(
                           color: AppColors.blackColor,
-                          fontSize: 15,
+                          fontSize:screenWidth* .04,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -55,7 +57,7 @@ class TabOneContent extends StatelessWidget {
               ),
             ),
           ),
-          Widgets.headingText('Images'),
+          Widgets.headingText('Images',context),
           SizedBox(
             height: 200,
             child: ListView.builder(
@@ -63,7 +65,7 @@ class TabOneContent extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:  EdgeInsets.all(screenWidth*.03),
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(

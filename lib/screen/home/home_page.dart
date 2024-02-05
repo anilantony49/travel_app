@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/db/category_db.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
@@ -145,6 +146,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     final dropdownItems = [
       ...initialCategories, // Include initial categories
       ...newiItems, // Include newly created categories
@@ -158,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: AppColors.greenColor,
                 stretch: true,
                 automaticallyImplyLeading: false,
-                expandedHeight: 300.0,
+                expandedHeight: screenWidth * 0.9,
                 floating: false,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
@@ -189,25 +192,26 @@ class _HomePageState extends State<HomePage> {
                             )
                           ]),
                       Positioned(
-                        top: 90,
-                        left: 10,
+                        top: screenWidth * 0.26,
+                        left: screenWidth * 0.03,
                         child: Container(
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)),
                               color: AppColors.blackColor),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: EdgeInsets.all(screenWidth * .02),
                             child: ConstrainedBox(
                               constraints: const BoxConstraints(
                                   maxHeight: double.infinity,
                                   maxWidth: double.infinity),
                               child: Text(
                                 'Hi, ${_greetingMessage()}, $userName!',
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.white,
-                                    fontWeight: FontWeight.bold),
+                                style: GoogleFonts.alata(
+                                  fontSize: screenWidth * .04,
+                                  color: AppColors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),

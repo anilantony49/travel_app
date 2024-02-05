@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
@@ -7,7 +8,6 @@ import 'package:new_travel_app/refracted_class/app_background.dart';
 import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
 import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:new_travel_app/refracted_widgets/app_string.dart';
-import 'package:new_travel_app/screen/account/account_page.dart';
 import 'package:new_travel_app/widgets/text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,13 +55,17 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarwidget(title: AppStrings.editProfile),
+      appBar: AppBarwidget(
+          title: AppStrings.editProfile, textStyle: GoogleFonts.alata()),
       body: BackgroundColor(
           child: Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
             children: [
+              const SizedBox(
+                height: 20,
+              ),
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,

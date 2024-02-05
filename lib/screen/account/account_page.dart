@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/db/authentication_db.dart';
 import 'package:new_travel_app/models/authentication.dart';
 import 'package:new_travel_app/refracted_class/app_background.dart';
 import 'package:new_travel_app/refracted_class/app_toolbarsearch.dart';
 import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:new_travel_app/refracted_widgets/app_string.dart';
+import 'package:new_travel_app/screen/account/about.dart';
 import 'package:new_travel_app/screen/account/edit_profile.dart';
 import 'package:new_travel_app/screen/account/privacy_policy.dart';
 import 'package:new_travel_app/screen/account/terms_and_conditions.dart';
@@ -46,9 +48,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.scaffoldColor,
-        appBar: AppBarwidget(
-          title: 'Account',
-        ),
+        appBar: AppBarwidget(title: 'Account', textStyle: GoogleFonts.alata()),
         body: BackgroundColor(
           child: Padding(
             padding: const EdgeInsets.only(left: 30, top: 50),
@@ -74,10 +74,10 @@ class _AccountPageState extends State<AccountPage> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const PlannedTrip()));
                 }),
-                // textwidget('About', () {
-                //   Navigator.of(context).push(MaterialPageRoute(
-                //       builder: (context) => const AboutPage()));
-                // }),
+                textwidget(AppStrings.about, () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const AboutPage()));
+                }),
                 textwidget(AppStrings.privacyPolicy, () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const PrivacyPolicy()));
@@ -118,19 +118,31 @@ class _AccountPageState extends State<AccountPage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            title: const Text(AppStrings.logOut),
-            content: const Text(AppStrings.logoutConfirmation),
+            title: Text(
+              AppStrings.logOut,
+              style: GoogleFonts.alata(),
+            ),
+            content: Text(
+              AppStrings.logoutConfirmation,
+              style: GoogleFonts.alata(),
+            ),
             actions: [
               TextButton(
                   onPressed: () {
                     _logoutAndExit(context);
                   },
-                  child: const Text('Yes')),
+                  child: Text(
+                    'Yes',
+                    style: GoogleFonts.alata(),
+                  )),
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('No'))
+                  child: Text(
+                    'No',
+                    style: GoogleFonts.alata(),
+                  ))
             ],
           );
         });

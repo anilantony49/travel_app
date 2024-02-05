@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 import 'package:new_travel_app/refracted_widgets/app_sized_box.dart';
@@ -37,14 +38,12 @@ List<Widget> generateCategoryWidgets(
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'No destinations for $category',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: AppColors.red,
-              ),
-            ),
+            child: Text('No destinations for $category',
+                style: GoogleFonts.alata(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.red,
+                )),
           ),
         ),
       );
@@ -54,9 +53,12 @@ List<Widget> generateCategoryWidgets(
   return categoryWidgets;
 }
 
-Widget emergencyServices(String text, String number, IconData icon) {
+Widget emergencyServices(
+    BuildContext context, String text, String number, IconData icon) {
+  double screenWidth = MediaQuery.of(context).size.width;
+
   return Padding(
-    padding: const EdgeInsets.all(12.0),
+    padding:  EdgeInsets.all(screenWidth*.05),
     child: Container(
       height: 80,
       width: 320,

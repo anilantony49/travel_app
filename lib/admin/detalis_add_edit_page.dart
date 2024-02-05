@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:new_travel_app/admin/add_details.dart';
 import 'package:new_travel_app/admin/edit_datails.dart';
@@ -182,6 +183,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -208,17 +210,24 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 5),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: screenWidth * .015),
                         child: Text(
                           AppStrings.selectCategory,
+                          style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                              color: AppColors.blackColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: screenWidth * .04,
+                            ),
+                          ),
                           // style: Apptext.text2,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(screenWidth * .04),
                         child: Container(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(left: screenWidth * .05),
                           decoration: BoxDecoration(
                               color: AppColors.borderColor,
                               borderRadius: BorderRadius.circular(10)),
@@ -259,14 +268,21 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 5),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: screenWidth * .017),
                         child: Text(
                           AppStrings.rating,
+                          style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                              color: AppColors.blackColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: screenWidth * .04,
+                            ),
+                          ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: EdgeInsets.all(screenWidth * .03),
                         child: Container(
                           width: MediaQuery.of(context).size.width * .40,
                           height: MediaQuery.of(context).size.width * .12,
@@ -312,7 +328,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               ),
               // AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(_countryNameController, 'Country Name', 1,
                     TextInputType.name),
               ),
@@ -326,7 +342,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 14),
+                padding: EdgeInsets.only(right: screenWidth * .03),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -334,13 +350,13 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    padding: EdgeInsets.symmetric(vertical: screenWidth * .03),
                     child: Align(
                       alignment: Alignment.topRight,
                       child: Text(
                         isExpanded ? 'Show less' : 'Show more',
                         style: const TextStyle(
-                          color: AppColors.white,
+                          color: AppColors.blackColor,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -354,10 +370,10 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                   selectImages();
                 },
                 child: Container(
-                  width: 350,
-                  height: 115,
+                  width: screenWidth * .95,
+                  height: screenWidth * .32,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(screenWidth * .03),
                       color: AppColors.borderColor),
                   child: Stack(children: [
                     GridView.builder(
@@ -368,7 +384,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                       ),
                       itemBuilder: (BuildContext context, int index) {
                         return ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius:
+                              BorderRadius.circular(screenWidth * .03),
                           child: Image.file(
                             File(imageFileList[index].path),
                             fit: BoxFit.cover,
@@ -394,7 +411,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(screenWidth * .03),
                           child: Row(
                             children: [
                               Expanded(
@@ -412,8 +429,8 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                                     ],
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * .03),
                                     child: TextField(
                                       controller: _majorCitiesController[index],
                                       style: const TextStyle(
@@ -470,7 +487,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: EdgeInsets.all(screenWidth * .03),
                           child: Row(
                             children: [
                               Expanded(
@@ -488,10 +505,10 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                                     ],
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * .03),
                                     child: TextField(
-                                      controller: _majorCitiesController[index],
+                                      controller: _knownForController[index],
                                       style: const TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.w400,
@@ -515,7 +532,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
                                 icon: const Icon(Icons.add),
                                 onPressed: () {
                                   setState(() {
-                                    _majorCitiesController
+                                    _knownForController
                                         .add(TextEditingController());
                                   });
                                 },
@@ -540,43 +557,34 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: textfields(
-                  _countryCapitalController,
-                  'Capital',
-                ),
+                padding: EdgeInsets.all(screenWidth * .03),
+                child: textfields(_countryCapitalController, 'Capital', 1),
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: textfields(
-                  _languageController,
-                  'Language',
-                ),
+                padding: EdgeInsets.all(screenWidth * .03),
+                child: textfields(_languageController, 'Language', 1),
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: textfields(
-                  _currencyController,
-                  'Currency',
-                ),
+                padding: EdgeInsets.all(screenWidth * .03),
+                child: textfields(_currencyController, 'Currency', 1),
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(
                     _digitalCodeController, 'Dial Code', 1, TextInputType.name),
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(
                     _wheatherController, 'weather', 5, TextInputType.name),
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(
                   _policeEmergencyController,
                   'Police emergency number',
@@ -586,7 +594,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(
                   _ambulanceEmergencyController,
                   'Ambulance emergency number',
@@ -596,7 +604,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: textfields(
                   _fireEmergencyController,
                   'Fire emergency number',
@@ -606,7 +614,7 @@ class _DetailsAddEditPageState extends State<DetailsAddEditPage> {
               ),
               AppSizedBoxes.box5,
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.all(screenWidth * .03),
                 child: ElevatedButton.icon(
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(

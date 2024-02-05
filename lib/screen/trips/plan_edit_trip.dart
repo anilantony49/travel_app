@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:new_travel_app/db/planned_trips._db.dart';
 import 'package:new_travel_app/models/destination_details.dart';
@@ -45,9 +46,17 @@ class _PlanEditTripState extends State<PlanEditTrip> {
 
     return Scaffold(
       appBar: AppBarwidget(
-          title: widget.tripId != null
-              ? AppStrings.editTriptitle
-              : AppStrings.addTriptitle),
+        title: widget.tripId != null
+            ? AppStrings.editTriptitle
+            : AppStrings.addTriptitle,
+        textStyle: GoogleFonts.alata(
+          textStyle: const TextStyle(
+            color: AppColors.blackColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+      ),
       body: BackgroundColor(
         child: SingleChildScrollView(
           child: Column(
@@ -56,10 +65,13 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                 widget.tripId != null
                     ? widget.selectedPlace ?? ''
                     : 'Trip to ${widget.selectedItem!.countryName}',
-                style: const TextStyle(
+                style: GoogleFonts.alata(
+                  textStyle: const TextStyle(
                     color: AppColors.blackColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -85,7 +97,7 @@ class _PlanEditTripState extends State<PlanEditTrip> {
                 height: 50,
                 width: 250,
                 decoration: BoxDecoration(
-                    color: AppColors.grey,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(10)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

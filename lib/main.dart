@@ -5,7 +5,6 @@ import 'package:new_travel_app/models/category.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/models/favorites.dart';
 import 'package:new_travel_app/models/planned_trip.dart';
-import 'package:new_travel_app/screen/account/account_page.dart';
 import 'package:new_travel_app/screen/first%20screen/splash_screen.dart';
 import 'package:new_travel_app/screen/first%20screen/welcome_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,9 +38,6 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routes: {
-        '/account': (context) => const AccountPage(),
-      },
       home: welcomeScreenShown ? const SplashScreen() : const WelcomePage(),
     );
   }

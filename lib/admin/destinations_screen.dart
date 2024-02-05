@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/admin/detalis_add_edit_page.dart';
 import 'package:new_travel_app/admin/user_details_page.dart';
 import 'package:new_travel_app/db/destination_details_db.dart';
@@ -80,10 +81,12 @@ class _DestintationScreenState extends State<DestintationScreen> {
         appBar: AppBar(
           backgroundColor: AppColors.greenColor,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             AppStrings.destination,
-            style: TextStyle(
-                color: AppColors.blackColor, fontWeight: FontWeight.bold),
+            style: GoogleFonts.alata(
+              color: AppColors.blackColor,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             PopupMenuButton<String>(
@@ -118,12 +121,13 @@ class _DestintationScreenState extends State<DestintationScreen> {
                               builder: (context) => const AuthenticationPage()),
                           (route) => false);
                     },
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.exit_to_app, color: AppColors.greenColor),
-                        SizedBox(width: 10),
-                        Text('Log Out',
+                        const Icon(Icons.exit_to_app,
+                            color: AppColors.greenColor),
+                        SizedBox(width: screenWidth * .03),
+                        const Text('Log Out',
                             style: TextStyle(color: AppColors.blackColor)),
                       ],
                     ),
@@ -135,15 +139,14 @@ class _DestintationScreenState extends State<DestintationScreen> {
         ),
         body: BackgroundColor(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: EdgeInsets.all(screenWidth * .04),
             child: items.isEmpty
-                ? const Center(child: Text(AppStrings.destinationEmpty))
+                ?  Center(child: Text(AppStrings.destinationEmpty,style: GoogleFonts.alata(),))
                 : GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: screenWidth * .05,
+                        crossAxisSpacing: screenWidth * .05),
                     itemCount: items.length,
                     itemBuilder: (BuildContext context, int index) {
                       destinations = items.isNotEmpty ? items[index] : null;
@@ -157,7 +160,6 @@ class _DestintationScreenState extends State<DestintationScreen> {
                             });
                           });
                         },
-                        
                         onTap: () {
                           Navigator.push(
                               context,
@@ -186,58 +188,72 @@ class _DestintationScreenState extends State<DestintationScreen> {
                                         addOrEdit: 'Edit',
                                       )));
                         },
-                        child: Stack(children: [
-                          Container(
-                            height: screenWidth * 0.4,
-                            width: screenWidth * 0.4,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                        const Color.fromARGB(255, 188, 181, 181)
-                                            .withOpacity(0.2),
-                                    spreadRadius: 2,
-                                    blurRadius: 4,
-                                    offset: const Offset(0, 2),
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(screenWidth * 0.04)),
-                                color: Colors.grey),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(screenWidth * 0.04),
-                              child: destinations?.countryImage != null
-                                  ? Image.file(
-                                      File(destinations!.countryImage),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Text(
-                                      'No Image',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: screenWidth * 0.04,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            left: 35,
-                            child: Transform.translate(
-                              offset: Offset(15, -(screenWidth * 0.04)),
-                              child: Center(
-                                child: Text(
-                                  destinations!.countryName,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: screenWidth * 0.055,
-                                      color: AppColors.blackColor),
+                        child: Container(
+                          height: screenWidth * 0.4,
+                          width: screenWidth * 0.4,
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color:
+                                      const Color.fromARGB(255, 188, 181, 181)
+                                          .withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
                                 ),
+                              ],
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(screenWidth * 0.04)),
+                              color: Colors.grey),
+                          child: Stack(children: [
+                            Positioned.fill(
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(screenWidth * 0.04),
+                                child: destinations?.countryImage != null
+                                    ? Image.file(
+                                        File(destinations!.countryImage),
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Text(
+                                        'No Image',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: screenWidth * 0.04,
+                                        ),
+                                      ),
                               ),
                             ),
-                          ),
-                        ]),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  minHeight: screenWidth *
+                                      0.1, // Adjust the min height as needed
+                                  minWidth: screenWidth *
+                                      0.1, // Adjust the min width as needed
+                                  maxHeight: screenWidth *
+                                      0.1, // Adjust the max height as needed
+                               
+                                ),
+                                child: Container(
+                                  color: Colors.transparent,
+                                  child: Center(
+                                      child: Text(
+                                    destinations!.countryName,
+                                    style: GoogleFonts.alata(
+                                      textStyle:  TextStyle(
+                                        color: AppColors.blackColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:screenWidth*.05,
+                                      ),
+                                    ),
+                                  )),
+                                ),
+                              ),
+                            )
+                          ]),
+                        ),
                       );
                     }),
           ),

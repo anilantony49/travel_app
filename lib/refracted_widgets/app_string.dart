@@ -15,6 +15,7 @@ class AppStrings {
   static const enterPassword = 'Please enter your password';
   static const saveChanges = 'Save Changes';
   static const privacyPolicy = 'Privacy Policy';
+  static const about = 'About';
   static const termsAndCondition = 'Terms and Conditions';
   static const editProfile = 'Edit Profile';
   static const createNewAccount = "Don't have an account?";
@@ -31,7 +32,7 @@ class AppStrings {
   static const enterValidEmail =
       'Please enter a valid email address.with @gmail.com';
   static const accountCreated = 'Account created successfully!';
-  static const destinationEmpty = 'Destinations list is Empty';
+  static const destinationEmpty = 'Destination list is Empty';
   static const rating = "Rating";
   static const selectCategory = "Select Category";
   static const favorite = "Favorite";
@@ -44,9 +45,9 @@ class AppStrings {
   static const pageviewImage2 = 'Italy';
   static const pageviewImage3 = 'United Kingdom';
   static const pageviewImageCountryDescription1 =
-      "Explore India's timeless allure, where every corner narrates\n a captivating tale of heritage and wonder.";
+      "Explore India's timeless allure, where every corner narrates\na captivating tale of heritage and wonder.";
   static const pageviewImageCountryDescription2 =
-      '''Italy, in southern Europe, is renowned for its history, art, and\n delectable cuisine.Iconic landmarks like the Colosseum''';
+      '''Italy, in southern Europe, is renowned for its history, art, and\ndelectable cuisine.Iconic landmarks like the Colosseum''';
   static const pageviewImageCountryDescription3 =
       'The United Kingdom, often called the UK, is a country located off\n the northwestern coast of mainland Europe';
   static const editTrip = 'Trip Edit successfully!';
@@ -159,6 +160,33 @@ Contact Us
 
 If you have any questions or suggestions about my Terms and Conditions, do not hesitate to contact me at anilantony49@gmail.com.''';
 
+  static const aboutUsIntroduce =
+      "Introducing Triplings: Your Ultimate Travel Companion";
+  static const aboutUsIntroduceNote =
+      'Triplings is your go-to app for seamless travel planning and comprehensive travel guides, right at your fingertips. Explore the world like never before with detailed insights into countries across Asia, Europe, Africa, and more.';
+  static const aboutUsDiscoverExplore = " Discover and Explore:";
+  static const aboutUsDiscoverExploreNotes =
+      '''Dive into a vast collection of countries categorized by regions, allowing you to easily navigate and explore your desired destinations.
+Gain access to in-depth details about each country, including essential information, cultural insights, and must-visit attractions.''';
+  static const aboutUsPlan = "Plan Your Adventures:";
+  static const aboutUsPlanNote =
+      ''' Plan your dream trips effortlessly by selecting your preferred date range and destinations within the app.
+Save your favorite countries to your personalized favorites page, ensuring easy access to your most-loved destinations.''';
+  static const aboutUsSearch = "Smart Search and Filters:";
+
+  static const aboutUsSearchNote =
+      '''Use the powerful search feature to find specific countries quickly.
+Refine your search with advanced filters, making it easier to discover countries based on various categories.''';
+
+  static const aboutUsManageTrip = "Manage Your Trips:";
+  static const aboutUsManageTripNote =
+      '''Access your planned trips conveniently from the dedicated trips page.
+Edit your itineraries with ease, ensuring that your travel plans are always up-to-date and tailored to your preferences.''';
+  static const aboutUsProfile = "Personalized Profile:";
+  static const aboutUsProfileNote =
+      "Customize your profile in the account page, allowing you to manage your personal information effortlessly.";
+  static const aboutUsLastNote =
+      '''With Triplings, embark on unforgettable journeys, plan your adventures with precision, and explore the world with confidence. Download Triplings now and start your next travel adventure today!''';
   // Assets images
 
   static const pageviewAssetImage1 = 'assets/image/india.jpg';

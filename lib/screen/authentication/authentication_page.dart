@@ -92,20 +92,20 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               ),
               textWidget(
                 'Plan your Trip',
-                25,
+                screenHeight * .035,
                 AppColors.blackColor,
                 FontWeight.w900,
               ),
               height,
               textWidget(
                 'Custom and fast planning',
-                13,
+                screenHeight * .023,
                 AppColors.blackColor,
                 null,
               ),
-              textWidget('With a low price', 13, AppColors.blackColor, null),
+              textWidget('With a low price', screenHeight *.023, AppColors.blackColor, null),
               SizedBox(
-                height: screenHeight * 0.09,
+                height: screenHeight * 0.04,
               ),
               SizedBox(
                   width: screenWidth * 0.8,

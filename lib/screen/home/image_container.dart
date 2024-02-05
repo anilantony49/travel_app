@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_travel_app/models/destination_details.dart';
 import 'package:new_travel_app/screen/detailscreen/show_detail_description.dart';
 import 'package:new_travel_app/refracted_widgets/app_colors.dart';
 
-Widget buildCategorySliverList(List<DestinationModels> items,String category) {
+Widget buildCategorySliverList(List<DestinationModels> items, String category) {
   // Filter the items to include only those belonging to the "Popular Destination" category
-   List<DestinationModels> categoryItems = items
-      .where((destination) => destination.categories == category)
-      .toList();
+  List<DestinationModels> categoryItems =
+      items.where((destination) => destination.categories == category).toList();
 
   return SliverList(
     delegate: SliverChildBuilderDelegate(
@@ -28,7 +28,7 @@ Widget buildCategorySliverList(List<DestinationModels> items,String category) {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ShowDetailsPage(
-                          selectedItem:categoryItems[index],
+                          selectedItem: categoryItems[index],
                         ),
                       ),
                     );
@@ -58,14 +58,12 @@ Widget buildCategorySliverList(List<DestinationModels> items,String category) {
                               ),
                             ),
                           ),
-                          Text(
-                            categoryItems[index].countryName,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color:AppColors.black,
-                            ),
-                          ),
+                          Text(categoryItems[index].countryName,
+                              style: GoogleFonts.alata(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.black,
+                              )),
                         ],
                       ),
                     ),

@@ -13,30 +13,37 @@ class TabTwoContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Widgets.headingText('Capital'),
+          Widgets.headingText('Capital', context),
           Padding(
-            padding: const EdgeInsets.only(left: 15, bottom: 10),
-            child: Container(
-              width: 150,
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color.fromARGB(255, 231, 228, 228)),
-              child: Center(
-                  child: Text(
-                selectedItem?.capital ?? 'No Data available',
-                style: const TextStyle(
-                    color: AppColors.purple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20),
-              )),
+            padding: EdgeInsets.only(
+                left: screenWidth * .035, bottom: screenWidth * .010),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                  // minWidth: 250, // Minimum width of the Container
+                  minHeight: 50,
+                  maxWidth: 150),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color.fromARGB(255, 231, 228, 228)),
+                child: Center(
+                    child: Text(
+                  selectedItem?.capital ?? 'No Data available',
+                  style: const TextStyle(
+                      color: AppColors.purple,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                )),
+              ),
             ),
           ),
-          Widgets.headingText('Known For'),
+          Widgets.headingText('Known For', context),
           Container(
             height: 115,
             decoration: BoxDecoration(
@@ -86,7 +93,7 @@ class TabTwoContent extends StatelessWidget {
               },
             ),
           ),
-          Widgets.headingText('Major Cities'),
+          Widgets.headingText('Major Cities', context),
           Container(
             height: 125,
             decoration: BoxDecoration(
@@ -129,15 +136,15 @@ class TabTwoContent extends StatelessWidget {
               },
             ),
           ),
-          Widgets.headingText('Official Language'),
+          Widgets.headingText('Official Language', context),
           Widgets.section(
             selectedItem?.language ?? 'No Data available',
           ),
-          Widgets.headingText('Currency'),
+          Widgets.headingText('Currency', context),
           Widgets.section(
             selectedItem?.currency ?? 'No Data available',
           ),
-          Widgets.headingText('Dial Code'),
+          Widgets.headingText('Dial Code', context),
           Widgets.section(
             selectedItem?.digitialCode ?? 'No Data available',
           ),
